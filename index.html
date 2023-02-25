@@ -114,7 +114,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -132,6 +132,109 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2023/02/25/deploy-hexo-by-github-pages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/2023/02/25/deploy-hexo-by-github-pages/" class="post-title-link" itemprop="url">deploy-hexo-by-github-pages</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-02-25 20:20:41 / Modified: 21:40:16" itemprop="dateCreated datePublished" datetime="2023-02-25T20:20:41+08:00">2023-02-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言提要"><a href="#前言提要" class="headerlink" title="前言提要"></a>前言提要</h1><p>建置 Hexo 部落格已經兩年多，如今更換 Ｍac 之後建制的新環境 Node 版本已經不相容，peer packages 貼心的設計也種下了難以收拾的坑 （難解的 sass loader），舊的部落格所選用的 Minos 框架在少數的使用量與停止維護下造就了相容性衝突也是在所難免，如今只能硬著頭皮重新學習建置一包 Hexo 了。<br>踩過的坑我們懂得避免，這次選用最多人使用與維護的 ＮexT 模板作為新部落格的皮膚。</p>
+<h1 id="建立-NexT-主題專案包"><a href="#建立-NexT-主題專案包" class="headerlink" title="建立 ＮexT 主題專案包"></a>建立 ＮexT 主題專案包</h1><p>NexT 建置了貼心的官網提供完整的說明，<a target="_blank" rel="noopener" href="https://theme-next.js.org/">點我</a>。<br>再建置好 Hexo 專案包後，執行以下命令取得 ＮexT theme。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo-site</span><br><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
+
+<h4 id="更換-config-yml-主題"><a href="#更換-config-yml-主題" class="headerlink" title="更換 __config.yml 主題"></a>更換 __config.yml 主題</h4><p>將 Hexo 專案根目錄下的 __config.yml 配置更改為：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ theme: next</span><br></pre></td></tr></table></figure>
+<h4 id="新增部落格文章"><a href="#新增部落格文章" class="headerlink" title="新增部落格文章"></a>新增部落格文章</h4><p>cd 至專案目錄後，透過以下指令建立文章：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new post your-post-name</span><br></pre></td></tr></table></figure>
+
+<h1 id="如何搭配-Github-pages-部署網站"><a href="#如何搭配-Github-pages-部署網站" class="headerlink" title="如何搭配 Github pages 部署網站"></a>如何搭配 Github pages 部署網站</h1><p>先說我個人的案例，去年第一個部落格我的做法是去建立新的 Github 帳號，將專案直接部署在 <my-name>.github.io 的 repository 上，原因是個人帳號的 github.io 已經被舊專案所佔據了，這個做法不是很好，白白浪費了舊帳號的 pages 空間。於是乎在新部落格建置後決定好好利用舊帳號的 Github pages。<br>原先在 google 搜尋引擎上查不太到好的解法，所以就求救了 ChatGpt 老師～，沒想到各種問題都能一一擊破，真的是太厲害了！</p>
+<h4 id="建立新的-Git-repository"><a href="#建立新的-Git-repository" class="headerlink" title="建立新的 Git repository"></a>建立新的 Git repository</h4><p>去想要使用的 Account 建立一個新的倉庫，並且隨意命名，我使用 blog 這個名稱當作主網站的 router。</p>
+<h4 id="專案包中安裝自動部署工具"><a href="#專案包中安裝自動部署工具" class="headerlink" title="專案包中安裝自動部署工具"></a>專案包中安裝自動部署工具</h4><p>cd 至專案包路徑後，執行以下的命令安裝 Hexo 自動部署工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="連結-Github-repository-至部落格"><a href="#連結-Github-repository-至部落格" class="headerlink" title="連結 Github repository 至部落格"></a>連結 Github repository 至部落格</h4><p>cd 開啟專案中的 __config.yml 檔案改寫以下內容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/your-username/blog.git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  tkn: your-pat-tkn</span><br></pre></td></tr></table></figure>
+<p>直得注意的是分支 <code>gh-pages</code> 會為 github 部屬時自動辨別為子專案使用，待下一個步驟設定完成並建立後將子專案推至此分支。<br><img src="/images/deploy-hexo-by-github-pages-1.jpg"  width="60%" height="30%"></p>
+<h4 id="事前作業"><a href="#事前作業" class="headerlink" title="事前作業"></a>事前作業</h4><p>為了讓 url 可以指向正確的路徑，需要調整 <code>__config.yml</code> 中的幾個設定：</p>
+<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">    url: https://user-name.github.io/blog</span><br><span class="line">    root: /</span><br></pre></td></tr></table></figure>
+<h4 id="public-dir"><a href="#public-dir" class="headerlink" title="public dir"></a>public dir</h4><p>調整發布的資料夾名稱為 docs，在部署後會自動建立一個資料夾名稱為 docs。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line">    source_dir: <span class="built_in">source</span></span><br><span class="line">    public_dir: docs</span><br></pre></td></tr></table></figure>
+
+<p>執行命令建立該資料夾：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<h5 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h5><p>在部署後有發生錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ github-pages 228 | Error: No such file or directory @ dir_chdir - /github/workspace/docs</span><br></pre></td></tr></table></figure>
+
+<p>ChatGpt 的回覆：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You can also update the url setting <span class="keyword">in</span> your Hexo project<span class="string">&#x27;s _config.yml file to match your new deployment environment. For example, if your site is deployed to https://your-username.github.io/blog, you can update your url setting like this:</span></span><br></pre></td></tr></table></figure>
+<p>原因是我忘了將上一個步驟中的 url 指向調整到 <code>/blog</code>，導致網站開啟後 css 與 javascript 直接掛掉找不到路徑。<br>將這一段調整後重新操作部署指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+<p>就可以在子路由中看到 Hexo 部落格搭建好囉！完美的與舊專案並存在 github.io domain 下啦！</p>
+<h1 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h1><p> <a target="_blank" rel="noopener" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始 用 github pages 上傳靜態網站</a><br> <a target="_blank" rel="noopener" href="https://chat.openai.com/chat/">ChatGpt</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
