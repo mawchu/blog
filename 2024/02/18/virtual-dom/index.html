@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
@@ -17,18 +18,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/blog/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":true,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/blog/js/config.js"></script>
 
     <meta name="description" content="新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。 對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的濃縮精華文章。 Virtual dom 真的必要嗎？又沒比較快！文章開頭的疑問是，在測試操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 思維進化 - Virtual dom">
 <meta property="og:url" content="https://mawchu.github.io/blog/2024/02/18/virtual-dom/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
 <meta property="og:description" content="新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。 對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的濃縮精華文章。 Virtual dom 真的必要嗎？又沒比較快！文章開頭的疑問是，在測試操作">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-18T08:25:16.000Z">
-<meta property="article:modified_time" content="2024-02-18T09:28:57.262Z">
+<meta property="article:modified_time" content="2024-02-24T04:00:04.728Z">
 <meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="virtual-dom">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="browser">
 <meta name="twitter:card" content="summary">
 
 
@@ -39,7 +44,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/02/18/virtual-dom/","path":"2024/02/18/virtual-dom/","title":"React 思維進化 - Virtual dom"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>React 思維進化 - Virtual dom | Hexo</title>
+<title>React 思維進化 - Virtual dom | Mawchu's blog</title>
   
 
 
@@ -52,6 +57,7 @@
   <noscript>
     <link rel="stylesheet" href="/blog/css/noscript.css">
   </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -72,7 +78,7 @@
 
     <a href="/blog/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Hexo</p>
+      <p class="site-title">Mawchu's blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -126,12 +132,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -166,12 +172,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Mawchu's blog">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="React 思維進化 - Virtual dom | Hexo">
+      <meta itemprop="name" content="React 思維進化 - Virtual dom | Mawchu's blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -186,9 +192,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-02-18 16:25:16 / Modified: 17:28:57" itemprop="dateCreated datePublished" datetime="2024-02-18T16:25:16+08:00">2024-02-18</time>
+      <time title="Created: 2024-02-18 16:25:16" itemprop="dateCreated datePublished" datetime="2024-02-18T16:25:16+08:00">2024-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-24 12:00:04" itemprop="dateModified" datetime="2024-02-24T12:00:04+08:00">2024-02-24</time>
     </span>
 
   
@@ -211,7 +223,7 @@
 <li>react 的函式導向設計法(functional programming) + hooks</li>
 </ul>
 <p>框架幫你掩蓋了底層的操作邏輯，給予多個易於操作的 api 讓你專注開發。</p>
-<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴原因在於：重新渲染。</p>
+<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴——重新渲染。</p>
 <p>瀏覽器在 DOM 改變後、渲染畫面經歷的階段：</p>
 <ol>
 <li>DOM Tree Update</li>
@@ -224,7 +236,7 @@
 <h2 id="Virtual-dom-為什麼重要"><a href="#Virtual-dom-為什麼重要" class="headerlink" title="Virtual dom 為什麼重要"></a>Virtual dom 為什麼重要</h2><p>先講結論：只更新 『必要的』元素。</p>
 <p>不同於原生 DOM 操作習慣，例如 innerHTML 每次必定全部渲染，虛擬 DOM 先在藍圖草稿上，操作低成本的 js 對象，規劃與彩排各種情況的 DOM tree，多次演練編排過後的結果才會真正地透過瀏覽器操作原生 DOM。這個過程之所以比預期的慢，是因為進行了幾個背後的努力：</p>
 <h3 id="Virtual-dom-react"><a href="#Virtual-dom-react" class="headerlink" title="Virtual dom - react"></a>Virtual dom - react</h3><p>React 採取持續不斷的檢查與比對 DOM 結構(Diff)，過程中建立與修改一個個 js dom object 規劃新的 DOM 長相，包含 type, prop, children 等敘述，以便 Diff 完成以後的最終版(patch) 如實透過原生 DOM 產出。</p>
-<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track ny $index 躍升了效能，與之平起平坐。</p>
+<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track by $index 躍升了效能，與之平起平坐。</p>
 <h1 id="效率並非時間導向"><a href="#效率並非時間導向" class="headerlink" title="效率並非時間導向"></a>效率並非時間導向</h1><p>效率這個假議題從『時間』被拉出來討論背後實際的『渲染』問題才是重點，框架解決的從不是快不快，而是好不好用，能不能直觀開發與維護。</p>
 
     </div>
@@ -234,6 +246,12 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/react/" rel="tag"># react</a>
+              <a href="/blog/tags/virtual-dom/" rel="tag"># virtual-dom</a>
+              <a href="/blog/tags/vue/" rel="tag"># vue</a>
+              <a href="/blog/tags/browser/" rel="tag"># browser</a>
+          </div>
 
         
 
@@ -244,6 +262,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/blog/2024/02/22/react-element/" rel="next" title="React 思維進化 - React Element X JSX">
+                  React 思維進化 - React Element X JSX <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -270,7 +291,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Mawchu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
     </div>

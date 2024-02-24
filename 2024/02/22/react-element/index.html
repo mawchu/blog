@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":true,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="承襲上一篇『React 思維進化』核心理念的出發點——Virtual Dom 為基底，第二層的關鍵因素就是 React Element，筆者佔用了相當大的篇幅與頻繁地提及次數都在在彰顯其份量，可以從幾個粗淺但切中要害的方式分析： React Element 為構築畫面的最小單位筆者從開頭就破題「組成 React 最小畫面的元素單位並非 component 而是 React Element」，以及「">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 思維進化 - React Element X JSX">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/02/22/react-element/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="承襲上一篇『React 思維進化』核心理念的出發點——Virtual Dom 為基底，第二層的關鍵因素就是 React Element，筆者佔用了相當大的篇幅與頻繁地提及次數都在在彰顯其份量，可以從幾個粗淺但切中要害的方式分析： React Element 為構築畫面的最小單位筆者從開頭就破題「組成 React 最小畫面的元素單位並非 component 而是 React Element」，以及「">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-22T14:10:09.000Z">
+<meta property="article:modified_time" content="2024-02-24T04:00:36.077Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="react思維進化">
+<meta property="article:tag" content="react-element">
+<meta property="article:tag" content="virtual-dom">
+<meta property="article:tag" content="browser-render">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/02/22/react-element/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/02/22/react-element/","path":"2024/02/22/react-element/","title":"React 思維進化 - React Element X JSX"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React 思維進化 - React Element X JSX | Mawchu's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-Element-%E7%82%BA%E6%A7%8B%E7%AF%89%E7%95%AB%E9%9D%A2%E7%9A%84%E6%9C%80%E5%B0%8F%E5%96%AE%E4%BD%8D"><span class="nav-number">1.</span> <span class="nav-text">React Element 為構築畫面的最小單位</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Dom-%E6%98%AF%E6%A6%82%E5%BF%B5%E3%80%81React-Element-%E6%98%AF%E5%AF%A6%E4%BD%9C%E3%80%81DOM-%E6%98%AF%E7%B5%90%E6%9E%9C"><span class="nav-number">1.1.</span> <span class="nav-text">Virtual Dom 是概念、React Element 是實作、DOM 是結果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Element-Child-%E5%8F%AF%E4%BB%A5%E5%A4%9A%E5%80%8B%E6%88%96%E5%B5%8C%E5%A5%97"><span class="nav-number">1.2.</span> <span class="nav-text">React Element Child 可以多個或嵌套</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Element-%E7%9A%84-immutable-%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">React Element 的 immutable 特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSX-%E8%8F%80%E8%8F%80%E9%A1%9E%E5%8D%BF%EF%BC%8C%E9%99%A4%E5%8D%BB%E5%B7%AB%E5%B1%B1%E4%B8%8D%E6%98%AF%E9%9B%B2"><span class="nav-number">2.</span> <span class="nav-text">JSX 菀菀類卿，除卻巫山不是雲</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/02/22/react-element/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React 思維進化 - React Element X JSX | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React 思維進化 - React Element X JSX
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-02-22 22:10:09" itemprop="dateCreated datePublished" datetime="2024-02-22T22:10:09+08:00">2024-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-02-24 12:00:36" itemprop="dateModified" datetime="2024-02-24T12:00:36+08:00">2024-02-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>承襲上一篇『React 思維進化』核心理念的出發點——Virtual Dom 為基底，第二層的關鍵因素就是 React Element，筆者佔用了相當大的篇幅與頻繁地提及次數都在在彰顯其份量，可以從幾個粗淺但切中要害的方式分析：</p>
+<h1 id="React-Element-為構築畫面的最小單位"><a href="#React-Element-為構築畫面的最小單位" class="headerlink" title="React Element 為構築畫面的最小單位"></a>React Element 為構築畫面的最小單位</h1><p>筆者從開頭就破題「組成 React 最小畫面的元素單位並非 component 而是 React Element」，以及「React Element 就是 React 實作 Virtual Dom 作為優化瀏覽器重新渲染造成的效能消耗必要手段之一。」來當作所有思維的基礎。</p>
+<h2 id="Virtual-Dom-是概念、React-Element-是實作、DOM-是結果"><a href="#Virtual-Dom-是概念、React-Element-是實作、DOM-是結果" class="headerlink" title="Virtual Dom 是概念、React Element 是實作、DOM 是結果"></a>Virtual Dom 是概念、React Element 是實作、DOM 是結果</h2><p>Virtual Dom 的美好藍圖必須透過某些框架手法來轉換為現實，就是透過 React 的最小構築畫面單位——React Element，該方法可以傳入三個參數：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import React from &#x27;react&#x27;;</span><br><span class="line">import ReactDOM from &#x27;react-dom/client&#x27;;</span><br><span class="line"></span><br><span class="line">// 準備容器根節點(注意！該範圍內會直接為 React 所掌控與覆蓋，盡量避免直接透過其他 js 手法寫入此容器)</span><br><span class="line">const rootContainerElement = document.getElementById(&#x27;root-container&#x27;);</span><br><span class="line">const root = ReactDOM.creatRoot(rootContainerElement);</span><br><span class="line"></span><br><span class="line">// 注入React Element</span><br><span class="line">const buttonReactElement = React.creactElement(</span><br><span class="line">    &#x27;button&#x27;,           // 元素類型</span><br><span class="line">    &#123; id: &#x27;button1&#x27; &#125;,  // 屬性值</span><br><span class="line">    &#x27;I am a button&#x27;     // 子元素，可以往後傳入多個</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>產生的實際 DOM 樣貌：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=&quot;root-container&quot;&gt;</span><br><span class="line">            &lt;button id=&quot;button1&quot;&gt;I am a button&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>React.creactElement 實際產生的是一個普通的 React javascript 物件，用來模擬實際產生的 DOM 樣貌，</p>
+</blockquote>
+<h2 id="React-Element-Child-可以多個或嵌套"><a href="#React-Element-Child-可以多個或嵌套" class="headerlink" title="React Element Child 可以多個或嵌套"></a>React Element Child 可以多個或嵌套</h2><p>從第三個參數開始可以不斷透過 React Element 持續撰寫撰寫平行的兄弟、巢狀嵌套的父子等子元素：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const buttonReactElement = React.creactElement(</span><br><span class="line">    &#x27;div&#x27;,           // 元素類型</span><br><span class="line">    &#123; id: &#x27;wrapper&#x27;, className: &#x27;wrapper&#x27; &#125;,  // 屬性值</span><br><span class="line">    React.creactElement(  // 子元素，可以往後傳入多個</span><br><span class="line">        &#x27;ul&#x27;,</span><br><span class="line">        &#123; id: &#x27;list&#x27; &#125;,</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 1&#x27;),</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 2&#x27;),</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 3&#x27;),</span><br><span class="line">    ),</span><br><span class="line">    React.creactElement(</span><br><span class="line">        &#x27;button&#x27;,</span><br><span class="line">        &#123; id: &#x27;button1&#x27; &#125;,</span><br><span class="line">        &#x27;I am a button&#x27;</span><br><span class="line">    )</span><br><span class="line">    ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="React-Element-的-immutable-特性"><a href="#React-Element-的-immutable-特性" class="headerlink" title="React Element 的 immutable 特性"></a>React Element 的 immutable 特性</h2><p>為了實現效能優化，React 發展出不可變(immutable)的特性，每個產生的 React Element 都不能為後續的修改而變動，這是為了確保每個版本的 React Element 都有白紙黑字的根據，以便後續與新的版本做對照與比較(Diff)，進而方便 React 鎖定比較後的結構細節並且縮小範圍。</p>
+<p>不過 React.creactElement 這樣的撰寫方式不夠直覺好懂，所以發展出第三個核心理念——JSX。</p>
+<h1 id="JSX-菀菀類卿，除卻巫山不是雲"><a href="#JSX-菀菀類卿，除卻巫山不是雲" class="headerlink" title="JSX 菀菀類卿，除卻巫山不是雲"></a>JSX 菀菀類卿，除卻巫山不是雲</h1><p>JSX 長得像 HTML、本質上卻是 Virtual DOM，這是因為如同 <code>class</code> 是 functional constructor 的語法糖一樣，他不過是 React Element 方法的語法糖，並非一個新的語言、也不是獨創的，撕開面具他不過就是透過 Babel 從高階語言轉換成另一個高階語言的「轉譯」(Transpiler)手法而已，讓你可以用 HTML 的概念去寫 Virtual DOM 並且呼叫 React.creactElement 方法，目的就是好維護、夠直觀。</p>
+<p>透過 JSX 撰寫 React.creactElement：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const reactElement = (</span><br><span class="line">    &lt;div id=&quot;wrapper&quot; className=&quot;wrapper&quot;&gt;</span><br><span class="line">        &lt;ul id=&quot;list&quot;&gt;</span><br><span class="line">            &lt;li className=&quot;list-item&quot;&gt;item 1&lt;/li&gt;</span><br><span class="line">            &lt;li className=&quot;list-item&quot;&gt;item 2&lt;/li&gt;</span><br><span class="line">            &lt;li className=&quot;list-item&quot;&gt;item 3&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">        &lt;button id=&quot;button1&quot;&gt;I am a button&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>避免與 <code>class</code> 重複而使用 <code>className</code> 並非 JSX 的規定，而是為了映射到 React.creactElement 呼叫時的寫法。</p>
+</blockquote>
+<p>完全等同以下的寫法(Babel 轉譯結果)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const buttonReactElement = React.creactElement(</span><br><span class="line">    &#x27;div&#x27;, // 元素類型</span><br><span class="line">    &#123; id: &#x27;wrapper&#x27;, className: &#x27;wrapper&#x27; &#125;, // 屬性值</span><br><span class="line">    React.creactElement( // 子元素，可以往後傳入多個</span><br><span class="line">        &#x27;ul&#x27;,</span><br><span class="line">        &#123; id: &#x27;list&#x27; &#125;,</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 1&#x27;),</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 2&#x27;),</span><br><span class="line">        React.creactElement(&#x27;li&#x27;, &#123; className: &#x27;list-item&#x27; &#125;, &#x27;item 3&#x27;),</span><br><span class="line">    ),</span><br><span class="line">    React.creactElement(</span><br><span class="line">        &#x27;button&#x27;,</span><br><span class="line">        &#123; id: &#x27;button1&#x27; &#125;,</span><br><span class="line">        &#x27;I am a button&#x27;</span><br><span class="line">    )</span><br><span class="line">    ...</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>下一篇將跟隨『React 思維進化』筆者的引導，深入檢討 React 與 Vue 各自在優化前端效能上採用的做法，以及如何呼應到瀏覽器的渲染行為。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/react/" rel="tag"># react</a>
+              <a href="/blog/tags/react%E6%80%9D%E7%B6%AD%E9%80%B2%E5%8C%96/" rel="tag"># react思維進化</a>
+              <a href="/blog/tags/react-element/" rel="tag"># react-element</a>
+              <a href="/blog/tags/virtual-dom/" rel="tag"># virtual-dom</a>
+              <a href="/blog/tags/browser-render/" rel="tag"># browser-render</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/02/18/virtual-dom/" rel="prev" title="React 思維進化 - Virtual dom">
+                  <i class="fa fa-chevron-left"></i> React 思維進化 - Virtual dom
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
