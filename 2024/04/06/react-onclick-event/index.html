@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":true,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="終於在前端生涯來到三年多後第一次接觸 React 開發，即便已經知道 React 容易踩坑無限迴圈的議題，仍然一頭栽了進去。今天要來說說關於「onClick 事件的無限迴圈」，為什麼在 Vue 習以為常的開發手法卻在 React 踢爆鐵板呢？抱持著踩坑的興奮心情與你各位分享ヾ(&#x3D;&#96;ω´&#x3D;)ノ | |： React 的重新渲染機制Vue 與 React 在運作機制上為了避">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 初學踩坑記 - onClick 事件的無限迴圈">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/04/06/react-onclick-event/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="終於在前端生涯來到三年多後第一次接觸 React 開發，即便已經知道 React 容易踩坑無限迴圈的議題，仍然一頭栽了進去。今天要來說說關於「onClick 事件的無限迴圈」，為什麼在 Vue 習以為常的開發手法卻在 React 踢爆鐵板呢？抱持著踩坑的興奮心情與你各位分享ヾ(&#x3D;&#96;ω´&#x3D;)ノ | |： React 的重新渲染機制Vue 與 React 在運作機制上為了避">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-onclick-event-0.png">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-onclick-event-1.gif">
+<meta property="article:published_time" content="2024-04-06T14:47:03.000Z">
+<meta property="article:modified_time" content="2024-04-06T15:44:15.886Z">
+<meta property="article:author" content="Mawchu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mawchu.github.io/blog/images/react-onclick-event-0.png">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/04/06/react-onclick-event/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/04/06/react-onclick-event/","path":"2024/04/06/react-onclick-event/","title":"React 初學踩坑記 - onClick 事件的無限迴圈"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React 初學踩坑記 - onClick 事件的無限迴圈 | Mawchu's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-%E7%9A%84%E9%87%8D%E6%96%B0%E6%B8%B2%E6%9F%93%E6%A9%9F%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">React 的重新渲染機制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OnClick-%E4%BA%8B%E4%BB%B6%E5%82%B3%E5%85%A5%E5%8F%83%E6%95%B8%E7%9A%84%E6%97%A5%E5%B8%B8"><span class="nav-number">2.</span> <span class="nav-text">OnClick 事件傳入參數的日常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E9%80%A0%E6%88%90%E7%84%A1%E9%99%90%E8%BF%B4%E5%9C%88"><span class="nav-number">2.1.</span> <span class="nav-text">為什麼會造成無限迴圈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC-inline-function-%E6%9C%89%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">為什麼 inline function 有解</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/04/06/react-onclick-event/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React 初學踩坑記 - onClick 事件的無限迴圈 | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React 初學踩坑記 - onClick 事件的無限迴圈
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-04-06 22:47:03 / Modified: 23:44:15" itemprop="dateCreated datePublished" datetime="2024-04-06T22:47:03+08:00">2024-04-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>終於在前端生涯來到三年多後第一次接觸 React 開發，即便已經知道 React 容易踩坑無限迴圈的議題，仍然一頭栽了進去。<br>今天要來說說關於<code>「onClick 事件的無限迴圈」</code>，為什麼在 Vue 習以為常的開發手法卻在 React 踢爆鐵板呢？<br>抱持著踩坑的興奮心情與你各位分享ヾ(&#x3D;&#96;ω´&#x3D;)ノ | |：</p>
+<h1 id="React-的重新渲染機制"><a href="#React-的重新渲染機制" class="headerlink" title="React 的重新渲染機制"></a>React 的重新渲染機制</h1><p>Vue 與 React 在運作機制上為了避免高耗能的 DOM 操作採取不同的做法，詳細可以閱讀 Zet 大大在《React 思維進化》中的解說。<br>總的來講，Vue 採用資料與視圖綁定的做法， MVVM 雙向綁定監聽資料變化以最小規模化操作牽動到的 DOM；React 則是採用了 React DOM 操作虛擬物件、一率重繪與單向資料流（One way dataflow）等多重手法來達成目的，這也造成 React 容易無限迴圈的主因。</p>
+<h1 id="OnClick-事件傳入參數的日常"><a href="#OnClick-事件傳入參數的日常" class="headerlink" title="OnClick 事件傳入參數的日常"></a>OnClick 事件傳入參數的日常</h1><p>當我在開發一個簡易的路由切換，給當前按鈕改變顏色時秉持以往撰寫 Vue 的習慣：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Root</span></span>() &#123;</span><br><span class="line">  const [currentTab, setCurrentTab] = useState(<span class="string">&quot;app&quot;</span>);</span><br><span class="line">  const changeCurrentTab = (tabName) =&gt; &#123;</span><br><span class="line">    setCurrentTab(tabName);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;h1&gt;This is main page.&lt;/h1&gt;</span><br><span class="line">      &lt;Space</span><br><span class="line">        style=&#123;&#123;</span><br><span class="line">          display: <span class="string">&quot;flex&quot;</span>,</span><br><span class="line">          flexWrap: <span class="string">&quot;wrap&quot;</span>,</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        &lt;Link to=&#123;`/app`&#125;&gt;</span><br><span class="line">          &lt;Button</span><br><span class="line">            onClick=&#123;changeCurrentTab(<span class="string">&quot;app&quot;</span>)&#125;</span><br><span class="line">            <span class="built_in">type</span>=&#123;currentTab === <span class="string">&quot;app&quot;</span> ? <span class="string">&quot;primary&quot;</span> : <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            APP</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Link&gt;</span><br><span class="line">        &lt;Link to=&#123;`/library`&#125;&gt;</span><br><span class="line">          &lt;Button</span><br><span class="line">            onClick=&#123;changeCurrentTab(<span class="string">&quot;library&quot;</span>)&#125;</span><br><span class="line">            <span class="built_in">type</span>=&#123;currentTab === <span class="string">&quot;library&quot;</span> ? <span class="string">&quot;primary&quot;</span> : <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            LIBRARY</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Link&gt;</span><br><span class="line">      &lt;/Space&gt;</span><br><span class="line">      &lt;Outlet /&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default Root;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然後就沒有然後了，畫面直接死給你看：</p>
+<img style='margin-right: unset; margin-left: unset; padding-top: 30px' src='/blog/images/react-onclick-event-0.png' width='100%' height='auto'>
+
+<p>原因在於當前 Component 的 function 一旦傳入參數就視同於立即呼叫，時機在於 Component 渲染後觸發，這並不是我們預期「點擊後觸發」的行為，為了修正錯誤必須更改為箭頭函式以確保元件渲染的當下才定義函式，並且在需要的時候呼叫：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Root</span></span>() &#123;</span><br><span class="line">  const [currentTab, setCurrentTab] = useState(<span class="string">&quot;app&quot;</span>);</span><br><span class="line">  const changeCurrentTab = (tabName) =&gt; &#123;</span><br><span class="line">    setCurrentTab(tabName);</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="built_in">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;h1&gt;This is main page.&lt;/h1&gt;</span><br><span class="line">      &lt;Space</span><br><span class="line">        style=&#123;&#123;</span><br><span class="line">          display: <span class="string">&quot;flex&quot;</span>,</span><br><span class="line">          flexWrap: <span class="string">&quot;wrap&quot;</span>,</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        &lt;Link to=&#123;`/app`&#125;&gt;</span><br><span class="line">          &lt;Button</span><br><span class="line">            onClick=&#123;() =&gt; changeCurrentTab(<span class="string">&quot;app&quot;</span>)&#125;</span><br><span class="line">            <span class="built_in">type</span>=&#123;currentTab === <span class="string">&quot;app&quot;</span> ? <span class="string">&quot;primary&quot;</span> : <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            APP</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Link&gt;</span><br><span class="line">        &lt;Link to=&#123;`/library`&#125;&gt;</span><br><span class="line">          &lt;Button</span><br><span class="line">            onClick=&#123;() =&gt; changeCurrentTab(<span class="string">&quot;library&quot;</span>)&#125;</span><br><span class="line">            <span class="built_in">type</span>=&#123;currentTab === <span class="string">&quot;library&quot;</span> ? <span class="string">&quot;primary&quot;</span> : <span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">          &gt;</span><br><span class="line">            LIBRARY</span><br><span class="line">          &lt;/Button&gt;</span><br><span class="line">        &lt;/Link&gt;</span><br><span class="line">      &lt;/Space&gt;</span><br><span class="line">      &lt;Outlet /&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> default Root;</span><br></pre></td></tr></table></figure>
+
+<p>詳細可以看<a target="_blank" rel="noopener" href="https://sentry.io/answers/why-can-t-the-react-js-onclick-event-pass-a-value-to-a-method/">這一篇</a>的說明</p>
+<blockquote>
+<p>When you call an onClick event handler function directly with an argument passed in, the function <code>is executed when the component is mounted</code>.<br><code>An inline function is a function that’s</code>defined when the component is rendered&#96;. This onClick event handler is now called by React only when the button is clicked by a user.</p>
+</blockquote>
+<h2 id="為什麼會造成無限迴圈"><a href="#為什麼會造成無限迴圈" class="headerlink" title="為什麼會造成無限迴圈"></a>為什麼會造成無限迴圈</h2><p>render 時觸發資料變化 -&gt; re-render -&gt; render 時觸發資料變化 -&gt; re-render -&gt; render 時觸發資料變化 -&gt; re-render …<br>於是造成了渲染渲染再渲染，重複重複再重複的死胡同裡面了。<br><img style='margin-right: unset; margin-left: unset; padding-top: 30px' src='/blog/images/react-onclick-event-1.gif' width='60%' height='auto'></p>
+<blockquote>
+<p>The reason why passing in a value to a state setter onClick event handler causes an infinite loop, if you call it without an inline function, is that the state is set when the component is rendered. <code>This causes the component to re-render as the state is updated</code>. The state is then set again when the component is re-rendered, which causes another re-render. This continues and causes an infinite loop.</p>
+</blockquote>
+<h2 id="為什麼-inline-function-有解"><a href="#為什麼-inline-function-有解" class="headerlink" title="為什麼 inline function 有解"></a>為什麼 inline function 有解</h2><p>Inline arrow function 之所以有效，在於他每一次的<code>函式執行環境都是「獨立的」</code>，對於 Javascript 來說 function 也是一種物件，物件的特性就是傳參考（by preference），所以 React 在每次渲染創建的 inline arrow function 都是各自獨立的函式，與之前的參考脫鉤也就沒有資料改變的問題，從而解決了因為偵測變化而重新渲染的無限迴圈。</p>
+<blockquote>
+<p>Using an inline arrow function helps resolve this issue. When you use an inline arrow function, a new function is created each time the component renders. This ensures that <code>the reference to the function changes</code>, which prevents the effect from re-rendering. - chatGpt</p>
+</blockquote>
+<ul>
+<li>踩坑記先記錄到這裡，期待透過下一次的採坑重新認識每個 Javascript 框架囉～！</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/02/24/react-one-way-dataflow/" rel="prev" title="React 思維進化 - One-way dataflow">
+                  <i class="fa fa-chevron-left"></i> React 思維進化 - One-way dataflow
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

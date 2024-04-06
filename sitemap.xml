@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://mawchu.github.io/blog/2024/04/06/react-onclick-event/</loc>
+    
+    <lastmod>2024-04-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://mawchu.github.io/blog/2024/02/24/react-one-way-dataflow/</loc>
+    
+    <lastmod>2024-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://mawchu.github.io/blog/2024/02/22/react-element/</loc>
     
     <lastmod>2024-02-24</lastmod>
@@ -85,7 +103,7 @@
 
   <url>
     <loc>https://mawchu.github.io/blog</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -93,77 +111,77 @@
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/ssh/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/rsa/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/publicKey/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/privateKey/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/react/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/react%E6%80%9D%E7%B6%AD%E9%80%B2%E5%8C%96/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/react-element/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/virtual-dom/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/browser-render/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/vue/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/browser/</loc>
-    <lastmod>2024-02-24</lastmod>
+    <lastmod>2024-04-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
