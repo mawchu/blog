@@ -175,6 +175,20 @@
   </url>
   
   <url>
+    <loc>https://mawchu.github.io/blog/tags/macbook/</loc>
+    <lastmod>2024-04-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://mawchu.github.io/blog/tags/shortcut/</loc>
+    <lastmod>2024-04-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://mawchu.github.io/blog/tags/react/</loc>
     <lastmod>2024-04-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -204,20 +218,6 @@
   
   <url>
     <loc>https://mawchu.github.io/blog/tags/browser-render/</loc>
-    <lastmod>2024-04-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://mawchu.github.io/blog/tags/macbook/</loc>
-    <lastmod>2024-04-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://mawchu.github.io/blog/tags/shortcut/</loc>
     <lastmod>2024-04-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
