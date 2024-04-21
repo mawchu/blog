@@ -3,7 +3,7 @@
   <url>
     <loc>https://mawchu.github.io/</loc>
     
-    <lastmod>{{ posts[0].date | formatDate }}</lastmod>
+    <lastmod>{{ posts[0].updated | formatDate }}</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
