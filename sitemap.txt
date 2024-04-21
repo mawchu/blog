@@ -29,9 +29,9 @@ https://mawchu.github.io/blog/tags/immutable-update/
 https://mawchu.github.io/blog/tags/primitive-object/
 https://mawchu.github.io/blog/tags/immutable-mutable/
 https://mawchu.github.io/blog/tags/React-%E6%80%9D%E7%B6%AD%E9%80%B2%E5%8C%96/
-https://mawchu.github.io/blog/tags/one-way-dataflow/
-https://mawchu.github.io/blog/tags/virtual-dom/
 https://mawchu.github.io/blog/tags/inline-function/
+https://mawchu.github.io/blog/tags/one-way-dataflow/
 https://mawchu.github.io/blog/tags/onclick-arguments/
+https://mawchu.github.io/blog/tags/virtual-dom/
 https://mawchu.github.io/blog/tags/vue/
 https://mawchu.github.io/blog/tags/browser/

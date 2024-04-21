@@ -78,9 +78,9 @@
     
     <category term="react" scheme="https://mawchu.github.io/blog/tags/react/"/>
     
-    <category term="one-way dataflow" scheme="https://mawchu.github.io/blog/tags/one-way-dataflow/"/>
-    
     <category term="inline function" scheme="https://mawchu.github.io/blog/tags/inline-function/"/>
+    
+    <category term="one-way dataflow" scheme="https://mawchu.github.io/blog/tags/one-way-dataflow/"/>
     
     <category term="onclick arguments" scheme="https://mawchu.github.io/blog/tags/onclick-arguments/"/>
     
