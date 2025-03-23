@@ -118,13 +118,13 @@
     
     <category term="Algorithm" scheme="https://mawchu.github.io/blog/tags/Algorithm/"/>
     
-    <category term="Map" scheme="https://mawchu.github.io/blog/tags/Map/"/>
-    
-    <category term="Leetcode" scheme="https://mawchu.github.io/blog/tags/Leetcode/"/>
-    
     <category term="Hashtable" scheme="https://mawchu.github.io/blog/tags/Hashtable/"/>
     
+    <category term="Map" scheme="https://mawchu.github.io/blog/tags/Map/"/>
+    
     <category term="Set" scheme="https://mawchu.github.io/blog/tags/Set/"/>
+    
+    <category term="Leetcode" scheme="https://mawchu.github.io/blog/tags/Leetcode/"/>
     
   </entry>
   

@@ -53,6 +53,73 @@
       </tags>
   </entry>
   <entry>
+    <title>部署 Hexo 部落格至 Github Pages</title>
+    <url>/blog/2023/02/25/deploy-hexo-by-github-pages/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Hexo  Github Pages</div>
+            <div class="stroke"> Hexo  Github Pages</div>
+            <div class="plain main-title"> Hexo  Github Pages</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>建置 Hexo 部落格已經兩年多，如今更換 Ｍ ac 之後建制的新環境 Node 版本已經不相容，peer packages 貼心的設計也種下了難以收拾的坑 （難解的 sass loader），舊的部落格所選用的 Minos 框架在少數的使用量與停止維護下造就了相容性衝突也是在所難免，如今只能硬著頭皮重新學習建置一包 Hexo 了。</p>
+<span id="more"></span>
+
+<p>踩過的坑我們懂得避免，這次選用最多人使用與維護的 Ｎ exT 模板作為新部落格的皮膚。</p>
+<h1 id="建立-N-exT-主題專案包"><a href="#建立-N-exT-主題專案包" class="headerlink" title="建立 Ｎ exT 主題專案包"></a>建立 Ｎ exT 主題專案包</h1><p>NexT 建置了貼心的官網提供完整的說明，<a href="https://theme-next.js.org/">點我</a>。<br>再建置好 Hexo 專案包後，執行以下命令取得 Ｎ exT theme。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo-site</span><br><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
+
+<h4 id="更換-config-yml-主題"><a href="#更換-config-yml-主題" class="headerlink" title="更換 __config.yml 主題"></a>更換 __config.yml 主題</h4><p>將 Hexo 專案根目錄下的 __config.yml 配置更改為：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ theme: next</span><br></pre></td></tr></table></figure>
+
+<h4 id="新增部落格文章"><a href="#新增部落格文章" class="headerlink" title="新增部落格文章"></a>新增部落格文章</h4><p>cd 至專案目錄後，透過以下指令建立文章：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post your-post-name</span><br></pre></td></tr></table></figure>
+
+<h1 id="如何搭配-Github-pages-部署網站"><a href="#如何搭配-Github-pages-部署網站" class="headerlink" title="如何搭配 Github pages 部署網站"></a>如何搭配 Github pages 部署網站</h1><p>先說我個人的案例，去年第一個部落格我的做法是去建立新的 Github 帳號，將專案直接部署在 <my-name>.github.io 的 repository 上，原因是個人帳號的 github.io 已經被舊專案所佔據了，這個做法不是很好，白白浪費了舊帳號的 pages 空間。於是乎在新部落格建置後決定好好利用舊帳號的 Github pages。<br>原先在 google 搜尋引擎上查不太到好的解法，所以就求救了 ChatGpt 老師～，沒想到各種問題都能一一擊破，真的是太厲害了！</p>
+<h4 id="建立新的-Git-repository"><a href="#建立新的-Git-repository" class="headerlink" title="建立新的 Git repository"></a>建立新的 Git repository</h4><p>去想要使用的 Account 建立一個新的倉庫，並且隨意命名，我使用 blog 這個名稱當作主網站的 router。</p>
+<h4 id="專案包中安裝自動部署工具"><a href="#專案包中安裝自動部署工具" class="headerlink" title="專案包中安裝自動部署工具"></a>專案包中安裝自動部署工具</h4><p>cd 至專案包路徑後，執行以下的命令安裝 Hexo 自動部署工具。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="連結-Github-repository-至部落格"><a href="#連結-Github-repository-至部落格" class="headerlink" title="連結 Github repository 至部落格"></a>連結 Github repository 至部落格</h4><p>cd 開啟專案中的 __config.yml 檔案改寫以下內容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/your-username/blog.git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  tkn: your-pat-tkn</span><br></pre></td></tr></table></figure>
+
+<p>直得注意的是分支 <code>gh-pages</code> 會為 github 部屬時自動辨別為子專案使用，待下一個步驟設定完成並建立後將子專案推至此分支。<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/deploy-hexo-by-github-pages-1.jpg" height="auto"></p>
+<h4 id="事前作業"><a href="#事前作業" class="headerlink" title="事前作業"></a>事前作業</h4><p>為了讓 url 可以指向正確的路徑，需要調整 <code>__config.yml</code> 中的幾個設定：</p>
+<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">    url: https://user-name.github.io/blog</span><br><span class="line">    root: /</span><br></pre></td></tr></table></figure>
+
+<h4 id="public-dir"><a href="#public-dir" class="headerlink" title="public dir"></a>public dir</h4><p>調整發布的資料夾名稱為 docs，在部署後會自動建立一個資料夾名稱為 docs。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line">    source_dir: <span class="built_in">source</span></span><br><span class="line">    public_dir: docs</span><br></pre></td></tr></table></figure>
+
+<p>執行命令建立該資料夾：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<h5 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h5><p>在部署後有發生錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ github-pages 228 | Error: No such file or directory @ dir_chdir - /github/workspace/docs</span><br></pre></td></tr></table></figure>
+
+<p>ChatGpt 的回覆：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">You can also update the url setting <span class="keyword">in</span> your Hexo project<span class="string">&#x27;s _config.yml file to match your new deployment environment. For example, if your site is deployed to https://your-username.github.io/blog, you can update your url setting like this:</span></span><br></pre></td></tr></table></figure>
+
+<p>原因是我忘了將上一個步驟中的 url 指向調整到 <code>/blog</code>，導致網站開啟後 css 與 javascript 直接掛掉找不到路徑。<br>將這一段調整後重新操作部署指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>就可以在子路由中看到 Hexo 部落格搭建好囉！完美的與舊專案並存在 github.io domain 下啦！</p>
+<h1 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h1><p><a href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始 用 github pages 上傳靜態網站</a><br><a href="https://chat.openai.com/chat/">ChatGpt</a></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+        <tag>github pages</tag>
+        <tag>next themec</tag>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP error handler 錯誤控制</title>
     <url>/blog/2024/06/20/error-handle-in-axios/</url>
     <content><![CDATA[<div class="visual-image">
@@ -152,73 +219,6 @@
       </tags>
   </entry>
   <entry>
-    <title>部署 Hexo 部落格至 Github Pages</title>
-    <url>/blog/2023/02/25/deploy-hexo-by-github-pages/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> Hexo  Github Pages</div>
-            <div class="stroke"> Hexo  Github Pages</div>
-            <div class="plain main-title"> Hexo  Github Pages</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>建置 Hexo 部落格已經兩年多，如今更換 Ｍ ac 之後建制的新環境 Node 版本已經不相容，peer packages 貼心的設計也種下了難以收拾的坑 （難解的 sass loader），舊的部落格所選用的 Minos 框架在少數的使用量與停止維護下造就了相容性衝突也是在所難免，如今只能硬著頭皮重新學習建置一包 Hexo 了。</p>
-<span id="more"></span>
-
-<p>踩過的坑我們懂得避免，這次選用最多人使用與維護的 Ｎ exT 模板作為新部落格的皮膚。</p>
-<h1 id="建立-N-exT-主題專案包"><a href="#建立-N-exT-主題專案包" class="headerlink" title="建立 Ｎ exT 主題專案包"></a>建立 Ｎ exT 主題專案包</h1><p>NexT 建置了貼心的官網提供完整的說明，<a href="https://theme-next.js.org/">點我</a>。<br>再建置好 Hexo 專案包後，執行以下命令取得 Ｎ exT theme。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo-site</span><br><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
-
-<h4 id="更換-config-yml-主題"><a href="#更換-config-yml-主題" class="headerlink" title="更換 __config.yml 主題"></a>更換 __config.yml 主題</h4><p>將 Hexo 專案根目錄下的 __config.yml 配置更改為：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ theme: next</span><br></pre></td></tr></table></figure>
-
-<h4 id="新增部落格文章"><a href="#新增部落格文章" class="headerlink" title="新增部落格文章"></a>新增部落格文章</h4><p>cd 至專案目錄後，透過以下指令建立文章：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post your-post-name</span><br></pre></td></tr></table></figure>
-
-<h1 id="如何搭配-Github-pages-部署網站"><a href="#如何搭配-Github-pages-部署網站" class="headerlink" title="如何搭配 Github pages 部署網站"></a>如何搭配 Github pages 部署網站</h1><p>先說我個人的案例，去年第一個部落格我的做法是去建立新的 Github 帳號，將專案直接部署在 <my-name>.github.io 的 repository 上，原因是個人帳號的 github.io 已經被舊專案所佔據了，這個做法不是很好，白白浪費了舊帳號的 pages 空間。於是乎在新部落格建置後決定好好利用舊帳號的 Github pages。<br>原先在 google 搜尋引擎上查不太到好的解法，所以就求救了 ChatGpt 老師～，沒想到各種問題都能一一擊破，真的是太厲害了！</p>
-<h4 id="建立新的-Git-repository"><a href="#建立新的-Git-repository" class="headerlink" title="建立新的 Git repository"></a>建立新的 Git repository</h4><p>去想要使用的 Account 建立一個新的倉庫，並且隨意命名，我使用 blog 這個名稱當作主網站的 router。</p>
-<h4 id="專案包中安裝自動部署工具"><a href="#專案包中安裝自動部署工具" class="headerlink" title="專案包中安裝自動部署工具"></a>專案包中安裝自動部署工具</h4><p>cd 至專案包路徑後，執行以下的命令安裝 Hexo 自動部署工具。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h4 id="連結-Github-repository-至部落格"><a href="#連結-Github-repository-至部落格" class="headerlink" title="連結 Github repository 至部落格"></a>連結 Github repository 至部落格</h4><p>cd 開啟專案中的 __config.yml 檔案改寫以下內容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/your-username/blog.git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  tkn: your-pat-tkn</span><br></pre></td></tr></table></figure>
-
-<p>直得注意的是分支 <code>gh-pages</code> 會為 github 部屬時自動辨別為子專案使用，待下一個步驟設定完成並建立後將子專案推至此分支。<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/deploy-hexo-by-github-pages-1.jpg" height="auto"></p>
-<h4 id="事前作業"><a href="#事前作業" class="headerlink" title="事前作業"></a>事前作業</h4><p>為了讓 url 可以指向正確的路徑，需要調整 <code>__config.yml</code> 中的幾個設定：</p>
-<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">    url: https://user-name.github.io/blog</span><br><span class="line">    root: /</span><br></pre></td></tr></table></figure>
-
-<h4 id="public-dir"><a href="#public-dir" class="headerlink" title="public dir"></a>public dir</h4><p>調整發布的資料夾名稱為 docs，在部署後會自動建立一個資料夾名稱為 docs。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line">    source_dir: <span class="built_in">source</span></span><br><span class="line">    public_dir: docs</span><br></pre></td></tr></table></figure>
-
-<p>執行命令建立該資料夾：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<h5 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h5><p>在部署後有發生錯誤訊息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ github-pages 228 | Error: No such file or directory @ dir_chdir - /github/workspace/docs</span><br></pre></td></tr></table></figure>
-
-<p>ChatGpt 的回覆：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">You can also update the url setting <span class="keyword">in</span> your Hexo project<span class="string">&#x27;s _config.yml file to match your new deployment environment. For example, if your site is deployed to https://your-username.github.io/blog, you can update your url setting like this:</span></span><br></pre></td></tr></table></figure>
-
-<p>原因是我忘了將上一個步驟中的 url 指向調整到 <code>/blog</code>，導致網站開啟後 css 與 javascript 直接掛掉找不到路徑。<br>將這一段調整後重新操作部署指令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>就可以在子路由中看到 Hexo 部落格搭建好囉！完美的與舊專案並存在 github.io domain 下啦！</p>
-<h1 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h1><p><a href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始 用 github pages 上傳靜態網站</a><br><a href="https://chat.openai.com/chat/">ChatGpt</a></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>blog</tag>
-        <tag>github pages</tag>
-        <tag>next themec</tag>
-        <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何與 server 進行 ssh 連線</title>
     <url>/blog/2023/03/05/establish-ssh-connection/</url>
     <content><![CDATA[<div class="visual-image">
@@ -300,35 +300,6 @@
         <tag>rsa</tag>
         <tag>publicKey</tag>
         <tag>privateKey</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ultralearnning 高速學習的技巧 II</title>
-    <url>/blog/2023/03/20/fast-learning/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Ultralearnning  II</div>
-            <div class="stroke">Ultralearnning  II</div>
-            <div class="plain main-title">Ultralearnning  II</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>經過 Youtube 的神奇演算法我閱覽了分別來自薑餅資與文森先生，關於高效學習的這本書提到的做法，雖然我沒有時間實際閱讀這本書，仍然在先輩的分享獲得許多啟發。</p>
-<span id="more"></span>
-
-<p>既然書本的重點中有一點與某北一女畢業生分享的雷同，就應該應用在這篇文章中才恰當囉！也就是 <strong>回想式學習</strong>。<br>我先將記得的部分做幾個提問式回想：</p>
-<h1 id="情境式學習"><a href="#情境式學習" class="headerlink" title="情境式學習"></a>情境式學習</h1><h2 id="為什麼學校的學習總是與社會脫節？"><a href="#為什麼學校的學習總是與社會脫節？" class="headerlink" title="為什麼學校的學習總是與社會脫節？"></a>為什麼學校的學習總是與社會脫節？</h2><p>因為學校教學內容分散且流於表面，很難將一個技能實際運用在真正的技能場景上，導致學生在學習過程的環境與學習內容，甚至到工具都與情境脫節，導致學習的成果不如市場預期。</p>
-<h1 id="後設學習-（meta-learning）"><a href="#後設學習-（meta-learning）" class="headerlink" title="後設學習 （meta learning）"></a>後設學習 （meta learning）</h1><h2 id="為何當資源充足時學習成果卻不如預期？"><a href="#為何當資源充足時學習成果卻不如預期？" class="headerlink" title="為何當資源充足時學習成果卻不如預期？"></a>為何當資源充足時學習成果卻不如預期？</h2><p>當資源廣泛而且容易取得時暴露的缺點就是，學習沒有預設的目標與焦點集中，導致學習非常分散沒有效率，就我個人從事軟體工程師相關工作的經驗是，在學習任何主題之前必須設立學習地圖（roadmap），甚至上求職網查詢想要獲得的職位頭銜需要具備的技能，讓自己的進修範圍可以更精確，節省許多在學習上迷路的時間。</p>
-<h1 id="回想式學習"><a href="#回想式學習" class="headerlink" title="回想式學習"></a>回想式學習</h1><h2 id="為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？"><a href="#為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？" class="headerlink" title="為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？"></a>為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？</h2><p>經過實驗可以發現回想式學習會讓腦袋自動將認爲重要的資訊加強記憶，讓這些碎片盡可能儲存在長期記憶中，也因為主動式的歸納資訊的重要性讓自己更能快速找到不夠熟悉、缺失的學習重點，就像請隔壁同學抽考一樣，提前找到自己在重複閱讀時被動學習而不夠理解的地方。</p>
-<p>其他的忘了，回想式學習找到不夠理解的地方ＸＤ</p>
-]]></content>
-      <categories>
-        <category>Book learning</category>
-      </categories>
-      <tags>
-        <tag>Ultralearnning</tag>
       </tags>
   </entry>
   <entry>
@@ -452,69 +423,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Git Rebase X Vim editor X Hexo 入門</title>
-    <url>/blog/2025/03/18/git-rebase-n-vim/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Git Rebase X Vim editor X Hexo </div>
-            <div class="stroke">Git Rebase X Vim editor X Hexo </div>
-            <div class="plain main-title">Git Rebase X Vim editor X Hexo </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>本篇介紹一下操作 Git rebase 以及 Vim editor 的混合技，適用情境為某次的 commit 想棄用但已經在本次的 commit 之前。</p>
-<span id="more"></span>
-
-<img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='https://needone.app/content/images/size/w2000/2022/09/git-rebase-vs-git-merge.png' width='min(100%, 600px)' height='auto'>
-
-<h1 id="Git-Rebase-前情提要"><a href="#Git-Rebase-前情提要" class="headerlink" title="Git Rebase 前情提要"></a>Git Rebase 前情提要</h1><p>由於本次在 push commit 至遠端時 sourcetree 罕見地跳出 Error：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Pushing to github.com:mawchu/blog-generater.git</span><br><span class="line">remote: error: GH013: Repository rule violations found for refs/heads/gh-pages.</span><br><span class="line">remote: - GITHUB PUSH PROTECTION</span><br><span class="line">remote:   —————————————————————————————————————————</span><br><span class="line">remote:     Resolve the following violations before pushing again</span><br><span class="line">remote:     - Push cannot contain secrets</span><br><span class="line">remote:      (?) Learn how to resolve a blocked push</span><br><span class="line">remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push</span><br><span class="line">remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.</span><br><span class="line">remote:      Visit the repository settings page, https://github.com/mawchu/blog-generater/settings/security_analysis</span><br><span class="line">remote:       —— GitHub Personal Access Token ——————————————————————</span><br><span class="line">remote:        locations:</span><br><span class="line">remote:          - commit: bf1d61b769dafbd3359b845a6d6c8aa6c8fa826b</span><br><span class="line">remote:            path: _config.yml:132</span><br><span class="line">remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.</span><br><span class="line">remote:        https://github.com/mawchu/blog-generater/security/secret-scanning/unblock-secret/2uT9c8ujVk3xUd33a6aAjbXI5Xp</span><br><span class="line">To github.com:mawchu/blog-generater.git</span><br><span class="line"> ! [remote rejected] gh-pages -&gt; gh-pages (push declined due to repository rule violations)</span><br><span class="line">error: failed to push some refs to &#x27;github.com:mawchu/blog-generater.git&#x27;</span><br><span class="line">Completed with errors, see above</span><br></pre></td></tr></table></figure>
-
-<p>大致上的意思就是推送的 commit 中包含了敏感的金鑰資料(Secret)，為了防範有心人士的操作 Github 建立的推送的檢查機制。一直以來都是將推送專案的 Github Access Token 放在 _config.yml 來完成部署，透過這次的警示訊息來矯正一下健康的開發習慣吧！</p>
-<h1 id="修改專案推送-Script"><a href="#修改專案推送-Script" class="headerlink" title="修改專案推送 Script"></a>修改專案推送 Script</h1><p>既然要避開敏感資料就務必要借助 <code>.env</code> 與 <code>dotenv</code> 老朋友來落實環境參數囉！</p>
-<ol>
-<li><p>首先在專案內安裝 <code>dotenv</code> 來讀取環境檔內的參數：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>撰寫 <code>loadEnv.js</code> 來客製化回填 Token 至 <code>_config.yml</code> 的行為：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">require(&#x27;dotenv&#x27;).config();</span><br><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const yaml = require(&#x27;js-yaml&#x27;);</span><br><span class="line"></span><br><span class="line">const configPath = &#x27;./_config.yml&#x27;;</span><br><span class="line">const config = yaml.load(fs.readFileSync(configPath, &#x27;utf8&#x27;));</span><br><span class="line"></span><br><span class="line">if (process.env.GIT_DEPLOY_KEY) &#123;</span><br><span class="line">config.deploy.repo = config.deploy.repo.replace(&#x27;$&#123;GIT_DEPLOY_KEY&#125;&#x27;, process.env.GIT_DEPLOY_KEY);</span><br><span class="line">fs.writeFileSync(configPath, yaml.dump(config));</span><br><span class="line">console.log(&#x27;🔑 Injected environment variables into _config.yml&#x27;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Deploy Hexo</span><br><span class="line">const &#123; execSync &#125; = require(&#x27;child_process&#x27;);</span><br><span class="line">try &#123;</span><br><span class="line">execSync(&#x27;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;);</span><br><span class="line">console.log(&#x27;🚀 Hexo deployed successfully&#x27;);</span><br><span class="line">&#125; catch (error) &#123;</span><br><span class="line">console.error(&#x27;❌ Deployment failed&#x27;, error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">config.deploy.repo = config.deploy.repo.replace(process.env.GIT_DEPLOY_KEY, &#x27;$&#123;GIT_DEPLOY_KEY&#125;&#x27;);</span><br><span class="line">fs.writeFileSync(configPath, yaml.dump(config));</span><br><span class="line">console.log(&#x27;🔄 Restored placeholder in _config.yml&#x27;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>將 ${GIT_DEPLOY_KEY} 填寫在 <code>.env</code> 檔案並加入 <code>gitignore</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIT_DEPLOY_KEY=ghp_YOUR_ACCESS_TOKEN</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>撰寫 <code>package.json</code> 的操作指令：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;launch&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node loadEnv.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="Git-Rebase-X-Vim-編輯器操作"><a href="#Git-Rebase-X-Vim-編輯器操作" class="headerlink" title="Git Rebase X Vim 編輯器操作"></a>Git Rebase X Vim 編輯器操作</h1><p>由於 前一個 commit 上不小心已經包含了 Token 機敏資料無法一起推送上 origin，我選擇使用最簡單的 Git Rebase 方式 drop 掉包含機敏資料的 commit：</p>
-<h2 id="Git-Rebase-script"><a href="#Git-Rebase-script" class="headerlink" title="Git Rebase script"></a>Git Rebase script</h2><p>確認本次要拋棄的 commit hex 代號並執行往前幾個：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure>
-
-<h2 id="Vim-editor-編輯模式"><a href="#Vim-editor-編輯模式" class="headerlink" title="Vim editor 編輯模式"></a>Vim editor 編輯模式</h2><p>執行後會進入 Vim editor 的檔案中顯示要執行 Git Rebase 的操作 commit：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick bf1d61b add new posts</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure>
-
-<p>第一個 commit 是這次預計拋棄的對象，執行步驟如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick bf1d61b add new posts</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>按 <kbd>i</kbd> 進入 Vim 的 –INSERT– 模式編輯</li>
-<li>將第一個 commit 指令修改為 “drop”，會在之後解決衝突時變成 “Current Change” 記得選擇 “Incoming Change” 後推送。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">drop bf1d61b add new posts // &lt;---- change rebate script here</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure></li>
-<li>編輯完畢後按 <kbd>esc</kbd> 鍵恢復普通模式，並輸入 <code>:wq</code> 儲存編輯並跳出。若不想儲存更改內容的話則輸入 <code>:q!</code> 強行跳出。</li>
-</ol>
-<h1 id="補充幾個-Vim-editor-編輯模式的快捷鍵"><a href="#補充幾個-Vim-editor-編輯模式的快捷鍵" class="headerlink" title="補充幾個 Vim editor 編輯模式的快捷鍵"></a>補充幾個 Vim editor 編輯模式的快捷鍵</h1><p><kbd>h</kbd> Move left<br><kbd>j</kbd> Move down<br><kbd>k</kbd> Move up<br><kbd>l</kbd> Move right</p>
-<p>以上步驟執行完就可以看到 commit tree 的改變並推送成功！</p>
-]]></content>
-      <categories>
-        <category>Git</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Git</tag>
-        <tag>Git Rebase</tag>
-        <tag>Vim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Google Tag Manager - 你的 datalayer 設定小幫手</title>
     <url>/blog/2024/08/28/google-tag-manager-and-datalayer/</url>
     <content><![CDATA[<div class="visual-image">
@@ -591,6 +499,69 @@
       <tags>
         <tag>Hash</tag>
         <tag>Encryption</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git Rebase X Vim editor X Hexo 入門</title>
+    <url>/blog/2025/03/18/git-rebase-n-vim/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Git Rebase X Vim editor X Hexo </div>
+            <div class="stroke">Git Rebase X Vim editor X Hexo </div>
+            <div class="plain main-title">Git Rebase X Vim editor X Hexo </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇介紹一下操作 Git rebase 以及 Vim editor 的混合技，適用情境為某次的 commit 想棄用但已經在本次的 commit 之前。</p>
+<span id="more"></span>
+
+<img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='https://needone.app/content/images/size/w2000/2022/09/git-rebase-vs-git-merge.png' width='min(100%, 600px)' height='auto'>
+
+<h1 id="Git-Rebase-前情提要"><a href="#Git-Rebase-前情提要" class="headerlink" title="Git Rebase 前情提要"></a>Git Rebase 前情提要</h1><p>由於本次在 push commit 至遠端時 sourcetree 罕見地跳出 Error：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Pushing to github.com:mawchu/blog-generater.git</span><br><span class="line">remote: error: GH013: Repository rule violations found for refs/heads/gh-pages.</span><br><span class="line">remote: - GITHUB PUSH PROTECTION</span><br><span class="line">remote:   —————————————————————————————————————————</span><br><span class="line">remote:     Resolve the following violations before pushing again</span><br><span class="line">remote:     - Push cannot contain secrets</span><br><span class="line">remote:      (?) Learn how to resolve a blocked push</span><br><span class="line">remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push</span><br><span class="line">remote:      (?) This repository does not have Secret Scanning enabled, but is eligible. Enable Secret Scanning to view and manage detected secrets.</span><br><span class="line">remote:      Visit the repository settings page, https://github.com/mawchu/blog-generater/settings/security_analysis</span><br><span class="line">remote:       —— GitHub Personal Access Token ——————————————————————</span><br><span class="line">remote:        locations:</span><br><span class="line">remote:          - commit: bf1d61b769dafbd3359b845a6d6c8aa6c8fa826b</span><br><span class="line">remote:            path: _config.yml:132</span><br><span class="line">remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.</span><br><span class="line">remote:        https://github.com/mawchu/blog-generater/security/secret-scanning/unblock-secret/2uT9c8ujVk3xUd33a6aAjbXI5Xp</span><br><span class="line">To github.com:mawchu/blog-generater.git</span><br><span class="line"> ! [remote rejected] gh-pages -&gt; gh-pages (push declined due to repository rule violations)</span><br><span class="line">error: failed to push some refs to &#x27;github.com:mawchu/blog-generater.git&#x27;</span><br><span class="line">Completed with errors, see above</span><br></pre></td></tr></table></figure>
+
+<p>大致上的意思就是推送的 commit 中包含了敏感的金鑰資料(Secret)，為了防範有心人士的操作 Github 建立的推送的檢查機制。一直以來都是將推送專案的 Github Access Token 放在 _config.yml 來完成部署，透過這次的警示訊息來矯正一下健康的開發習慣吧！</p>
+<h1 id="修改專案推送-Script"><a href="#修改專案推送-Script" class="headerlink" title="修改專案推送 Script"></a>修改專案推送 Script</h1><p>既然要避開敏感資料就務必要借助 <code>.env</code> 與 <code>dotenv</code> 老朋友來落實環境參數囉！</p>
+<ol>
+<li><p>首先在專案內安裝 <code>dotenv</code> 來讀取環境檔內的參數：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install dotenv --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>撰寫 <code>loadEnv.js</code> 來客製化回填 Token 至 <code>_config.yml</code> 的行為：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">require(&#x27;dotenv&#x27;).config();</span><br><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const yaml = require(&#x27;js-yaml&#x27;);</span><br><span class="line"></span><br><span class="line">const configPath = &#x27;./_config.yml&#x27;;</span><br><span class="line">const config = yaml.load(fs.readFileSync(configPath, &#x27;utf8&#x27;));</span><br><span class="line"></span><br><span class="line">if (process.env.GIT_DEPLOY_KEY) &#123;</span><br><span class="line">config.deploy.repo = config.deploy.repo.replace(&#x27;$&#123;GIT_DEPLOY_KEY&#125;&#x27;, process.env.GIT_DEPLOY_KEY);</span><br><span class="line">fs.writeFileSync(configPath, yaml.dump(config));</span><br><span class="line">console.log(&#x27;🔑 Injected environment variables into _config.yml&#x27;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Deploy Hexo</span><br><span class="line">const &#123; execSync &#125; = require(&#x27;child_process&#x27;);</span><br><span class="line">try &#123;</span><br><span class="line">execSync(&#x27;hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy&#x27;, &#123; stdio: &#x27;inherit&#x27; &#125;);</span><br><span class="line">console.log(&#x27;🚀 Hexo deployed successfully&#x27;);</span><br><span class="line">&#125; catch (error) &#123;</span><br><span class="line">console.error(&#x27;❌ Deployment failed&#x27;, error);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">config.deploy.repo = config.deploy.repo.replace(process.env.GIT_DEPLOY_KEY, &#x27;$&#123;GIT_DEPLOY_KEY&#125;&#x27;);</span><br><span class="line">fs.writeFileSync(configPath, yaml.dump(config));</span><br><span class="line">console.log(&#x27;🔄 Restored placeholder in _config.yml&#x27;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>將 ${GIT_DEPLOY_KEY} 填寫在 <code>.env</code> 檔案並加入 <code>gitignore</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIT_DEPLOY_KEY=ghp_YOUR_ACCESS_TOKEN</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>撰寫 <code>package.json</code> 的操作指令：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;launch&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node loadEnv.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="Git-Rebase-X-Vim-編輯器操作"><a href="#Git-Rebase-X-Vim-編輯器操作" class="headerlink" title="Git Rebase X Vim 編輯器操作"></a>Git Rebase X Vim 編輯器操作</h1><p>由於 前一個 commit 上不小心已經包含了 Token 機敏資料無法一起推送上 origin，我選擇使用最簡單的 Git Rebase 方式 drop 掉包含機敏資料的 commit：</p>
+<h2 id="Git-Rebase-script"><a href="#Git-Rebase-script" class="headerlink" title="Git Rebase script"></a>Git Rebase script</h2><p>確認本次要拋棄的 commit hex 代號並執行往前幾個：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~2</span><br></pre></td></tr></table></figure>
+
+<h2 id="Vim-editor-編輯模式"><a href="#Vim-editor-編輯模式" class="headerlink" title="Vim editor 編輯模式"></a>Vim editor 編輯模式</h2><p>執行後會進入 Vim editor 的檔案中顯示要執行 Git Rebase 的操作 commit：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick bf1d61b add new posts</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure>
+
+<p>第一個 commit 是這次預計拋棄的對象，執行步驟如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick bf1d61b add new posts</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>按 <kbd>i</kbd> 進入 Vim 的 –INSERT– 模式編輯</li>
+<li>將第一個 commit 指令修改為 “drop”，會在之後解決衝突時變成 “Current Change” 記得選擇 “Incoming Change” 後推送。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">drop bf1d61b add new posts // &lt;---- change rebate script here</span><br><span class="line">pick fec4281 add new posts &amp; add env &amp; script</span><br></pre></td></tr></table></figure></li>
+<li>編輯完畢後按 <kbd>esc</kbd> 鍵恢復普通模式，並輸入 <code>:wq</code> 儲存編輯並跳出。若不想儲存更改內容的話則輸入 <code>:q!</code> 強行跳出。</li>
+</ol>
+<h1 id="補充幾個-Vim-editor-編輯模式的快捷鍵"><a href="#補充幾個-Vim-editor-編輯模式的快捷鍵" class="headerlink" title="補充幾個 Vim editor 編輯模式的快捷鍵"></a>補充幾個 Vim editor 編輯模式的快捷鍵</h1><p><kbd>h</kbd> Move left<br><kbd>j</kbd> Move down<br><kbd>k</kbd> Move up<br><kbd>l</kbd> Move right</p>
+<p>以上步驟執行完就可以看到 commit tree 的改變並推送成功！</p>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Git</tag>
+        <tag>Git Rebase</tag>
+        <tag>Vim</tag>
       </tags>
   </entry>
   <entry>
@@ -768,35 +739,32 @@
       </tags>
   </entry>
   <entry>
-    <title>iframe 嵌入 PDF Reader</title>
-    <url>/blog/2024/05/07/iframe-pdf-reader/</url>
+    <title>Ultralearnning 高速學習的技巧 II</title>
+    <url>/blog/2023/03/20/fast-learning/</url>
     <content><![CDATA[<div class="visual-image">
         <div class="visual-image-box">
             <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">iframe  PDF Reader</div>
-            <div class="stroke">iframe  PDF Reader</div>
-            <div class="plain main-title">iframe  PDF Reader</div>
+            <div class="stroke">Ultralearnning  II</div>
+            <div class="stroke">Ultralearnning  II</div>
+            <div class="plain main-title">Ultralearnning  II</div>
             <div class="plain">．．．</div>
         </div>
     </div>
 
-<p>這篇記錄一下合約更新後提供 PDF 閱讀器提醒使用者合約條款更新的優雅作法，以為很難其實超簡單！</p>
+<p>經過 Youtube 的神奇演算法我閱覽了分別來自薑餅資與文森先生，關於高效學習的這本書提到的做法，雖然我沒有時間實際閱讀這本書，仍然在先輩的分享獲得許多啟發。</p>
 <span id="more"></span>
 
-<h1 id="準備一個-iframe"><a href="#準備一個-iframe" class="headerlink" title="準備一個 iframe"></a>準備一個 iframe</h1><p>常見場景是使用一個彈出視窗提醒使用者閱畢後同意條款，簡單的展示一下結構。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">url</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="將-PDF-url-傳入-iframe"><a href="#將-PDF-url-傳入-iframe" class="headerlink" title="將 PDF url 傳入 iframe"></a>將 PDF url 傳入 iframe</h1><p>PDF 上傳到 server 獲得網址後塞進 iframe。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">title</span>=<span class="string">&quot;contract update&quot;</span> <span class="attr">url</span>=<span class="string">&#123;pdfURL&#125;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>呈現的畫面會如下，超簡單吧！<br><img src="/blog/images/iframe-pdf-reader-0.jpg" alt="mawchu blog - iframe pdf reader"></p>
+<p>既然書本的重點中有一點與某北一女畢業生分享的雷同，就應該應用在這篇文章中才恰當囉！也就是 <strong>回想式學習</strong>。<br>我先將記得的部分做幾個提問式回想：</p>
+<h1 id="情境式學習"><a href="#情境式學習" class="headerlink" title="情境式學習"></a>情境式學習</h1><h2 id="為什麼學校的學習總是與社會脫節？"><a href="#為什麼學校的學習總是與社會脫節？" class="headerlink" title="為什麼學校的學習總是與社會脫節？"></a>為什麼學校的學習總是與社會脫節？</h2><p>因為學校教學內容分散且流於表面，很難將一個技能實際運用在真正的技能場景上，導致學生在學習過程的環境與學習內容，甚至到工具都與情境脫節，導致學習的成果不如市場預期。</p>
+<h1 id="後設學習-（meta-learning）"><a href="#後設學習-（meta-learning）" class="headerlink" title="後設學習 （meta learning）"></a>後設學習 （meta learning）</h1><h2 id="為何當資源充足時學習成果卻不如預期？"><a href="#為何當資源充足時學習成果卻不如預期？" class="headerlink" title="為何當資源充足時學習成果卻不如預期？"></a>為何當資源充足時學習成果卻不如預期？</h2><p>當資源廣泛而且容易取得時暴露的缺點就是，學習沒有預設的目標與焦點集中，導致學習非常分散沒有效率，就我個人從事軟體工程師相關工作的經驗是，在學習任何主題之前必須設立學習地圖（roadmap），甚至上求職網查詢想要獲得的職位頭銜需要具備的技能，讓自己的進修範圍可以更精確，節省許多在學習上迷路的時間。</p>
+<h1 id="回想式學習"><a href="#回想式學習" class="headerlink" title="回想式學習"></a>回想式學習</h1><h2 id="為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？"><a href="#為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？" class="headerlink" title="為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？"></a>為什麼心理學家將實驗人員分組學習方式，分配到回想式學習的組別成果最好？</h2><p>經過實驗可以發現回想式學習會讓腦袋自動將認爲重要的資訊加強記憶，讓這些碎片盡可能儲存在長期記憶中，也因為主動式的歸納資訊的重要性讓自己更能快速找到不夠熟悉、缺失的學習重點，就像請隔壁同學抽考一樣，提前找到自己在重複閱讀時被動學習而不夠理解的地方。</p>
+<p>其他的忘了，回想式學習找到不夠理解的地方ＸＤ</p>
 ]]></content>
       <categories>
-        <category>Javascript</category>
+        <category>Book learning</category>
       </categories>
       <tags>
-        <tag>iframe</tag>
-        <tag>pdf</tag>
+        <tag>Ultralearnning</tag>
       </tags>
   </entry>
   <entry>
@@ -873,6 +841,38 @@
       </tags>
   </entry>
   <entry>
+    <title>iframe 嵌入 PDF Reader</title>
+    <url>/blog/2024/05/07/iframe-pdf-reader/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">iframe  PDF Reader</div>
+            <div class="stroke">iframe  PDF Reader</div>
+            <div class="plain main-title">iframe  PDF Reader</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>這篇記錄一下合約更新後提供 PDF 閱讀器提醒使用者合約條款更新的優雅作法，以為很難其實超簡單！</p>
+<span id="more"></span>
+
+<h1 id="準備一個-iframe"><a href="#準備一個-iframe" class="headerlink" title="準備一個 iframe"></a>準備一個 iframe</h1><p>常見場景是使用一個彈出視窗提醒使用者閱畢後同意條款，簡單的展示一下結構。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">url</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="將-PDF-url-傳入-iframe"><a href="#將-PDF-url-傳入-iframe" class="headerlink" title="將 PDF url 傳入 iframe"></a>將 PDF url 傳入 iframe</h1><p>PDF 上傳到 server 獲得網址後塞進 iframe。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">title</span>=<span class="string">&quot;contract update&quot;</span> <span class="attr">url</span>=<span class="string">&#123;pdfURL&#125;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>呈現的畫面會如下，超簡單吧！<br><img src="/blog/images/iframe-pdf-reader-0.jpg" alt="mawchu blog - iframe pdf reader"></p>
+]]></content>
+      <categories>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>iframe</tag>
+        <tag>pdf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ultralearnning 高速學習的技巧</title>
     <url>/blog/2023/02/17/learning-fast/</url>
     <content><![CDATA[<div class="visual-image">
@@ -916,6 +916,60 @@
       </categories>
       <tags>
         <tag>Ultralearnning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>優化演算法練習 Leecode Test X Contains Duplicate</title>
+    <url>/blog/2025/03/20/leecode-test-contains-duplicate/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leecode Test X Contains Duplicate</div>
+            <div class="stroke"> Leecode Test X Contains Duplicate</div>
+            <div class="plain main-title"> Leecode Test X Contains Duplicate</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>又來到歡樂的(自虐的) Leetcode 時間，本篇深入探討考題 217 <code>Contains Duplicate</code> ：</p>
+<span id="more"></span>
+
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><ol start="217">
+<li>Contains Duplicate (Easy)<br>Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.</li>
+</ol>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>Example 1:<br>    Input: nums &#x3D; [1,2,3,1]<br>    Output: true<br>    Explanation:<br>    The element 1 occurs at the indices 0 and 3.</p>
+<p>Example 2:<br>    Input: nums &#x3D; [1,2,3,4]<br>    Output: false<br>    Explanation:<br>    All elements are distinct.</p>
+<p>Example 3:<br>    Input: nums &#x3D; [1,1,1,3,3,4,3,2,4,2]<br>    Output: true</p>
+<h1 id="解題思維"><a href="#解題思維" class="headerlink" title="解題思維"></a>解題思維</h1><h2 id="善用-Set-去除重複"><a href="#善用-Set-去除重複" class="headerlink" title="善用 Set 去除重複"></a>善用 Set 去除重複</h2><ol>
+<li><p>每每看到 <code>Duplicate</code> 關鍵字很直覺反應想到 hash 方法 <code>Set()</code>，可以很快速地挑檢出獨一無二的數字並取得其長度，一但取得的長度大於傳入的 nums 就可以確定其中存在重複性數字了！</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; <span class="keyword">new</span> <span class="title class_">Set</span>(nums).<span class="property">size</span> &gt; nums.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; [...<span class="keyword">new</span> <span class="title class_">Set</span>(nums)].<span class="property">length</span> &gt; nums.<span class="property">length</span>;</span><br></pre></td></tr></table></figure>
+<p> 以上兩種方法都可以確定數字陣列 nums 中存在重複數字，其中小小差異在於 <code>.size</code> 可以直接取得 Set 集資料表有多少數字，而轉化成陣列後須改以 <code>.length</code> 取得，方法一簡潔而方法二易懂。</p>
+</li>
+<li><p>建立 Map 映射直接返回找到的、排除不存在的數字：</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> numSet = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">    <span class="keyword">for</span> (num <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="keyword">if</span> (numMap.<span class="title function_">has</span>(num)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> numMap.<span class="title function_">add</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 先於映射表中確認數字符合重複條件就跳出、沒有就 <code>add</code> 在映射表中，效率上比方法一更好的地方在於不需將所有數字都操作一遍 <code>add</code> (new Set(nums))可以找到重複數字，除非第一個重複數字在最後一個位置。</p>
+</li>
+</ol>
+<h1 id="題後惡補"><a href="#題後惡補" class="headerlink" title="題後惡補"></a>題後惡補</h1><p>來記錄幾個 leetcode 解題的秘訣：</p>
+<h2 id="Hash-哈希-雜湊"><a href="#Hash-哈希-雜湊" class="headerlink" title="Hash 哈希(雜湊)"></a>Hash 哈希(雜湊)</h2><p>哈希表基於哈希函數將鍵映射到一個固定大小的數組索引中，從而實現了快速的查找、插入和刪除操作。這些操作的平均時間複雜度通常是 O(1)，這使得 Map 和 Set 成為處理大量資料時非常高效的資料結構。</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>Map 是一個鍵值對（key-value）資料結構，它通常基於哈希表來實現。每個鍵值對的鍵（key）會經過哈希函數轉換成一個哈希碼，然後根據該哈希碼將數據儲存在哈希表中。</p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是一個<em>不允許重複元素</em>的集合資料結構。在 Set 中，每個元素都作為一個「鍵」，而哈希表中則存儲這些鍵（不需要對應的值）。Set 可以利用哈希表的特性來快速檢查元素是否存在，以及高效地執行插入和刪除操作。</p>
+<h2 id="Set-和-Map-v-s-Hashtable-的運算優勢"><a href="#Set-和-Map-v-s-Hashtable-的運算優勢" class="headerlink" title="Set 和 Map v.s. Hashtable 的運算優勢"></a>Set 和 Map v.s. Hashtable 的運算優勢</h2><h3 id="哈希碰撞處理"><a href="#哈希碰撞處理" class="headerlink" title="哈希碰撞處理"></a>哈希碰撞處理</h3><p>Set 和 Map 使用更加現代和有效的哈希碰撞處理機制，這意味著它們能夠更好地管理可能的哈希碰撞情況。傳統的 Hashtable 可能在碰撞發生時造成性能下降，特別是當哈希函數的設計不夠良好時。<br>在現代的 JavaScript 實現中，Set 和 Map 通常會使用更優化的哈希函數來確保鍵分佈均勻，這有助於減少碰撞並提高性能。</p>
+<h3 id="安全性機制"><a href="#安全性機制" class="headerlink" title="安全性機制"></a>安全性機制</h3><p>Map 和 Set 允許鍵是 任意類型，包括對象、函數，甚至是 NaN、undefined 等。這意味著你可以將任何資料類型作為鍵來存儲數據，而不像傳統的 Hashtable，在某些語言中只能使用字串或數字作為鍵。</p>
+<h3 id="按元素插入的順序來迭代元素"><a href="#按元素插入的順序來迭代元素" class="headerlink" title="按元素插入的順序來迭代元素"></a>按元素插入的順序來迭代元素</h3><p>Set 和 Map 提供了 穩定的插入順序，即它們會按元素插入的順序來迭代元素。這和傳統的 Hashtable 不同，因為 Hashtable 中的鍵的順序是無序的。</p>
+<h3 id="防止鍵的重複"><a href="#防止鍵的重複" class="headerlink" title="防止鍵的重複"></a>防止鍵的重複</h3><p>在某些語言的 Hashtable 實現中，若鍵的命名不當（例如，與內建屬性名稱相同），可能會導致鍵被意外覆蓋或隱藏。<br>Set 和 Map 避免了這些問題，因為它們有明確的鍵範圍和更高的安全性保障。它們的鍵不會被隨意覆蓋，而且能夠避免由於錯誤的鍵類型而引起的潛在錯誤。</p>
+<h2 id="解題後感想"><a href="#解題後感想" class="headerlink" title="解題後感想"></a>解題後感想</h2><p>有發現 leetcode 幾個題目都在圍繞 <code>Set</code> <code>Map</code> 方法與概念的熟練度與靈活運用，映射的做法大大提高了運算效能值得多練練。</p>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+        <category>Leetcode</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>Algorithm</tag>
+        <tag>Hashtable</tag>
+        <tag>Map</tag>
+        <tag>Set</tag>
+        <tag>Leetcode</tag>
       </tags>
   </entry>
   <entry>
@@ -1004,63 +1058,9 @@
       <tags>
         <tag>Javascript</tag>
         <tag>Algorithm</tag>
+        <tag>Map</tag>
+        <tag>Leetcode</tag>
         <tag>HashMap</tag>
-        <tag>Map</tag>
-        <tag>Leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>優化演算法練習 Leecode Test X Contains Duplicate</title>
-    <url>/blog/2025/03/20/leecode-test-contains-duplicate/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> Leecode Test X Contains Duplicate</div>
-            <div class="stroke"> Leecode Test X Contains Duplicate</div>
-            <div class="plain main-title"> Leecode Test X Contains Duplicate</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>又來到歡樂的(自虐的) Leetcode 時間，本篇深入探討考題 217 <code>Contains Duplicate</code> ：</p>
-<span id="more"></span>
-
-<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><ol start="217">
-<li>Contains Duplicate (Easy)<br>Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.</li>
-</ol>
-<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>Example 1:<br>    Input: nums &#x3D; [1,2,3,1]<br>    Output: true<br>    Explanation:<br>    The element 1 occurs at the indices 0 and 3.</p>
-<p>Example 2:<br>    Input: nums &#x3D; [1,2,3,4]<br>    Output: false<br>    Explanation:<br>    All elements are distinct.</p>
-<p>Example 3:<br>    Input: nums &#x3D; [1,1,1,3,3,4,3,2,4,2]<br>    Output: true</p>
-<h1 id="解題思維"><a href="#解題思維" class="headerlink" title="解題思維"></a>解題思維</h1><h2 id="善用-Set-去除重複"><a href="#善用-Set-去除重複" class="headerlink" title="善用 Set 去除重複"></a>善用 Set 去除重複</h2><ol>
-<li><p>每每看到 <code>Duplicate</code> 關鍵字很直覺反應想到 hash 方法 <code>Set()</code>，可以很快速地挑檢出獨一無二的數字並取得其長度，一但取得的長度大於傳入的 nums 就可以確定其中存在重複性數字了！</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; <span class="keyword">new</span> <span class="title class_">Set</span>(nums).<span class="property">size</span> &gt; nums.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; [...<span class="keyword">new</span> <span class="title class_">Set</span>(nums)].<span class="property">length</span> &gt; nums.<span class="property">length</span>;</span><br></pre></td></tr></table></figure>
-<p> 以上兩種方法都可以確定數字陣列 nums 中存在重複數字，其中小小差異在於 <code>.size</code> 可以直接取得 Set 集資料表有多少數字，而轉化成陣列後須改以 <code>.length</code> 取得，方法一簡潔而方法二易懂。</p>
-</li>
-<li><p>建立 Map 映射直接返回找到的、排除不存在的數字：</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> numSet = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">    <span class="keyword">for</span> (num <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="keyword">if</span> (numMap.<span class="title function_">has</span>(num)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> numMap.<span class="title function_">add</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 先於映射表中確認數字符合重複條件就跳出、沒有就 <code>add</code> 在映射表中，效率上比方法一更好的地方在於不需將所有數字都操作一遍 <code>add</code> (new Set(nums))可以找到重複數字，除非第一個重複數字在最後一個位置。</p>
-</li>
-</ol>
-<h1 id="題後惡補"><a href="#題後惡補" class="headerlink" title="題後惡補"></a>題後惡補</h1><p>來記錄幾個 leetcode 解題的秘訣：</p>
-<h2 id="Hash-哈希-雜湊"><a href="#Hash-哈希-雜湊" class="headerlink" title="Hash 哈希(雜湊)"></a>Hash 哈希(雜湊)</h2><p>哈希表基於哈希函數將鍵映射到一個固定大小的數組索引中，從而實現了快速的查找、插入和刪除操作。這些操作的平均時間複雜度通常是 O(1)，這使得 Map 和 Set 成為處理大量資料時非常高效的資料結構。</p>
-<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>Map 是一個鍵值對（key-value）資料結構，它通常基於哈希表來實現。每個鍵值對的鍵（key）會經過哈希函數轉換成一個哈希碼，然後根據該哈希碼將數據儲存在哈希表中。</p>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是一個<em>不允許重複元素</em>的集合資料結構。在 Set 中，每個元素都作為一個「鍵」，而哈希表中則存儲這些鍵（不需要對應的值）。Set 可以利用哈希表的特性來快速檢查元素是否存在，以及高效地執行插入和刪除操作。</p>
-<h2 id="Set-和-Map-v-s-Hashtable-的運算優勢"><a href="#Set-和-Map-v-s-Hashtable-的運算優勢" class="headerlink" title="Set 和 Map v.s. Hashtable 的運算優勢"></a>Set 和 Map v.s. Hashtable 的運算優勢</h2><h3 id="哈希碰撞處理"><a href="#哈希碰撞處理" class="headerlink" title="哈希碰撞處理"></a>哈希碰撞處理</h3><p>Set 和 Map 使用更加現代和有效的哈希碰撞處理機制，這意味著它們能夠更好地管理可能的哈希碰撞情況。傳統的 Hashtable 可能在碰撞發生時造成性能下降，特別是當哈希函數的設計不夠良好時。<br>在現代的 JavaScript 實現中，Set 和 Map 通常會使用更優化的哈希函數來確保鍵分佈均勻，這有助於減少碰撞並提高性能。</p>
-<h3 id="安全性機制"><a href="#安全性機制" class="headerlink" title="安全性機制"></a>安全性機制</h3><p>Map 和 Set 允許鍵是 任意類型，包括對象、函數，甚至是 NaN、undefined 等。這意味著你可以將任何資料類型作為鍵來存儲數據，而不像傳統的 Hashtable，在某些語言中只能使用字串或數字作為鍵。</p>
-<h3 id="按元素插入的順序來迭代元素"><a href="#按元素插入的順序來迭代元素" class="headerlink" title="按元素插入的順序來迭代元素"></a>按元素插入的順序來迭代元素</h3><p>Set 和 Map 提供了 穩定的插入順序，即它們會按元素插入的順序來迭代元素。這和傳統的 Hashtable 不同，因為 Hashtable 中的鍵的順序是無序的。</p>
-<h3 id="防止鍵的重複"><a href="#防止鍵的重複" class="headerlink" title="防止鍵的重複"></a>防止鍵的重複</h3><p>在某些語言的 Hashtable 實現中，若鍵的命名不當（例如，與內建屬性名稱相同），可能會導致鍵被意外覆蓋或隱藏。<br>Set 和 Map 避免了這些問題，因為它們有明確的鍵範圍和更高的安全性保障。它們的鍵不會被隨意覆蓋，而且能夠避免由於錯誤的鍵類型而引起的潛在錯誤。</p>
-<h2 id="解題後感想"><a href="#解題後感想" class="headerlink" title="解題後感想"></a>解題後感想</h2><p>有發現 leetcode 幾個題目都在圍繞 <code>Set</code> <code>Map</code> 方法與概念的熟練度與靈活運用，映射的做法大大提高了運算效能值得多練練。</p>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-        <category>Leetcode</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
-        <tag>Algorithm</tag>
-        <tag>Map</tag>
-        <tag>Leetcode</tag>
-        <tag>Hashtable</tag>
-        <tag>Set</tag>
       </tags>
   </entry>
   <entry>
@@ -1210,6 +1210,39 @@
       </tags>
   </entry>
   <entry>
+    <title>新手須知 - Macbook beginner</title>
+    <url>/blog/2023/02/05/macbook-beginner-guide/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> - Macbook beginner</div>
+            <div class="stroke"> - Macbook beginner</div>
+            <div class="plain main-title"> - Macbook beginner</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>為方便工作效率將經常使用的 Ｍacbook 快速鍵記錄在這裡。</p>
+<span id="more"></span>
+
+<h1 id="Macbook-快捷鍵一覽"><a href="#Macbook-快捷鍵一覽" class="headerlink" title="Macbook 快捷鍵一覽"></a>Macbook 快捷鍵一覽</h1><h2 id="文書處理"><a href="#文書處理" class="headerlink" title="文書處理"></a>文書處理</h2><h4 id="刪除檔案"><a href="#刪除檔案" class="headerlink" title="刪除檔案"></a>刪除檔案</h4><p><kbd>command</kbd> + <kbd>delete</kbd></p>
+<h4 id="顯示隱藏檔案"><a href="#顯示隱藏檔案" class="headerlink" title="顯示隱藏檔案"></a>顯示隱藏檔案</h4><p><kbd>shift</kbd> + <kbd>command</kbd> + <kbd>.</kbd></p>
+<h5 id="剪下檔案並貼上"><a href="#剪下檔案並貼上" class="headerlink" title="剪下檔案並貼上"></a>剪下檔案並貼上</h5><p><kbd>commmand</kbd> + <kbd>C</kbd><br><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>V</kbd></p>
+<h4 id="切換或取消全螢幕"><a href="#切換或取消全螢幕" class="headerlink" title="切換或取消全螢幕"></a>切換或取消全螢幕</h4><p><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>F</kbd></p>
+<h4 id="開啟工作管理員"><a href="#開啟工作管理員" class="headerlink" title="開啟工作管理員"></a>開啟工作管理員</h4><p><kbd>option</kbd> + <kbd>command</kbd> + <kbd>esc</kbd></p>
+<h4 id="照片位址"><a href="#照片位址" class="headerlink" title="照片位址"></a>照片位址</h4><p>需要特別注意照片匯入時放置在 Finder <strong>圖片</strong>資料夾，照片圖庫才能如期查看，若移至照片則會導致圖片位址找不到該檔案</p>
+<hr>
+<h2 id="開發相關"><a href="#開發相關" class="headerlink" title="開發相關"></a>開發相關</h2><h4 id="快速刪除-terminal-整行指令"><a href="#快速刪除-terminal-整行指令" class="headerlink" title="快速刪除 terminal 整行指令"></a>快速刪除 terminal 整行指令</h4><p><kbd>ctrl</kbd> + <kbd>U</kbd></p>
+<h4 id="開啟-safari-RWD-除錯模式"><a href="#開啟-safari-RWD-除錯模式" class="headerlink" title="開啟 safari RWD 除錯模式"></a>開啟 safari RWD 除錯模式</h4><p><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>R</kbd></p>
+]]></content>
+      <categories>
+        <category>Macbook</category>
+      </categories>
+      <tags>
+        <tag>shortcut</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>優化演算法練習 Leetcode X ListNode 資料結構</title>
     <url>/blog/2025/03/23/leetcode-listnode-data-structure/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1306,39 +1339,6 @@
 <li>刪除鏈結串列中的節點（Delete Node in a Linked List）</li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>新手須知 - Macbook beginner</title>
-    <url>/blog/2023/02/05/macbook-beginner-guide/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> - Macbook beginner</div>
-            <div class="stroke"> - Macbook beginner</div>
-            <div class="plain main-title"> - Macbook beginner</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>為方便工作效率將經常使用的 Ｍacbook 快速鍵記錄在這裡。</p>
-<span id="more"></span>
-
-<h1 id="Macbook-快捷鍵一覽"><a href="#Macbook-快捷鍵一覽" class="headerlink" title="Macbook 快捷鍵一覽"></a>Macbook 快捷鍵一覽</h1><h2 id="文書處理"><a href="#文書處理" class="headerlink" title="文書處理"></a>文書處理</h2><h4 id="刪除檔案"><a href="#刪除檔案" class="headerlink" title="刪除檔案"></a>刪除檔案</h4><p><kbd>command</kbd> + <kbd>delete</kbd></p>
-<h4 id="顯示隱藏檔案"><a href="#顯示隱藏檔案" class="headerlink" title="顯示隱藏檔案"></a>顯示隱藏檔案</h4><p><kbd>shift</kbd> + <kbd>command</kbd> + <kbd>.</kbd></p>
-<h5 id="剪下檔案並貼上"><a href="#剪下檔案並貼上" class="headerlink" title="剪下檔案並貼上"></a>剪下檔案並貼上</h5><p><kbd>commmand</kbd> + <kbd>C</kbd><br><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>V</kbd></p>
-<h4 id="切換或取消全螢幕"><a href="#切換或取消全螢幕" class="headerlink" title="切換或取消全螢幕"></a>切換或取消全螢幕</h4><p><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>F</kbd></p>
-<h4 id="開啟工作管理員"><a href="#開啟工作管理員" class="headerlink" title="開啟工作管理員"></a>開啟工作管理員</h4><p><kbd>option</kbd> + <kbd>command</kbd> + <kbd>esc</kbd></p>
-<h4 id="照片位址"><a href="#照片位址" class="headerlink" title="照片位址"></a>照片位址</h4><p>需要特別注意照片匯入時放置在 Finder <strong>圖片</strong>資料夾，照片圖庫才能如期查看，若移至照片則會導致圖片位址找不到該檔案</p>
-<hr>
-<h2 id="開發相關"><a href="#開發相關" class="headerlink" title="開發相關"></a>開發相關</h2><h4 id="快速刪除-terminal-整行指令"><a href="#快速刪除-terminal-整行指令" class="headerlink" title="快速刪除 terminal 整行指令"></a>快速刪除 terminal 整行指令</h4><p><kbd>ctrl</kbd> + <kbd>U</kbd></p>
-<h4 id="開啟-safari-RWD-除錯模式"><a href="#開啟-safari-RWD-除錯模式" class="headerlink" title="開啟 safari RWD 除錯模式"></a>開啟 safari RWD 除錯模式</h4><p><kbd>ctrl</kbd> + <kbd>command</kbd> + <kbd>R</kbd></p>
-]]></content>
-      <categories>
-        <category>Macbook</category>
-      </categories>
-      <tags>
-        <tag>shortcut</tag>
-      </tags>
   </entry>
   <entry>
     <title>Macbook 錄製影音工具 - timeplayer</title>
@@ -1762,43 +1762,6 @@
       </tags>
   </entry>
   <entry>
-    <title>React 思維進化 - One-way dataflow</title>
-    <url>/blog/2024/02/24/react-one-way-dataflow/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React  - One-way dataflow</div>
-            <div class="stroke">React  - One-way dataflow</div>
-            <div class="plain main-title">React  - One-way dataflow</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>React 嚴格規範資料流的方向就是由上到下，根基越深的相對元件多也就會渲染多負擔重，不斷的渲染也能保持資料更新來源的單純。</p>
-<span id="more"></span>
-
-<p>以下記錄幾個《React 思維進化》一書提及的幾個重點與個人隨筆：</p>
-<h1 id="單向資料流的目的"><a href="#單向資料流的目的" class="headerlink" title="單向資料流的目的"></a>單向資料流的目的</h1><p>前端框架處理與解決的問題始終著重在：保持資料源頭(Source)的一致與完整性。之所以這樣設計的原因在於減少同時處理資料與操作 DOM 造成的多個變因，為保持來源的單純性，建構在「單向」會使得追蹤問題與除錯更簡單容易，只要聚焦在「正確的」資料、在透過模板渲染並且映射到畫面上的後續動作則透過框架處理成「自動化」。</p>
-<p>以下比較使用傳統 JQuery 開發與採用前端框架 React 的容易區別的關鍵思維差異：</p>
-<h2 id="資料與渲染元件混雜，無關注點分離"><a href="#資料與渲染元件混雜，無關注點分離" class="headerlink" title="資料與渲染元件混雜，無關注點分離"></a>資料與渲染元件混雜，無關注點分離</h2><p>JQuery 的開發思維若不夠謹慎，容易在開發時資料與渲染邏輯(UI)混合，資料揉在操作元件之內需同步處理，極可能在過程中因疏失或未查導致資料操作與畫面渲染不同步而在多個 DOM 或多個資料片段的邏輯拆解中遺漏未對齊，而使資料被污染也無法查找原始檔案作比較。</p>
-<p>不過有經驗的工程師仍可以藉由單獨管理資料、整理出 data model 後再一併渲染畫面來落實**關注點分離(Seperation of concerns)**，</p>
-<h1 id="React-如何實現前端效能優化"><a href="#React-如何實現前端效能優化" class="headerlink" title="React 如何實現前端效能優化"></a>React 如何實現前端效能優化</h1><p>前端解決操作 DOM 的渲染效能問題，有兩大類實作方式：</p>
-<ol>
-<li>模塊化最小範圍的 View-Model，比較資料（Model）差異後更新牽連的 DOM（View），著重在監聽資料的變化，是以 Two-way-binding 的資料流的框架 Vue.js 為代表。</li>
-<li>僅操作 Virtual Dom 虛擬對象（object），並且利用保留的版本比對差異無後顧之憂地一律重繪，持續透過 Virtual Dom 單向產出最終版的 Real Dom，</li>
-</ol>
-<h2 id="無視差異，一率重繪"><a href="#無視差異，一率重繪" class="headerlink" title="無視差異，一率重繪"></a>無視差異，一率重繪</h2><p>免去考慮模塊相關邏輯對應的 DOM（View），也不用一一拆分受影響的 DOM 有哪些、Model data 是什麼，一鍵清除重新歸零後再渲染新的 html 結構。</p>
-<h2 id="React-Element-不可變，保留原始結構"><a href="#React-Element-不可變，保留原始結構" class="headerlink" title="React Element 不可變，保留原始結構"></a>React Element 不可變，保留原始結構</h2><h2 id="Diff-新舊版結構，更新差異處到-DOM"><a href="#Diff-新舊版結構，更新差異處到-DOM" class="headerlink" title="Diff 新舊版結構，更新差異處到 DOM"></a>Diff 新舊版結構，更新差異處到 DOM</h2>]]></content>
-      <categories>
-        <category>React</category>
-        <category>Book learning</category>
-      </categories>
-      <tags>
-        <tag>react</tag>
-        <tag>one-way dataflow</tag>
-        <tag>virtual dom</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>React 思維進化 - immutable update</title>
     <url>/blog/2024/04/17/react-immutable-update/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1884,6 +1847,43 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>primitive &amp; object</tag>
         <tag>immutable &amp; mutable</tag>
         <tag>React 思維進化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 思維進化 - One-way dataflow</title>
+    <url>/blog/2024/02/24/react-one-way-dataflow/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React  - One-way dataflow</div>
+            <div class="stroke">React  - One-way dataflow</div>
+            <div class="plain main-title">React  - One-way dataflow</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>React 嚴格規範資料流的方向就是由上到下，根基越深的相對元件多也就會渲染多負擔重，不斷的渲染也能保持資料更新來源的單純。</p>
+<span id="more"></span>
+
+<p>以下記錄幾個《React 思維進化》一書提及的幾個重點與個人隨筆：</p>
+<h1 id="單向資料流的目的"><a href="#單向資料流的目的" class="headerlink" title="單向資料流的目的"></a>單向資料流的目的</h1><p>前端框架處理與解決的問題始終著重在：保持資料源頭(Source)的一致與完整性。之所以這樣設計的原因在於減少同時處理資料與操作 DOM 造成的多個變因，為保持來源的單純性，建構在「單向」會使得追蹤問題與除錯更簡單容易，只要聚焦在「正確的」資料、在透過模板渲染並且映射到畫面上的後續動作則透過框架處理成「自動化」。</p>
+<p>以下比較使用傳統 JQuery 開發與採用前端框架 React 的容易區別的關鍵思維差異：</p>
+<h2 id="資料與渲染元件混雜，無關注點分離"><a href="#資料與渲染元件混雜，無關注點分離" class="headerlink" title="資料與渲染元件混雜，無關注點分離"></a>資料與渲染元件混雜，無關注點分離</h2><p>JQuery 的開發思維若不夠謹慎，容易在開發時資料與渲染邏輯(UI)混合，資料揉在操作元件之內需同步處理，極可能在過程中因疏失或未查導致資料操作與畫面渲染不同步而在多個 DOM 或多個資料片段的邏輯拆解中遺漏未對齊，而使資料被污染也無法查找原始檔案作比較。</p>
+<p>不過有經驗的工程師仍可以藉由單獨管理資料、整理出 data model 後再一併渲染畫面來落實**關注點分離(Seperation of concerns)**，</p>
+<h1 id="React-如何實現前端效能優化"><a href="#React-如何實現前端效能優化" class="headerlink" title="React 如何實現前端效能優化"></a>React 如何實現前端效能優化</h1><p>前端解決操作 DOM 的渲染效能問題，有兩大類實作方式：</p>
+<ol>
+<li>模塊化最小範圍的 View-Model，比較資料（Model）差異後更新牽連的 DOM（View），著重在監聽資料的變化，是以 Two-way-binding 的資料流的框架 Vue.js 為代表。</li>
+<li>僅操作 Virtual Dom 虛擬對象（object），並且利用保留的版本比對差異無後顧之憂地一律重繪，持續透過 Virtual Dom 單向產出最終版的 Real Dom，</li>
+</ol>
+<h2 id="無視差異，一率重繪"><a href="#無視差異，一率重繪" class="headerlink" title="無視差異，一率重繪"></a>無視差異，一率重繪</h2><p>免去考慮模塊相關邏輯對應的 DOM（View），也不用一一拆分受影響的 DOM 有哪些、Model data 是什麼，一鍵清除重新歸零後再渲染新的 html 結構。</p>
+<h2 id="React-Element-不可變，保留原始結構"><a href="#React-Element-不可變，保留原始結構" class="headerlink" title="React Element 不可變，保留原始結構"></a>React Element 不可變，保留原始結構</h2><h2 id="Diff-新舊版結構，更新差異處到-DOM"><a href="#Diff-新舊版結構，更新差異處到-DOM" class="headerlink" title="Diff 新舊版結構，更新差異處到 DOM"></a>Diff 新舊版結構，更新差異處到 DOM</h2>]]></content>
+      <categories>
+        <category>React</category>
+        <category>Book learning</category>
+      </categories>
+      <tags>
+        <tag>react</tag>
+        <tag>one-way dataflow</tag>
+        <tag>virtual dom</tag>
       </tags>
   </entry>
   <entry>
@@ -2233,54 +2233,58 @@ on <a href="https://codepen.io">CodePen</a>.
       </tags>
   </entry>
   <entry>
-    <title>React 思維進化 - Virtual dom</title>
-    <url>/blog/2024/02/18/virtual-dom/</url>
+    <title>你不知道的 Vue Mixins Pitfalls 小陷阱</title>
+    <url>/blog/2024/06/25/vue-mixins-pitfalls/</url>
     <content><![CDATA[<div class="visual-image">
         <div class="visual-image-box">
             <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React  - Virtual dom</div>
-            <div class="stroke">React  - Virtual dom</div>
-            <div class="plain main-title">React  - Virtual dom</div>
+            <div class="stroke"> Vue Mixins Pitfalls </div>
+            <div class="stroke"> Vue Mixins Pitfalls </div>
+            <div class="plain main-title"> Vue Mixins Pitfalls </div>
             <div class="plain">．．．</div>
         </div>
     </div>
-<p>新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。</p>
+<p>在工作上第一次接觸到專案開發使用 <strong>Vue mixins</strong> 到有點氾濫的情況（甚至追朔至2-3個 mixins），所以採到的一個奇妙的雷。</p>
 <span id="more"></span>
 
-<p>對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的<a href="https://www.zhihu.com/question/31809713?utm_id=0">濃縮精華文章</a>。</p>
-<h1 id="Virtual-dom-真的必要嗎？又沒比較快！"><a href="#Virtual-dom-真的必要嗎？又沒比較快！" class="headerlink" title="Virtual dom 真的必要嗎？又沒比較快！"></a>Virtual dom 真的必要嗎？又沒比較快！</h1><p>文章開頭的疑問是，在測試操作原生方法來改變渲染的 DOM 結構之後發現 React 或 Angular 都不見效率(時間)上的優勢，那為何要這些框架？這個提問的人顯然非常簡單粗暴說出大部分新手的知識誤區：「快就是好！沒必要優化。」</p>
-<p>但發明框架一定有它的道理，從三個方面來說：</p>
-<h2 id="好維護"><a href="#好維護" class="headerlink" title="好維護"></a>好維護</h2><p>如果不使用框架開發應用程式，將一個肥大的專案打開後滿滿的都是 document.querySelector，你想要從某個功能入手修改的時候你不頭疼？就邏輯歸納來說就好像幫你雜亂的桌子理出個櫃子，每個抽屜好好放入同一個分類的東西，當你想找或者想使用的時候難道沒幫你省下不少時間嗎？<br>分類的優勢若從 vue 與 react 來說可以切入：</p>
-<ul>
-<li>vue 的 三大模組切分法(template, style, script)</li>
-<li>react 的函式導向設計法(functional programming) + hooks</li>
-</ul>
-<p>框架幫你掩蓋了底層的操作邏輯，給予多個易於操作的 api 讓你專注開發。</p>
-<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴——重新渲染。</p>
-<p>瀏覽器在 DOM 改變後、渲染畫面經歷的階段：</p>
+<p>前述一下遭遇的業務邏輯場景：</p>
 <ol>
-<li>DOM Tree Update</li>
-<li>Reflow&#x2F;Layout-計算畫面的位置與大小</li>
-<li>Repaint</li>
-<li>Composite-將畫面元素與 css 繪製合成</li>
-<li>Rendering</li>
+<li>頁面中存在父子組件同時需要應用一組 Mixins，共有一個 data <strong>token</strong>。</li>
+<li>由父組件來控制呼叫 API 改變臨時 token 以防用戶誤觸或者有心人士連擊。</li>
+<li>子組件則拿更新後的 token 來執行出入金。</li>
 </ol>
-<p>當這一連串的執行經常發生，就會造成瀏覽畫面的卡頓，其一原理包含了瀏覽器在背後每 16 FPS 渲染畫面的動作，也就是每秒刷新頁面 60 次。<br>而省去這些成本的大功臣來自於 Virtual dom 背後的辛苦。</p>
-<h2 id="Virtual-dom-為什麼重要"><a href="#Virtual-dom-為什麼重要" class="headerlink" title="Virtual dom 為什麼重要"></a>Virtual dom 為什麼重要</h2><p>先講結論：只更新 『必要的』元素。</p>
-<p>不同於原生 DOM 操作習慣，例如 innerHTML 每次必定全部渲染，虛擬 DOM 先在藍圖草稿上，操作低成本的 js 對象，規劃與彩排各種情況的 DOM tree，多次演練編排過後的結果才會真正地透過瀏覽器操作原生 DOM。這個過程之所以比預期的慢，是因為進行了幾個背後的努力：</p>
-<h3 id="Virtual-dom-react"><a href="#Virtual-dom-react" class="headerlink" title="Virtual dom - react"></a>Virtual dom - react</h3><p>React 採取持續不斷的檢查與比對 DOM 結構(Diff)，過程中建立與修改一個個 js dom object 規劃新的 DOM 長相，包含 type, prop, children 等敘述，以便 Diff 完成以後的最終版(patch) 如實透過原生 DOM 產出。</p>
-<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track by $index 躍升了效能，與之平起平坐。</p>
-<h1 id="效率並非時間導向"><a href="#效率並非時間導向" class="headerlink" title="效率並非時間導向"></a>效率並非時間導向</h1><p>效率這個假議題從『時間』被拉出來討論背後實際的『渲染』問題才是重點，框架解決的從不是快不快，而是好不好用，能不能直觀開發與維護。</p>
+<h1 id="mixins"><a href="#mixins" class="headerlink" title="mixins"></a>mixins</h1><p>先定義了一個 mixins 提供組件使用。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; tokenApi &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">getToken</span>()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">getToken</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">tokenApi</span>()</span><br><span class="line">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">token</span> = resp.<span class="property">data</span>.<span class="property">data</span></span><br><span class="line">                            <span class="title function_">resolve</span>();</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="title function_">reject</span>();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="title function_">reject</span>();</span><br><span class="line">                    &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Parent-component"><a href="#Parent-component" class="headerlink" title="Parent component"></a>Parent component</h1><p>父組件控制更新 Token 的時機點。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">component</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">ref</span>=<span class="string">&quot;child&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">:is</span>=<span class="string">&quot;currentComponent&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        @<span class="attr">submitChild</span>=<span class="string">&quot;submitChild&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">&#x27;@/mixins&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;parent&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitParent</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">submitChild</span>() <span class="comment">// ------------ 呼叫子組件本身的 channel API</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> === <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="variable language_">this</span>.<span class="title function_">getToken</span>() <span class="comment">// --------------- 雷點，後面詳述</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">catch</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Child-component"><a href="#Child-component" class="headerlink" title="Child component"></a>Child component</h1><p>子組件因應各自的出入金渠道而需要呼叫不同 API。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;el-button</span><br><span class="line">        :loading=<span class="string">&quot;loading&quot;</span></span><br><span class="line">        :disabled=<span class="string">&quot;loading&quot;</span></span><br><span class="line">        @click=<span class="string">&quot;submitChild&quot;</span></span><br><span class="line">    &gt;</span><br><span class="line">        submit</span><br><span class="line">    &lt;/el-button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> &#123; childChannelApi &#125; <span class="keyword">from</span> <span class="string">&#x27;@/channels&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;child&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitChild</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="keyword">return</span> <span class="title function_">childChannelApi</span>(</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="attr">account</span>: <span class="string">&#x27;*****&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="attr">amount</span>: <span class="string">&#x27;1234&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    <span class="variable language_">this</span>.<span class="property">token</span>　<span class="comment">// ------ token 被父組件更新後由渠道 API 使用</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                )</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="元件結構示意圖"><a href="#元件結構示意圖" class="headerlink" title="元件結構示意圖"></a>元件結構示意圖</h1><p><img src="/blog/images/vue-mixins-pitfalls.jpg" alt="vue-mixins-components-structure"></p>
+<h2 id="Merged-into-component’s-own-data"><a href="#Merged-into-component’s-own-data" class="headerlink" title="Merged into component’s own data"></a>Merged into component’s own data</h2><blockquote>
+<p>Data and methods defined in a mixin are merged into the component’s own data and methods.</p>
+</blockquote>
+<h2 id="參考合併"><a href="#參考合併" class="headerlink" title="參考合併"></a>參考合併</h2><blockquote>
+<p>Each instance of a component using the mixin gets its <strong>own independent copy of the data properties</strong> defined in the mixin. This means that the top-level properties are <strong>not shared between instances</strong>, but <strong>nested objects and arrays can still share references</strong> if not handled properly.</p>
+</blockquote>
+<p>文件與 ChatGpt 有提到<strong>合併物件</strong>的概念，這裡要注意的是一旦合併到元件所屬的 data 便意味著參考脫鉤了，無法再元件之間共享同一個位址而是各自為政的狀態，與 Vuex state 不是一個概念，僅能透過 <code>this.$refs.child</code> 的方式取得子元件本身的 scope data，並不符合當前業務邏輯「更新共享 Token」以及「同步共享 Token」的要求了。</p>
+<h3 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h3><p>原先在父組件無論更新幾百次 this.token 都只是更新父祖件本身的 this.token 參考內的值，當子組件呼叫 API 送出的 this.token 永遠不會變化，因為該 token 隸屬於子組件本身的 data，根本是兩個獨立的記憶體位址互相無關。</p>
+<blockquote>
+<p>The token property is a primitive (string). Each component instance (parent and child) gets its own copy of token.</p>
+</blockquote>
+<p>而上述提到的物件與陣列在此情況很可能會共享參考，剛巧不再這次的字串型別（Primative）資料 Issue 中，否則會更難釐清資料來源了。</p>
+<p>如此一來父組件的程式需要更改為：</p>
+<h3 id="Parent-component-1"><a href="#Parent-component-1" class="headerlink" title="Parent component"></a>Parent component</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">&#x27;@/mixins&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;parent&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitParent</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">submitChild</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> === <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="comment">// ------------- 直接呼叫子組件作用域內的 getToken 更新子組件本身的 token</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">getToken</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">catch</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h1 id="事後反思"><a href="#事後反思" class="headerlink" title="事後反思"></a>事後反思</h1><p>mixins 一開始的應用應該是給予各組件共用可以 <strong>extends 出去</strong> 的初始狀態，僅是提供「共享邏輯」或者是「共享資料結構」，若要同步更新或共用一份資料很可能比較適合使用 <strong>Vuex</strong> 或者 <code>LocalStorage</code>、<code>SessionStorage</code> 等方式，以確保物件參考沒有脫鉤，個人認為共享的 functions 或 methods 才比較是 mixins 開發的初衷吧！</p>
+<p>有紮實的 Javascript 基礎確實較能抓出框架內的坑，但很多時候坑是開發人員程式設計不慎的後果，例如這次專案中濫用 mixins 就是一個例子，需要提醒自己注意開發的靈敏度與避坑意識 ヽ(・×・´)ゞ</p>
 ]]></content>
-      <categories>
-        <category>React</category>
-        <category>Book learning</category>
-      </categories>
       <tags>
-        <tag>browser</tag>
-        <tag>react</tag>
-        <tag>virtual-dom</tag>
-        <tag>vue</tag>
+        <tag>vue2</tag>
+        <tag>vue mixins</tag>
+        <tag>objects merge</tag>
+        <tag>mixins pitfalls</tag>
       </tags>
   </entry>
   <entry>
@@ -2363,6 +2367,57 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>Vue2</tag>
         <tag>Vue3</tag>
         <tag>sync modifier</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 思維進化 - Virtual dom</title>
+    <url>/blog/2024/02/18/virtual-dom/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React  - Virtual dom</div>
+            <div class="stroke">React  - Virtual dom</div>
+            <div class="plain main-title">React  - Virtual dom</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。</p>
+<span id="more"></span>
+
+<p>對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的<a href="https://www.zhihu.com/question/31809713?utm_id=0">濃縮精華文章</a>。</p>
+<h1 id="Virtual-dom-真的必要嗎？又沒比較快！"><a href="#Virtual-dom-真的必要嗎？又沒比較快！" class="headerlink" title="Virtual dom 真的必要嗎？又沒比較快！"></a>Virtual dom 真的必要嗎？又沒比較快！</h1><p>文章開頭的疑問是，在測試操作原生方法來改變渲染的 DOM 結構之後發現 React 或 Angular 都不見效率(時間)上的優勢，那為何要這些框架？這個提問的人顯然非常簡單粗暴說出大部分新手的知識誤區：「快就是好！沒必要優化。」</p>
+<p>但發明框架一定有它的道理，從三個方面來說：</p>
+<h2 id="好維護"><a href="#好維護" class="headerlink" title="好維護"></a>好維護</h2><p>如果不使用框架開發應用程式，將一個肥大的專案打開後滿滿的都是 document.querySelector，你想要從某個功能入手修改的時候你不頭疼？就邏輯歸納來說就好像幫你雜亂的桌子理出個櫃子，每個抽屜好好放入同一個分類的東西，當你想找或者想使用的時候難道沒幫你省下不少時間嗎？<br>分類的優勢若從 vue 與 react 來說可以切入：</p>
+<ul>
+<li>vue 的 三大模組切分法(template, style, script)</li>
+<li>react 的函式導向設計法(functional programming) + hooks</li>
+</ul>
+<p>框架幫你掩蓋了底層的操作邏輯，給予多個易於操作的 api 讓你專注開發。</p>
+<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴——重新渲染。</p>
+<p>瀏覽器在 DOM 改變後、渲染畫面經歷的階段：</p>
+<ol>
+<li>DOM Tree Update</li>
+<li>Reflow&#x2F;Layout-計算畫面的位置與大小</li>
+<li>Repaint</li>
+<li>Composite-將畫面元素與 css 繪製合成</li>
+<li>Rendering</li>
+</ol>
+<p>當這一連串的執行經常發生，就會造成瀏覽畫面的卡頓，其一原理包含了瀏覽器在背後每 16 FPS 渲染畫面的動作，也就是每秒刷新頁面 60 次。<br>而省去這些成本的大功臣來自於 Virtual dom 背後的辛苦。</p>
+<h2 id="Virtual-dom-為什麼重要"><a href="#Virtual-dom-為什麼重要" class="headerlink" title="Virtual dom 為什麼重要"></a>Virtual dom 為什麼重要</h2><p>先講結論：只更新 『必要的』元素。</p>
+<p>不同於原生 DOM 操作習慣，例如 innerHTML 每次必定全部渲染，虛擬 DOM 先在藍圖草稿上，操作低成本的 js 對象，規劃與彩排各種情況的 DOM tree，多次演練編排過後的結果才會真正地透過瀏覽器操作原生 DOM。這個過程之所以比預期的慢，是因為進行了幾個背後的努力：</p>
+<h3 id="Virtual-dom-react"><a href="#Virtual-dom-react" class="headerlink" title="Virtual dom - react"></a>Virtual dom - react</h3><p>React 採取持續不斷的檢查與比對 DOM 結構(Diff)，過程中建立與修改一個個 js dom object 規劃新的 DOM 長相，包含 type, prop, children 等敘述，以便 Diff 完成以後的最終版(patch) 如實透過原生 DOM 產出。</p>
+<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track by $index 躍升了效能，與之平起平坐。</p>
+<h1 id="效率並非時間導向"><a href="#效率並非時間導向" class="headerlink" title="效率並非時間導向"></a>效率並非時間導向</h1><p>效率這個假議題從『時間』被拉出來討論背後實際的『渲染』問題才是重點，框架解決的從不是快不快，而是好不好用，能不能直觀開發與維護。</p>
+]]></content>
+      <categories>
+        <category>React</category>
+        <category>Book learning</category>
+      </categories>
+      <tags>
+        <tag>browser</tag>
+        <tag>react</tag>
+        <tag>virtual-dom</tag>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -2501,61 +2556,6 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>attrs</tag>
         <tag>useVModel</tag>
         <tag>defineModel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你不知道的 Vue Mixins Pitfalls 小陷阱</title>
-    <url>/blog/2024/06/25/vue-mixins-pitfalls/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> Vue Mixins Pitfalls </div>
-            <div class="stroke"> Vue Mixins Pitfalls </div>
-            <div class="plain main-title"> Vue Mixins Pitfalls </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>在工作上第一次接觸到專案開發使用 <strong>Vue mixins</strong> 到有點氾濫的情況（甚至追朔至2-3個 mixins），所以採到的一個奇妙的雷。</p>
-<span id="more"></span>
-
-<p>前述一下遭遇的業務邏輯場景：</p>
-<ol>
-<li>頁面中存在父子組件同時需要應用一組 Mixins，共有一個 data <strong>token</strong>。</li>
-<li>由父組件來控制呼叫 API 改變臨時 token 以防用戶誤觸或者有心人士連擊。</li>
-<li>子組件則拿更新後的 token 來執行出入金。</li>
-</ol>
-<h1 id="mixins"><a href="#mixins" class="headerlink" title="mixins"></a>mixins</h1><p>先定義了一個 mixins 提供組件使用。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; tokenApi &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">getToken</span>()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">getToken</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="title function_">tokenApi</span>()</span><br><span class="line">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                        <span class="variable language_">this</span>.<span class="property">token</span> = resp.<span class="property">data</span>.<span class="property">data</span></span><br><span class="line">                            <span class="title function_">resolve</span>();</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="title function_">reject</span>();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">                    .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="title function_">reject</span>();</span><br><span class="line">                    &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="Parent-component"><a href="#Parent-component" class="headerlink" title="Parent component"></a>Parent component</h1><p>父組件控制更新 Token 的時機點。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">component</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">ref</span>=<span class="string">&quot;child&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">:is</span>=<span class="string">&quot;currentComponent&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        @<span class="attr">submitChild</span>=<span class="string">&quot;submitChild&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">&#x27;@/mixins&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;parent&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitParent</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">submitChild</span>() <span class="comment">// ------------ 呼叫子組件本身的 channel API</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> === <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="variable language_">this</span>.<span class="title function_">getToken</span>() <span class="comment">// --------------- 雷點，後面詳述</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">catch</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<h1 id="Child-component"><a href="#Child-component" class="headerlink" title="Child component"></a>Child component</h1><p>子組件因應各自的出入金渠道而需要呼叫不同 API。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;el-button</span><br><span class="line">        :loading=<span class="string">&quot;loading&quot;</span></span><br><span class="line">        :disabled=<span class="string">&quot;loading&quot;</span></span><br><span class="line">        @click=<span class="string">&quot;submitChild&quot;</span></span><br><span class="line">    &gt;</span><br><span class="line">        submit</span><br><span class="line">    &lt;/el-button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> &#123; childChannelApi &#125; <span class="keyword">from</span> <span class="string">&#x27;@/channels&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;child&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitChild</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="keyword">return</span> <span class="title function_">childChannelApi</span>(</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="attr">account</span>: <span class="string">&#x27;*****&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="attr">amount</span>: <span class="string">&#x27;1234&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    <span class="variable language_">this</span>.<span class="property">token</span>　<span class="comment">// ------ token 被父組件更新後由渠道 API 使用</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                )</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="元件結構示意圖"><a href="#元件結構示意圖" class="headerlink" title="元件結構示意圖"></a>元件結構示意圖</h1><p><img src="/blog/images/vue-mixins-pitfalls.jpg" alt="vue-mixins-components-structure"></p>
-<h2 id="Merged-into-component’s-own-data"><a href="#Merged-into-component’s-own-data" class="headerlink" title="Merged into component’s own data"></a>Merged into component’s own data</h2><blockquote>
-<p>Data and methods defined in a mixin are merged into the component’s own data and methods.</p>
-</blockquote>
-<h2 id="參考合併"><a href="#參考合併" class="headerlink" title="參考合併"></a>參考合併</h2><blockquote>
-<p>Each instance of a component using the mixin gets its <strong>own independent copy of the data properties</strong> defined in the mixin. This means that the top-level properties are <strong>not shared between instances</strong>, but <strong>nested objects and arrays can still share references</strong> if not handled properly.</p>
-</blockquote>
-<p>文件與 ChatGpt 有提到<strong>合併物件</strong>的概念，這裡要注意的是一旦合併到元件所屬的 data 便意味著參考脫鉤了，無法再元件之間共享同一個位址而是各自為政的狀態，與 Vuex state 不是一個概念，僅能透過 <code>this.$refs.child</code> 的方式取得子元件本身的 scope data，並不符合當前業務邏輯「更新共享 Token」以及「同步共享 Token」的要求了。</p>
-<h3 id="問題描述"><a href="#問題描述" class="headerlink" title="問題描述"></a>問題描述</h3><p>原先在父組件無論更新幾百次 this.token 都只是更新父祖件本身的 this.token 參考內的值，當子組件呼叫 API 送出的 this.token 永遠不會變化，因為該 token 隸屬於子組件本身的 data，根本是兩個獨立的記憶體位址互相無關。</p>
-<blockquote>
-<p>The token property is a primitive (string). Each component instance (parent and child) gets its own copy of token.</p>
-</blockquote>
-<p>而上述提到的物件與陣列在此情況很可能會共享參考，剛巧不再這次的字串型別（Primative）資料 Issue 中，否則會更難釐清資料來源了。</p>
-<p>如此一來父組件的程式需要更改為：</p>
-<h3 id="Parent-component-1"><a href="#Parent-component-1" class="headerlink" title="Parent component"></a>Parent component</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">&#x27;@/mixins&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>: <span class="string">&#x27;parent&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">mixins</span>: [mixins],</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        data () &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">submitParent</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">submitChild</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        <span class="keyword">if</span> (resp.<span class="property">data</span>.<span class="property">code</span> === <span class="number">0</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125; <span class="keyword">else</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="comment">// ------------- 直接呼叫子組件作用域內的 getToken 更新子組件本身的 token</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                            <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">child</span>.<span class="title function_">getToken</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                .<span class="title function_">catch</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                    <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                                &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<h1 id="事後反思"><a href="#事後反思" class="headerlink" title="事後反思"></a>事後反思</h1><p>mixins 一開始的應用應該是給予各組件共用可以 <strong>extends 出去</strong> 的初始狀態，僅是提供「共享邏輯」或者是「共享資料結構」，若要同步更新或共用一份資料很可能比較適合使用 <strong>Vuex</strong> 或者 <code>LocalStorage</code>、<code>SessionStorage</code> 等方式，以確保物件參考沒有脫鉤，個人認為共享的 functions 或 methods 才比較是 mixins 開發的初衷吧！</p>
-<p>有紮實的 Javascript 基礎確實較能抓出框架內的坑，但很多時候坑是開發人員程式設計不慎的後果，例如這次專案中濫用 mixins 就是一個例子，需要提醒自己注意開發的靈敏度與避坑意識 ヽ(・×・´)ゞ</p>
-]]></content>
-      <tags>
-        <tag>vue2</tag>
-        <tag>vue mixins</tag>
-        <tag>objects merge</tag>
-        <tag>mixins pitfalls</tag>
       </tags>
   </entry>
   <entry>
