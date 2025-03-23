@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="HTTP error handler              HTTP error handler              HTTP error handler              ．．．                Axois 與 Fetch 兩大 Library 會給予客製化錯誤控制與處理流程，根據返回的 Pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP error handler 錯誤控制">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/06/20/error-handle-in-axios/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="HTTP error handler              HTTP error handler              HTTP error handler              ．．．                Axois 與 Fetch 兩大 Library 會給予客製化錯誤控制與處理流程，根據返回的 Pro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-06-20T03:41:06.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.063Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="error handler">
+<meta property="article:tag" content="axios">
+<meta property="article:tag" content="fetch">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/06/20/error-handle-in-axios/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/06/20/error-handle-in-axios/","path":"2024/06/20/error-handle-in-axios/","title":"HTTP error handler 錯誤控制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HTTP error handler 錯誤控制 | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#response-status-code"><span class="nav-number">1.</span> <span class="nav-text">response status code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#server-customized-error-code"><span class="nav-number">2.</span> <span class="nav-text">server customized error code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Handling-Response-Error-Library"><span class="nav-number">3.</span> <span class="nav-text">Handling Response Error Library</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch-%E7%9A%84%E6%88%90%E5%8A%9F%E5%88%A4%E6%96%B7"><span class="nav-number">3.1.</span> <span class="nav-text">Fetch 的成功判斷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response-ok"><span class="nav-number">3.2.</span> <span class="nav-text">response.ok</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Axios-%E7%9A%84%E7%A8%AE%E9%A1%9E%E5%88%A4%E6%96%B7"><span class="nav-number">3.3.</span> <span class="nav-text">Axios 的種類判斷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#then"><span class="nav-number">3.3.1.</span> <span class="nav-text">then</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#response-data"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">response.data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#catch"><span class="nav-number">3.3.2.</span> <span class="nav-text">catch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#error-response"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">error.response</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#error-request"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">error.request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#error-messages"><span class="nav-number">3.3.2.3.</span> <span class="nav-text">error.messages</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/06/20/error-handle-in-axios/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HTTP error handler 錯誤控制 | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTTP error handler 錯誤控制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-06-20 11:41:06" itemprop="dateCreated datePublished" datetime="2024-06-20T11:41:06+08:00">2024-06-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">HTTP error handler </div>
+            <div class="stroke">HTTP error handler </div>
+            <div class="plain main-title">HTTP error handler </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>Axois 與 Fetch 兩大 Library 會給予客製化錯誤控制與處理流程，根據返回的 <code>Promise</code> 會按照 HTTP <strong>response status</strong> 情況歸納至 <code>then()</code> 以及 <code>catch()</code>：</p>
+<span id="more"></span>
+
+<h1 id="response-status-code"><a href="#response-status-code" class="headerlink" title="response status code"></a>response status code</h1><p>公定的錯誤訊息可以當作初步判定大方向的依據，健康的一次前後端交流應當能透過此方式排查錯誤。<br>在之前的就網站上 <a target="_blank" rel="noopener" href="https://maomaoxie.github.io/2022/03/01/zh-tw/http-status-code/">這篇文章</a>有詳細描述 code 的幾個大致情況，重新複習一下：</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1XX</td>
+<td>Informational response</td>
+<td>代表要求已接受並了解了，因某些問題要求仍在繼續但尚未回應需要等候一陣時間。</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>Successful response</td>
+<td>通常代表成功情況，request &amp; response 完成了一次資料的交流。</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>Redirection messages</td>
+<td>網站可能遭遇重新導向的問題。</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>Client error responses</td>
+<td>通常代表著 request 方面的缺失或者錯誤，權限不足或者 input 不正確導致不回應。</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>Client error responses</td>
+<td>伺服器端的問題導致回應失敗。</td>
+</tr>
+</tbody></table>
+<h1 id="server-customized-error-code"><a href="#server-customized-error-code" class="headerlink" title="server customized error code"></a>server customized error code</h1><p>與後端協調制定的客製化錯誤訊息。由於公定的 HTTP status code 並不足夠闡述各種業務端口的 issue，所以各家公司的服務需要透過 <code>response.data.messages</code> 或者 <code>response.data.code</code> 來描述實際的錯誤內容以利於工程師互相溝通或者提供業務與客戶理解。</p>
+<h1 id="Handling-Response-Error-Library"><a href="#Handling-Response-Error-Library" class="headerlink" title="Handling Response Error Library"></a>Handling Response Error Library</h1><p>以下介紹兩大錯誤處理套件 AXIOS 與 FETCH 在邏輯上的些微差異：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fetch</th>
+<th>Axios</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>note</td>
+<td>需要客製化設定錯誤情況，制定錯誤事件</td>
+<td>套件經過包裝簡化了判斷</td>
+</tr>
+<tr>
+<td>then</td>
+<td>response.ok or customized successful condition</td>
+<td>HTTP status 200-299</td>
+</tr>
+<tr>
+<td>catch</td>
+<td>throw new Error() triggers error</td>
+<td>outside HTTP status 200-299</td>
+</tr>
+</tbody></table>
+<h2 id="Fetch-的成功判斷"><a href="#Fetch-的成功判斷" class="headerlink" title="Fetch 的成功判斷"></a>Fetch 的成功判斷</h2><h2 id="response-ok"><a href="#response-ok" class="headerlink" title="response.ok"></a>response.ok</h2><p>當 HTTP status 在範圍 200-299 內時 response.ok 為 <code>true</code>，示例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;https://api.example.com/data&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Check if the HTTP status code is not in the range 200-299</span></span><br><span class="line">    <span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span><br><span class="line">      <span class="comment">// Throw an error to be caught in the .catch() block</span></span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`HTTP error! Status: <span class="subst">$&#123;response.status&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// If response is OK, parse it as JSON</span></span><br><span class="line">    <span class="keyword">return</span> response.<span class="title function_">json</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Handle the JSON data</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Data:&#x27;</span>, data);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Handle errors: network issues or HTTP errors</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Fetch error:&#x27;</span>, error.<span class="property">message</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Axios-的種類判斷"><a href="#Axios-的種類判斷" class="headerlink" title="Axios 的種類判斷"></a>Axios 的種類判斷</h2><p>Axios 的錯誤控制範例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span>;</span><br><span class="line"></span><br><span class="line">axios.<span class="title function_">get</span>(<span class="string">&#x27;https://api.example.com/data&#x27;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Handle the response data</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Data:&#x27;</span>, response.<span class="property">data</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (error.<span class="property">response</span>) &#123;</span><br><span class="line">      <span class="comment">// The request was made and the server responded with a status code</span></span><br><span class="line">      <span class="comment">// that falls out of the range of 2xx</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;HTTP error! Status:&#x27;</span>, error.<span class="property">response</span>.<span class="property">status</span>);</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Response data:&#x27;</span>, error.<span class="property">response</span>.<span class="property">data</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (error.<span class="property">request</span>) &#123;</span><br><span class="line">      <span class="comment">// The request was made but no response was received</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Network error:&#x27;</span>, error.<span class="property">request</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// Something happened in setting up the request that triggered an Error</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error:&#x27;</span>, error.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="then"><a href="#then" class="headerlink" title="then"></a>then</h3><h4 id="response-data"><a href="#response-data" class="headerlink" title="response.data"></a>response.data</h4><p>倘若要求成功回應會帶上 data，並且協帶一個 data 物件。</p>
+<h3 id="catch"><a href="#catch" class="headerlink" title="catch"></a>catch</h3><p>當要求失敗會提供的判斷訊息，依據錯誤的不同提供幾種錯誤：</p>
+<h4 id="error-response"><a href="#error-response" class="headerlink" title="error.response"></a>error.response</h4><p>當 HTTP status code 在 200-299 以外時，可以透過 <code>error.response.status</code> 查詢錯誤代碼以及 <code>error.reponse.data</code> 取得伺服器回應的錯誤內容。</p>
+<h4 id="error-request"><a href="#error-request" class="headerlink" title="error.request"></a>error.request</h4><p>要求成功但沒有回應。</p>
+<h4 id="error-messages"><a href="#error-messages" class="headerlink" title="error.messages"></a>error.messages</h4><p>要求設定發生問題導致錯誤。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/HTTP/" rel="tag"># HTTP</a>
+              <a href="/blog/tags/error-handler/" rel="tag"># error handler</a>
+              <a href="/blog/tags/axios/" rel="tag"># axios</a>
+              <a href="/blog/tags/fetch/" rel="tag"># fetch</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/05/20/keep-canvas-switch-tabs/" rel="prev" title="保存畫布 createImageBitmap X visibilitychange">
+                  <i class="fa fa-chevron-left"></i> 保存畫布 createImageBitmap X visibilitychange
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2024/06/25/vue-mixins-pitfalls/" rel="next" title="你不知道的 Vue Mixins Pitfalls 小陷阱">
+                  你不知道的 Vue Mixins Pitfalls 小陷阱 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

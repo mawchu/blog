@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Vue - useful features              Vue - useful features              Vue - useful features              ．．．               本篇重點說明 Vue3 幾個好用的語法糖，包涵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3 - useful features 實用工具解析">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/08/14/vue3-useful-features/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="Vue - useful features              Vue - useful features              Vue - useful features              ．．．               本篇重點說明 Vue3 幾個好用的語法糖，包涵">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.pexels.com/photos/1543793/pexels-photo-1543793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+<meta property="article:published_time" content="2024-08-14T06:34:02.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.069Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Vue3">
+<meta property="article:tag" content="WatchEffect">
+<meta property="article:tag" content="defineProps">
+<meta property="article:tag" content="withDefaults">
+<meta property="article:tag" content="attrs">
+<meta property="article:tag" content="useVModel">
+<meta property="article:tag" content="defineModel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.pexels.com/photos/1543793/pexels-photo-1543793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/08/14/vue3-useful-features/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/08/14/vue3-useful-features/","path":"2024/08/14/vue3-useful-features/","title":"Vue3 - useful features 實用工具解析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue3 - useful features 實用工具解析 | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WatchEffect"><span class="nav-number">1.</span> <span class="nav-text">WatchEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#watchEffect-v-s-Watch"><span class="nav-number">1.1.</span> <span class="nav-text">watchEffect v.s. Watch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Component-features"><span class="nav-number">2.</span> <span class="nav-text">Component features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#defineProps-amp-withDefaults"><span class="nav-number">2.1.</span> <span class="nav-text">defineProps &amp; withDefaults</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#defineProps"><span class="nav-number">2.1.1.</span> <span class="nav-text">defineProps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#withDefaults"><span class="nav-number">2.1.2.</span> <span class="nav-text">withDefaults</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attrs-amp-v-bind"><span class="nav-number">2.2.</span> <span class="nav-text">attrs &amp; v-bind</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useVModel"><span class="nav-number">2.3.</span> <span class="nav-text">useVModel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8-useVModel"><span class="nav-number">2.3.1.</span> <span class="nav-text">不使用 useVModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-useVModel"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用 useVModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E6%95%B8%E5%88%97%E8%A1%A8"><span class="nav-number">2.3.3.</span> <span class="nav-text">參數列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defineModel"><span class="nav-number">2.4.</span> <span class="nav-text">defineModel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Component-%E5%AD%90%E5%85%83%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">Component 子元件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parent-%E7%88%B6%E5%85%83%E4%BB%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">Parent 父元件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BC%83-useVModel-amp-defineModel"><span class="nav-number">2.5.</span> <span class="nav-text">比較 useVModel &amp; defineModel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useVModel-1"><span class="nav-number">2.5.1.</span> <span class="nav-text">useVModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defineModel-1"><span class="nav-number">2.5.2.</span> <span class="nav-text">defineModel</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/08/14/vue3-useful-features/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Vue3 - useful features 實用工具解析 | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue3 - useful features 實用工具解析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-08-14 14:34:02" itemprop="dateCreated datePublished" datetime="2024-08-14T14:34:02+08:00">2024-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Vue - useful features </div>
+            <div class="stroke">Vue - useful features </div>
+            <div class="plain main-title">Vue - useful features </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇重點說明 Vue3 幾個好用的語法糖，包涵</p>
+<span id="more"></span>
+
+<p>又來到填坑的好時機了，這篇來重點介紹一下 Vue3 釋出的幾個好用的小工具來加快業務邏輯開發的效率，也可以更靈活的擴大 props 的應用，快來瞧瞧吧!</p>
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' class="post-image" src='https://images.pexels.com/photos/1543793/pexels-photo-1543793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' title="https://www.pexels.com/" height='auto'>
+
+<h1 id="WatchEffect"><a href="#WatchEffect" class="headerlink" title="WatchEffect"></a>WatchEffect</h1><p>該函式範圍內的依賴（Dependency）都會被直接偵測到並且觸發副作用，不需要特地撰寫 <code>immediate: true</code> 、 <code>deep: true</code> 與指定依賴（Source），大大的助益了多個依賴時的維護度。</p>
+<blockquote>
+<p><code>watchEffect</code> only tracks dependencies during its synchronous execution. When using it with an async callback, only properties accessed <strong>before the first await tick</strong> will be tracked.<br>同步執行的程式才會追蹤依賴（Dependency）變化，若以非同步形式 <code>async</code> 撰寫 Callback 則第一個 <code>await</code> 之前被監聽的依賴（Source）才會被追蹤。</p>
+</blockquote>
+<iframe height="300" style="width: 100%;" scrolling="no" title="Vue3 - watchEffect &amp; async function" src="https://codepen.io/mawchu/embed/KKjZwaX?default-tab=js" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/mawchu/pen/KKjZwaX">
+  Vue3 - watchEffect &amp; async function</a> by Jamie Hsieh (<a target="_blank" rel="noopener" href="https://codepen.io/mawchu">@mawchu</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.
+</iframe>
+簡而言之就是包含了以下額外配置的用法： 
+1. `immediate: true`
+2. `deep: true`
+3. 多重 source 監聽
+
+<h2 id="watchEffect-v-s-Watch"><a href="#watchEffect-v-s-Watch" class="headerlink" title="watchEffect v.s. Watch"></a>watchEffect v.s. Watch</h2><blockquote>
+<p><strong>Watch is lazy by default:</strong> the callback won’t be called until the watched source has changed.<br>watch 若沒有指定 <code>immediate: true</code> 則第一次的創造 watcher 時不會觸發，mounted 階段則沒有改變。<br>watchEffect 會自動在第一次就監聽到變化，可以節省撰寫 immediate 或者 mounted 額外執行第一次的行為，另外重要的一點是 watchEffect 只追蹤 Callback 觸及的 Source。</p>
+</blockquote>
+<h1 id="Component-features"><a href="#Component-features" class="headerlink" title="Component features"></a>Component features</h1><h2 id="defineProps-amp-withDefaults"><a href="#defineProps-amp-withDefaults" class="headerlink" title="defineProps &amp; withDefaults"></a>defineProps &amp; withDefaults</h2><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/typescript/composition-api.html#typing-component-props">defineProps 官方文件</a><br>應用上主要為了解決型別的定義(Typescript)而產生。</p>
+<h3 id="defineProps"><a href="#defineProps" class="headerlink" title="defineProps"></a>defineProps</h3><p>定義 props 的型別小工具，基礎用法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>(&#123;</span><br><span class="line">  <span class="attr">buttonType</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    <span class="attr">default</span>: <span class="string">&#x27;default&#x27;</span>, <span class="comment">// default, pending, complete, rejected</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">textColor</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="withDefaults"><a href="#withDefaults" class="headerlink" title="withDefaults"></a>withDefaults</h3><p>處理解構後的預設值(default props)，可以清楚分開定義型別與預設值，搭配 <code>defineProps</code> 的進階用法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(</span><br><span class="line">  defineProps&lt;&#123;</span><br><span class="line">    dataTestId?: string | number;</span><br><span class="line">    <span class="attr">activeCollapse</span>: string;</span><br><span class="line">    backgroundColor?: string;</span><br><span class="line">    headerHeight?: number;</span><br><span class="line">  &#125;&gt;(),</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">dataTestId</span>: <span class="string">&#x27;link&#x27;</span>,</span><br><span class="line">    <span class="attr">activeCollapse</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="attr">backgroundColor</span>: <span class="string">&#x27;#fff&#x27;</span>,</span><br><span class="line">    <span class="attr">headerHeight</span>: <span class="number">48</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="attrs-amp-v-bind"><a href="#attrs-amp-v-bind" class="headerlink" title="attrs &amp; v-bind"></a>attrs &amp; v-bind</h2><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/components/attrs">attrs 官方文件</a><br><code>attr</code> &amp; <code>v-bind</code> 是全開 props 的雙刀流，當使用三方 UI 套件時不限制元件的 props 資料可用，父元件傳的資料全盤接收到子元件上，擴展使用靈活度。</p>
+<ol>
+<li>使用 useAttrs() API 取得所有 props attributes。</li>
+<li>將元件 v-bind 傳入資料。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; useAttrs &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> attrs = <span class="title function_">useAttrs</span>()</span><br><span class="line"><span class="keyword">const</span> getBindValues = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  ...attrs,</span><br><span class="line">  <span class="attr">otherData</span>: <span class="string">&#x27;other props&#x27;</span></span><br><span class="line">&#125;))</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">el-component</span> <span class="attr">v-bind</span>=<span class="string">&quot;getBindValues&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">el-component</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="useVModel"><a href="#useVModel" class="headerlink" title="useVModel"></a>useVModel</h2><p><a target="_blank" rel="noopener" href="https://github.com/vueuse/vueuse/blob/main/packages/core/useVModel/index.ts">useVModel 官方文件</a></p>
+<blockquote>
+<p>Shorthand for v-model binding, props + emit -&gt; ref<br>我的理解是讓元件 <code>props</code> &amp; <code>emit</code> 也能落實 <code>V-model</code> 的雙向綁定效果，省略事件綁定的 boilerplate。</p>
+</blockquote>
+<h3 id="不使用-useVModel"><a href="#不使用-useVModel" class="headerlink" title="不使用 useVModel"></a>不使用 useVModel</h3><p>需要撰寫完整的監聽事件與 emit 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">:value</span>=<span class="string">&quot;modelValue&quot;</span> @<span class="attr">input</span>=<span class="string">&quot;onInput&quot;</span> /&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>([<span class="string">&#x27;modelValue&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>([<span class="string">&#x27;update:modelValue&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">function</span> <span class="title function_">onInput</span>(<span class="params">event</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">emit</span>(<span class="string">&#x27;update:modelValue&#x27;</span>, event.<span class="property">target</span>.<span class="property">value</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-useVModel"><a href="#使用-useVModel" class="headerlink" title="使用 useVModel"></a>使用 useVModel</h3><p>是需要透過 <code>@vueuse/core</code> 漸進式導入的額外工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; useVModel &#125; from <span class="string">&#x27;@vueuse/core&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>useVModel 在 <code>@vueuse/core</code> 有單一資料與 multiple 資料(useVModels 就是 useVModel loop)可以使用， 以 v-model 形式撰寫雙向資料綁定：</p>
+<h3 id="參數列表"><a href="#參數列表" class="headerlink" title="參數列表"></a>參數列表</h3><ol>
+<li><code>props</code> 為父元件傳遞的 <code>defineProps()</code> 資料串</li>
+<li><code>key</code> 為 <code>props[key]</code> 的值，選擇需要綁定的 prop 資料</li>
+<li>emit 為子元件響應的 <code>defineEmits()</code> 對應事件</li>
+</ol>
+<blockquote>
+<p>export function useVModel&lt;P extends object, K extends keyof P, Name extends string&gt;(<br>props: P,<br>key?: K,<br>emit?: (name: Name, …args: any[]) &#x3D;&gt; void,<br>options?: UseVModelOptions&lt;P[K], false&gt;,<br>): WritableComputedRef&lt;P[K]&gt;</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">&quot;inputValue&quot;</span> /&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; useVModel &#125; <span class="keyword">from</span> <span class="string">&#x27;@vueuse/core&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123; defineProps, defineEmits &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>([<span class="string">&#x27;modelValue&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>([<span class="string">&#x27;update:modelValue&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> inputValue = <span class="title function_">useVModel</span>(props, <span class="string">&#x27;modelValue&#x27;</span>, emit)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="defineModel"><a href="#defineModel" class="headerlink" title="defineModel"></a>defineModel</h2><p><a target="_blank" rel="noopener" href="https://vuejs.org/api/sfc-script-setup.html#definemodel">defineModel 官方文件</a><br>Vue 推出的 3.4 版本釋出的巨集(Macro)工具之一，不需匯入就可以使用，算是 V-model 在元件內的另一種進化版用法，常用在 <strong>集合 Form inputs</strong>。</p>
+<blockquote>
+<p>If you have a default value for defineModel prop and you don’t provide any value for this prop from the parent component, it can cause a de-synchronization between parent and child components.</p>
+</blockquote>
+<p>文件有提醒記得在父元件提供預設值(default values)否則會導致父子元件資料不同步的問題。</p>
+<h3 id="Component-子元件"><a href="#Component-子元件" class="headerlink" title="Component 子元件"></a>Component 子元件</h3><p>定義一個 <code>defineModel</code> 對象並制定表單項目。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">  ...</span><br><span class="line">  interface <span class="title class_">IEmployee</span> &#123;</span><br><span class="line">    name?: string;</span><br><span class="line">    age?: number;</span><br><span class="line">    salary?: number;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">model</span>: <span class="title class_">ModelRef</span>&lt;<span class="title class_">IFruits</span>&gt; = <span class="title function_">defineModel</span>(&#123;</span><br><span class="line">    <span class="attr">default</span>: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;John Doe&#x27;</span>,</span><br><span class="line">      <span class="attr">age</span>: <span class="number">38</span>,</span><br><span class="line">      <span class="attr">salary</span>: <span class="number">45000</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">el-form</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:model</span>=<span class="string">&quot;model&quot;</span> // <span class="attr">-------------</span> <span class="attr">父層傳入的</span> <span class="attr">v-model</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:rules</span>=<span class="string">&quot;formRules&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">label-position</span>=<span class="string">&quot;top&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">ref</span>=<span class="string">&quot;formRef&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">el-form-item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">prop</span>=<span class="string">&quot;name&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">:label</span>=<span class="string">&quot;...&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">el-input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-model</span>=<span class="string">&quot;model.name&quot;</span> // <span class="attr">----</span> <span class="attr">input</span> <span class="attr">item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">el-form-item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">prop</span>=<span class="string">&quot;age&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">:label</span>=<span class="string">&quot;...&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">el-input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-model</span>=<span class="string">&quot;model.age&quot;</span> // <span class="attr">----</span> <span class="attr">input</span> <span class="attr">item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">el-form-item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">prop</span>=<span class="string">&quot;salary&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">:label</span>=<span class="string">&quot;...&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">el-input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-model</span>=<span class="string">&quot;model.salary&quot;</span> // <span class="attr">----</span> <span class="attr">input</span> <span class="attr">item</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span><span class="tag">&lt;/<span class="name">el-input</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">el-form-item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">el-form</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Parent-父元件"><a href="#Parent-父元件" class="headerlink" title="Parent 父元件"></a>Parent 父元件</h3><p>制定一樣規格的資料傳進子元件中並設定好預設值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">const</span> form = <span class="title function_">reactive</span>(&#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">salary</span>: <span class="number">0</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">Child</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">v-model</span>=<span class="string">&quot;form&quot;</span> // <span class="attr">---------</span> <span class="attr">對應這裡的</span> <span class="attr">form</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">ref</span>=<span class="string">&quot;formRef&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="比較-useVModel-amp-defineModel"><a href="#比較-useVModel-amp-defineModel" class="headerlink" title="比較 useVModel &amp; defineModel"></a>比較 useVModel &amp; defineModel</h2><h3 id="useVModel-1"><a href="#useVModel-1" class="headerlink" title="useVModel"></a>useVModel</h3><blockquote>
+<ul>
+<li>useVModel is a function that takes in the component’s props and emits function, and it returns a reactive reference that can be bound to v-model.</li>
+<li>abstracts away the need to manually emit the update:modelValue event.</li>
+</ul>
+</blockquote>
+<p>從 VueUse(core) 外部引用的工具，提供給 Composition API 使用，取得元件的 props &amp; emits 並且回傳一個 model 對象提供綁定，減少 update value 的 emit 事件制定步驟。</p>
+<h3 id="defineModel-1"><a href="#defineModel-1" class="headerlink" title="defineModel"></a>defineModel</h3><blockquote>
+<ul>
+<li>defineModel allows you to declare a v-model binding directly in the component’s props, making it explicit and simplifying the logic for handling model bindings.</li>
+<li>It automatically handles the prop and event emission, reducing boilerplate code.</li>
+</ul>
+</blockquote>
+<p>是官方釋出的巨集(Macro)的工具之一，允許在子元件直接雙向綁定省去處理 props &amp; emits，Composition 與 Options APIs 都適用，會是一個比 useVModel 更簡潔的寫法，不過 useVModel 可以自定義更複雜的邏輯處理。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Vue3/" rel="tag"># Vue3</a>
+              <a href="/blog/tags/WatchEffect/" rel="tag"># WatchEffect</a>
+              <a href="/blog/tags/defineProps/" rel="tag"># defineProps</a>
+              <a href="/blog/tags/withDefaults/" rel="tag"># withDefaults</a>
+              <a href="/blog/tags/attrs/" rel="tag"># attrs</a>
+              <a href="/blog/tags/useVModel/" rel="tag"># useVModel</a>
+              <a href="/blog/tags/defineModel/" rel="tag"># defineModel</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/08/08/javascript-bitwise-not/" rel="prev" title="Javascript - bitwise NOT">
+                  <i class="fa fa-chevron-left"></i> Javascript - bitwise NOT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2024/08/16/vue3xTypescript-knowhow/" rel="next" title="Vue3 x Typescript knowhow 關於型別的兩三事">
+                  Vue3 x Typescript knowhow 關於型別的兩三事 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

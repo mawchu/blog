@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Leecode Test X Contains Duplicate              Leecode Test X Contains Duplicate              Leecode Test X Contains Duplicate             ．．．               又來到歡樂的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="優化演算法練習 Leecode Test X Contains Duplicate">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/03/20/leecode-test-contains-duplicate/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="Leecode Test X Contains Duplicate              Leecode Test X Contains Duplicate              Leecode Test X Contains Duplicate             ．．．               又來到歡樂的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-20T03:53:20.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.065Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Map">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="Hashtable">
+<meta property="article:tag" content="Set">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/03/20/leecode-test-contains-duplicate/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/03/20/leecode-test-contains-duplicate/","path":"2025/03/20/leecode-test-contains-duplicate/","title":"優化演算法練習 Leecode Test X Contains Duplicate"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>優化演算法練習 Leecode Test X Contains Duplicate | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%E8%AA%AA%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">題目說明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E6%80%9D%E7%B6%AD"><span class="nav-number">2.</span> <span class="nav-text">解題思維</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%96%84%E7%94%A8-Set-%E5%8E%BB%E9%99%A4%E9%87%8D%E8%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">善用 Set 去除重複</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E5%BE%8C%E6%83%A1%E8%A3%9C"><span class="nav-number">3.</span> <span class="nav-text">題後惡補</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash-%E5%93%88%E5%B8%8C-%E9%9B%9C%E6%B9%8A"><span class="nav-number">3.1.</span> <span class="nav-text">Hash 哈希(雜湊)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">3.1.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">3.1.2.</span> <span class="nav-text">Set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-%E5%92%8C-Map-v-s-Hashtable-%E7%9A%84%E9%81%8B%E7%AE%97%E5%84%AA%E5%8B%A2"><span class="nav-number">3.2.</span> <span class="nav-text">Set 和 Map v.s. Hashtable 的運算優勢</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E7%A2%B0%E6%92%9E%E8%99%95%E7%90%86"><span class="nav-number">3.2.1.</span> <span class="nav-text">哈希碰撞處理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E6%A9%9F%E5%88%B6"><span class="nav-number">3.2.2.</span> <span class="nav-text">安全性機制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E7%9A%84%E9%A0%86%E5%BA%8F%E4%BE%86%E8%BF%AD%E4%BB%A3%E5%85%83%E7%B4%A0"><span class="nav-number">3.2.3.</span> <span class="nav-text">按元素插入的順序來迭代元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E6%AD%A2%E9%8D%B5%E7%9A%84%E9%87%8D%E8%A4%87"><span class="nav-number">3.2.4.</span> <span class="nav-text">防止鍵的重複</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E5%BE%8C%E6%84%9F%E6%83%B3"><span class="nav-number">3.3.</span> <span class="nav-text">解題後感想</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/03/20/leecode-test-contains-duplicate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="優化演算法練習 Leecode Test X Contains Duplicate | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          優化演算法練習 Leecode Test X Contains Duplicate
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-20 11:53:20" itemprop="dateCreated datePublished" datetime="2025-03-20T11:53:20+08:00">2025-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leecode Test X Contains Duplicate</div>
+            <div class="stroke"> Leecode Test X Contains Duplicate</div>
+            <div class="plain main-title"> Leecode Test X Contains Duplicate</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>又來到歡樂的(自虐的) Leetcode 時間，本篇深入探討考題 217 <code>Contains Duplicate</code> ：</p>
+<span id="more"></span>
+
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><ol start="217">
+<li>Contains Duplicate (Easy)<br>Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.</li>
+</ol>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>Example 1:<br>    Input: nums &#x3D; [1,2,3,1]<br>    Output: true<br>    Explanation:<br>    The element 1 occurs at the indices 0 and 3.</p>
+<p>Example 2:<br>    Input: nums &#x3D; [1,2,3,4]<br>    Output: false<br>    Explanation:<br>    All elements are distinct.</p>
+<p>Example 3:<br>    Input: nums &#x3D; [1,1,1,3,3,4,3,2,4,2]<br>    Output: true</p>
+<h1 id="解題思維"><a href="#解題思維" class="headerlink" title="解題思維"></a>解題思維</h1><h2 id="善用-Set-去除重複"><a href="#善用-Set-去除重複" class="headerlink" title="善用 Set 去除重複"></a>善用 Set 去除重複</h2><ol>
+<li><p>每每看到 <code>Duplicate</code> 關鍵字很直覺反應想到 hash 方法 <code>Set()</code>，可以很快速地挑檢出獨一無二的數字並取得其長度，一但取得的長度大於傳入的 nums 就可以確定其中存在重複性數字了！</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; <span class="keyword">new</span> <span class="title class_">Set</span>(nums).<span class="property">size</span> &gt; nums.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; [...<span class="keyword">new</span> <span class="title class_">Set</span>(nums)].<span class="property">length</span> &gt; nums.<span class="property">length</span>;</span><br></pre></td></tr></table></figure>
+<p> 以上兩種方法都可以確定數字陣列 nums 中存在重複數字，其中小小差異在於 <code>.size</code> 可以直接取得 Set 集資料表有多少數字，而轉化成陣列後須改以 <code>.length</code> 取得，方法一簡潔而方法二易懂。</p>
+</li>
+<li><p>建立 Map 映射直接返回找到的、排除不存在的數字：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">containsDuplicate</span> = (<span class="params">nums</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> numSet = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line">    <span class="keyword">for</span> (num <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="keyword">if</span> (numMap.<span class="title function_">has</span>(num)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> numMap.<span class="title function_">add</span>(num);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 先於映射表中確認數字符合重複條件就跳出、沒有就 <code>add</code> 在映射表中，效率上比方法一更好的地方在於不需將所有數字都操作一遍 <code>add</code> (new Set(nums))可以找到重複數字，除非第一個重複數字在最後一個位置。</p>
+</li>
+</ol>
+<h1 id="題後惡補"><a href="#題後惡補" class="headerlink" title="題後惡補"></a>題後惡補</h1><p>來記錄幾個 leetcode 解題的秘訣：</p>
+<h2 id="Hash-哈希-雜湊"><a href="#Hash-哈希-雜湊" class="headerlink" title="Hash 哈希(雜湊)"></a>Hash 哈希(雜湊)</h2><p>哈希表基於哈希函數將鍵映射到一個固定大小的數組索引中，從而實現了快速的查找、插入和刪除操作。這些操作的平均時間複雜度通常是 O(1)，這使得 Map 和 Set 成為處理大量資料時非常高效的資料結構。</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>Map 是一個鍵值對（key-value）資料結構，它通常基於哈希表來實現。每個鍵值對的鍵（key）會經過哈希函數轉換成一個哈希碼，然後根據該哈希碼將數據儲存在哈希表中。</p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>Set 是一個<em>不允許重複元素</em>的集合資料結構。在 Set 中，每個元素都作為一個「鍵」，而哈希表中則存儲這些鍵（不需要對應的值）。Set 可以利用哈希表的特性來快速檢查元素是否存在，以及高效地執行插入和刪除操作。</p>
+<h2 id="Set-和-Map-v-s-Hashtable-的運算優勢"><a href="#Set-和-Map-v-s-Hashtable-的運算優勢" class="headerlink" title="Set 和 Map v.s. Hashtable 的運算優勢"></a>Set 和 Map v.s. Hashtable 的運算優勢</h2><h3 id="哈希碰撞處理"><a href="#哈希碰撞處理" class="headerlink" title="哈希碰撞處理"></a>哈希碰撞處理</h3><p>Set 和 Map 使用更加現代和有效的哈希碰撞處理機制，這意味著它們能夠更好地管理可能的哈希碰撞情況。傳統的 Hashtable 可能在碰撞發生時造成性能下降，特別是當哈希函數的設計不夠良好時。<br>在現代的 JavaScript 實現中，Set 和 Map 通常會使用更優化的哈希函數來確保鍵分佈均勻，這有助於減少碰撞並提高性能。</p>
+<h3 id="安全性機制"><a href="#安全性機制" class="headerlink" title="安全性機制"></a>安全性機制</h3><p>Map 和 Set 允許鍵是 任意類型，包括對象、函數，甚至是 NaN、undefined 等。這意味著你可以將任何資料類型作為鍵來存儲數據，而不像傳統的 Hashtable，在某些語言中只能使用字串或數字作為鍵。</p>
+<h3 id="按元素插入的順序來迭代元素"><a href="#按元素插入的順序來迭代元素" class="headerlink" title="按元素插入的順序來迭代元素"></a>按元素插入的順序來迭代元素</h3><p>Set 和 Map 提供了 穩定的插入順序，即它們會按元素插入的順序來迭代元素。這和傳統的 Hashtable 不同，因為 Hashtable 中的鍵的順序是無序的。</p>
+<h3 id="防止鍵的重複"><a href="#防止鍵的重複" class="headerlink" title="防止鍵的重複"></a>防止鍵的重複</h3><p>在某些語言的 Hashtable 實現中，若鍵的命名不當（例如，與內建屬性名稱相同），可能會導致鍵被意外覆蓋或隱藏。<br>Set 和 Map 避免了這些問題，因為它們有明確的鍵範圍和更高的安全性保障。它們的鍵不會被隨意覆蓋，而且能夠避免由於錯誤的鍵類型而引起的潛在錯誤。</p>
+<h2 id="解題後感想"><a href="#解題後感想" class="headerlink" title="解題後感想"></a>解題後感想</h2><p>有發現 leetcode 幾個題目都在圍繞 <code>Set</code> <code>Map</code> 方法與概念的熟練度與靈活運用，映射的做法大大提高了運算效能值得多練練。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+              <a href="/blog/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/blog/tags/Map/" rel="tag"># Map</a>
+              <a href="/blog/tags/Leetcode/" rel="tag"># Leetcode</a>
+              <a href="/blog/tags/Hashtable/" rel="tag"># Hashtable</a>
+              <a href="/blog/tags/Set/" rel="tag"># Set</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/18/my-first-react-task/" rel="prev" title="我的第一個完整 React developing note">
+                  <i class="fa fa-chevron-left"></i> 我的第一個完整 React developing note
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/20/leetcode-bitwise-operators-intro/" rel="next" title="優化演算法練習 Leetcode X Bitwise Operators 介紹">
+                  優化演算法練習 Leetcode X Bitwise Operators 介紹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

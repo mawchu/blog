@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="HTML  dir - text directionality             HTML  dir - text directionality             HTML  dir - text directionality             ．．．               接觸過 i18n 多國語言的同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML 文本元素 dir - text directionality">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/09/09/html-direction-scss/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="HTML  dir - text directionality             HTML  dir - text directionality             HTML  dir - text directionality             ．．．               接觸過 i18n 多國語言的同">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.pexels.com/photos/17635098/pexels-photo-17635098/free-photo-of-door.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+<meta property="article:published_time" content="2024-09-09T06:42:27.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.064Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="dir">
+<meta property="article:tag" content="SCSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.pexels.com/photos/17635098/pexels-photo-17635098/free-photo-of-door.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/09/09/html-direction-scss/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/09/09/html-direction-scss/","path":"2024/09/09/html-direction-scss/","title":"HTML 文本元素 dir - text directionality"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HTML 文本元素 dir - text directionality | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RTL-%E7%9A%84%E8%AA%9E%E8%A8%80%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">RTL 的語言設定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCSS-%E5%87%BD%E5%BC%8F%E5%88%B6%E5%AE%9A%E6%9B%B8%E5%AF%AB%E6%96%B9%E5%90%91%E6%A8%A3%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">SCSS 函式制定書寫方向樣式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E7%94%A8-Property"><span class="nav-number">2.1.</span> <span class="nav-text">共用 Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E7%94%A8-Value"><span class="nav-number">2.2.</span> <span class="nav-text">共用 Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E8%87%AA%E7%82%BA%E6%94%BF"><span class="nav-number">2.3.</span> <span class="nav-text">各自為政</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%96%AE%E9%82%8A%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.4.</span> <span class="nav-text">單邊設定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%8B%E9%9A%9B%E8%AA%9E%E8%A8%80%E4%BB%A3%E7%A2%BC%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">國際語言代碼表</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/09/09/html-direction-scss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HTML 文本元素 dir - text directionality | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTML 文本元素 dir - text directionality
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-09-09 14:42:27" itemprop="dateCreated datePublished" datetime="2024-09-09T14:42:27+08:00">2024-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/SCSS/" itemprop="url" rel="index"><span itemprop="name">SCSS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">HTML  dir - text directionality</div>
+            <div class="stroke">HTML  dir - text directionality</div>
+            <div class="plain main-title">HTML  dir - text directionality</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>接觸過 i18n 多國語言的同學一定對書寫方向（Directionality of elements text）並不陌生，算是前端一個滿運氣運氣會碰到的工作，可以當個冷知識來學習一下！</p>
+<span id="more"></span>
+
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='https://images.pexels.com/photos/17635098/pexels-photo-17635098/free-photo-of-door.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' width='80%' height='auto'>
+
+<h1 id="RTL-的語言設定"><a href="#RTL-的語言設定" class="headerlink" title="RTL 的語言設定"></a>RTL 的語言設定</h1><p>例如阿拉伯（Arabic, 縮寫 ar）、波斯（Farsi, 縮寫 fa）等就是屬於 <strong>RTL（Right to left）</strong> 由右至左的書寫方向，窺探一下語言設定的檔案可知一二：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">RTL_LANGUAGE_LIST</span> = [<span class="string">&#x27;ar&#x27;</span>, <span class="string">&#x27;fa&#x27;</span>];</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">RTL_LANGUAGE_LIST</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@/constants/language.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attr">watch</span>: &#123;</span><br><span class="line">        <span class="attr">lang</span>: &#123;</span><br><span class="line">        <span class="attr">immediate</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="title function_">handler</span>(<span class="params">val</span>) &#123;</span><br><span class="line">            <span class="title function_">setLocale</span>(val);</span><br><span class="line">                ...</span><br><span class="line">                <span class="variable language_">document</span>.<span class="property">body</span>.<span class="property">dir</span> = <span class="variable constant_">RTL_LANGUAGE_LIST</span>.<span class="title function_">includes</span>(val) ? <span class="string">&#x27;rtl&#x27;</span> : <span class="string">&#x27;ltr&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>產出的 HTML 就可以輕鬆制定書寫方向的樣式了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">dir</span>=<span class="string">&quot;rtl&quot;</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">dir</span>=<span class="string">&quot;ltr&quot;</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>透過 HTML attribute <code>dir=&quot;rtl&quot; </code> 設定由右至左， <code>dir=&quot;ltr&quot; </code> 設定由左至右的書寫方向以外，還可以結合 SCSS 的 <code>@include</code> 來自定義分別左與右的樣式避免破版。</p>
+<h1 id="SCSS-函式制定書寫方向樣式"><a href="#SCSS-函式制定書寫方向樣式" class="headerlink" title="SCSS 函式制定書寫方向樣式"></a>SCSS 函式制定書寫方向樣式</h1><p>專案上有使用幾個類型的延伸寫法，分別因應不同使用場景：</p>
+<h2 id="共用-Property"><a href="#共用-Property" class="headerlink" title="共用 Property"></a>共用 Property</h2><p>適用一種 property 但不同值，例如文字對齊方向：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 撰寫</span></span><br><span class="line"><span class="keyword">@mixin</span> directionality-diff-value(<span class="variable">$property</span>, <span class="variable">$ltr-value</span>, <span class="variable">$rtl-value</span>) &#123;</span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;ltr&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$property</span>&#125;: <span class="variable">$ltr-value</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;rtl&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$property</span>&#125;: <span class="variable">$rtl-value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//應用</span></span><br><span class="line"><span class="selector-class">.ql-editor</span> &#123;</span><br><span class="line">  <span class="keyword">@include</span> directionality-diff-value(text-align, left, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="共用-Value"><a href="#共用-Value" class="headerlink" title="共用 Value"></a>共用 Value</h2><p>適用兩種 property 但同值，例如浮動位置、內外距：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 撰寫</span></span><br><span class="line"><span class="keyword">@mixin</span> directionality-diff-property(<span class="variable">$ltr-property</span>, <span class="variable">$rtl-property</span>, <span class="variable">$value</span>) &#123;</span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;ltr&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$ltr-property</span>&#125;: <span class="variable">$value</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;rtl&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$rtl-property</span>&#125;: <span class="variable">$value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//應用</span></span><br><span class="line"><span class="selector-class">.btn_group</span> &#123;</span><br><span class="line">  <span class="selector-class">.second_btn</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> directionality-diff-property(margin-left, margin-right, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="各自為政"><a href="#各自為政" class="headerlink" title="各自為政"></a>各自為政</h2><p>適用 Property 與 Value 各有不同時，例如靠左或靠右且位置有異：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 撰寫</span></span><br><span class="line"><span class="keyword">@mixin</span> directionality-dual(</span><br><span class="line">  <span class="variable">$ltr-property</span>,</span><br><span class="line">  <span class="variable">$ltr-value</span>,</span><br><span class="line">  <span class="variable">$rtl-property</span>,</span><br><span class="line">  <span class="variable">$rtl-value</span></span><br><span class="line">) &#123;</span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;ltr&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$ltr-property</span>&#125;: <span class="variable">$ltr-value</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;rtl&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$rtl-property</span>&#125;: <span class="variable">$rtl-value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//應用</span></span><br><span class="line"><span class="selector-class">.login_dropdown_box</span> &#123;</span><br><span class="line">  <span class="selector-class">.popper__arrow</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> directionality-dual(right, <span class="number">0px</span> !important, left, <span class="number">10px</span> !important);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="單邊設定"><a href="#單邊設定" class="headerlink" title="單邊設定"></a>單邊設定</h2><p>適用由右至左書寫方向需要手動制定時，由於大眾書寫方向為 LTR 通常不用特別設定時就需 <strong>針對 RTL</strong> 撰寫樣式：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 撰寫</span></span><br><span class="line"><span class="keyword">@mixin</span> directionality-single(<span class="variable">$rtl-property</span>, <span class="variable">$rtl-value</span>) &#123;</span><br><span class="line">  <span class="selector-attr">[dir=<span class="string">&#x27;rtl&#x27;</span>]</span> &amp; &#123;</span><br><span class="line">    #&#123;<span class="variable">$rtl-property</span>&#125;: <span class="variable">$rtl-value</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//應用</span></span><br><span class="line"><span class="selector-class">.el-input__inner</span> &#123;</span><br><span class="line">  <span class="keyword">@include</span> directionality-single(flex-direction, row-reverse); <span class="comment">// 反轉方向</span></span><br><span class="line">  <span class="keyword">@include</span> directionality-single(text-align, right); <span class="comment">// 預設 left</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="國際語言代碼表"><a href="#國際語言代碼表" class="headerlink" title="國際語言代碼表"></a>國際語言代碼表</h1><p>以下補充語言代碼的對應縮寫或者別名：</p>
+<table>
+<thead>
+<tr>
+<th align="center">縮寫</th>
+<th align="center">語言</th>
+<th align="center">書寫方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">en</td>
+<td align="center">English</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">zh-CN</td>
+<td align="center">簡體中文</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">zh-TW</td>
+<td align="center">繁體中文</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">ar</td>
+<td align="center">Arabic</td>
+<td align="center"><strong>RTL</strong></td>
+</tr>
+<tr>
+<td align="center">de</td>
+<td align="center">German</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">es</td>
+<td align="center">Spanish(EU)</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">fa</td>
+<td align="center">Farsi, Persian 波斯語</td>
+<td align="center"><strong>RTL</strong></td>
+</tr>
+<tr>
+<td align="center">fr</td>
+<td align="center">French</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">hi</td>
+<td align="center">Hindi 印度文、印地語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">id</td>
+<td align="center">Indonesian</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">it</td>
+<td align="center">Italian</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">ja</td>
+<td align="center">Japanese</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">km</td>
+<td align="center">Khmer 高棉語、柬埔寨</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">kr</td>
+<td align="center">Korean</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">mn</td>
+<td align="center">Mongolian 蒙古語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">my</td>
+<td align="center">Bahasa Malaysian</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">nl</td>
+<td align="center">Netherland, Dutch 荷蘭、尼德蘭語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">pl</td>
+<td align="center">Polish 波蘭語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">pt</td>
+<td align="center">Portuguese(EU) 葡萄牙語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">ru</td>
+<td align="center">Russian 俄羅斯</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">th</td>
+<td align="center">Thai 泰語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">tl</td>
+<td align="center">Filipino, Tagalog 菲律賓、塔加路語</td>
+<td align="center">LTR</td>
+</tr>
+<tr>
+<td align="center">vi</td>
+<td align="center">Vietnamese 越南語</td>
+<td align="center">LTR</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/HTML/" rel="tag"># HTML</a>
+              <a href="/blog/tags/dir/" rel="tag"># dir</a>
+              <a href="/blog/tags/SCSS/" rel="tag"># SCSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/09/05/vue-sync-modifier/" rel="prev" title="Vue 雙向綁定語法糖 - sync modifier">
+                  <i class="fa fa-chevron-left"></i> Vue 雙向綁定語法糖 - sync modifier
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2024/12/24/react-context-hook-pitfalls/" rel="next" title="React Context pitfalls - 踩雷經驗">
+                  React Context pitfalls - 踩雷經驗 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

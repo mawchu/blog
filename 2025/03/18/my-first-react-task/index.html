@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="React developing note              React developing note              React developing note             ．．．                因應公司系統架構的配置接觸到客戶後台的功能開發，順勢記錄一下完整的開發流程在這裡，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的第一個完整 React developing note">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/03/18/my-first-react-task/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="React developing note              React developing note              React developing note             ．．．                因應公司系統架構的配置接觸到客戶後台的功能開發，順勢記錄一下完整的開發流程在這裡，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/my-first-react-task-0.jpg">
+<meta property="article:published_time" content="2025-03-18T12:20:41.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.066Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="React Context">
+<meta property="article:tag" content="React Hooks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mawchu.github.io/blog/images/my-first-react-task-0.jpg">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/03/18/my-first-react-task/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/03/18/my-first-react-task/","path":"2025/03/18/my-first-react-task/","title":"我的第一個完整 React developing note"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>我的第一個完整 React developing note | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%8B%E7%99%BC%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">開發背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MVC-%E9%81%8B%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">MVC 運作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%89%93%E5%8C%85-module-%E6%AA%94"><span class="nav-number">2.1.</span> <span class="nav-text">前端打包 module 檔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%8C%E7%AB%AF%E9%96%8B%E5%95%9F%E5%85%A5%E5%8F%A3%E9%BB%9E"><span class="nav-number">2.2.</span> <span class="nav-text">後端開啟入口點</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#React-%E6%9E%B6%E6%A7%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">React 架構分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Routers"><span class="nav-number">3.1.</span> <span class="nav-text">建立 Routers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%85%A5%E5%8F%A3%E9%BB%9E"><span class="nav-number">3.2.</span> <span class="nav-text">前端入口點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E6%8E%A5-API"><span class="nav-number">3.3.</span> <span class="nav-text">串接 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%A5%AD%E5%8B%99%E9%82%8F%E8%BC%AF"><span class="nav-number">3.4.</span> <span class="nav-text">建立業務邏輯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-App-%E5%85%A5%E5%8F%A3%E9%BB%9E"><span class="nav-number">3.5.</span> <span class="nav-text">React App 入口點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%B2%E5%85%A5%E9%96%8B%E7%99%BC%E6%A8%A1%E5%A1%8A%E6%A0%B8%E5%BF%83%E9%82%8F%E8%BC%AF%E5%85%A5%E5%8F%A3"><span class="nav-number">3.6.</span> <span class="nav-text">進入開發模塊核心邏輯入口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#useContext-%E8%A7%A3%E6%B1%BA-props-drilling"><span class="nav-number">4.</span> <span class="nav-text">useContext 解決 props drilling</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/03/18/my-first-react-task/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="我的第一個完整 React developing note | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的第一個完整 React developing note
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-03-18 20:20:41" itemprop="dateCreated datePublished" datetime="2025-03-18T20:20:41+08:00">2025-03-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> React developing note</div>
+            <div class="stroke"> React developing note</div>
+            <div class="plain main-title"> React developing note</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>因應公司系統架構的配置接觸到客戶後台的功能開發，順勢記錄一下完整的開發流程在這裡，文中將以化名取代實際專案內容 🫣</p>
+<span id="more"></span>
+
+<p>踩過的坑我們懂得避免，這次選用最多人使用與維護的 Ｎ exT 模板作為新部落格的皮膚。</p>
+<h1 id="開發背景"><a href="#開發背景" class="headerlink" title="開發背景"></a>開發背景</h1><p>首先是專案架構是以一個神奇的方式從 Java MVC 中抽離出來的小綠洲，由於舊的邏輯架構 80% 都還是透過後端開發(全 SSR + sql)不能割捨，打包時須跟隨著捆綁式部署，相信有年代的系統又想跟隨前後端分離的新技術時難免會遭遇到此情境，簡單的看一下架構基礎建設：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Node -v</th>
+<th align="center">Npm</th>
+<th align="center">UI framework</th>
+<th align="center">Programming language</th>
+<th align="center">Build Tool</th>
+<th align="center">Git Commit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">18+</td>
+<td align="center">yarn</td>
+<td align="center">Ant design</td>
+<td align="center">Typescript</td>
+<td align="center">craco</td>
+<td align="center">Husky</td>
+</tr>
+</tbody></table>
+<h1 id="MVC-運作方式"><a href="#MVC-運作方式" class="headerlink" title="MVC 運作方式"></a>MVC 運作方式</h1><h2 id="前端打包-module-檔"><a href="#前端打包-module-檔" class="headerlink" title="前端打包 module 檔"></a>前端打包 module 檔</h2><ol>
+<li><p>透過一段 Webpack 設定將寫好了 React 文件打包為模組形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; pluginByName &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@craco/craco&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> entry = &#123;</span><br><span class="line">  <span class="attr">main</span>: <span class="string">&#x27;./src/routers/index-export.js&#x27;</span>,</span><br><span class="line">  <span class="attr">my_module</span>: <span class="string">&#x27;./src/routers/parentCategory/my_module/index-export.tsx&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">webpackConfigure</span> = (<span class="params">webpackConfig, env</span>) =&gt; &#123;</span><br><span class="line">  webpackConfig.<span class="property">entry</span> = entry;</span><br><span class="line"></span><br><span class="line">  webpackConfig.<span class="property">output</span> = &#123;</span><br><span class="line">    ...webpackConfig.<span class="property">output</span>,</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;modules/[name].bundle.js&#x27;</span>,</span><br><span class="line">    <span class="attr">chunkFilename</span>: <span class="string">&#x27;modules/[id].[contenthash:8].chunk.js&#x27;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* 修改minicss 导出filename  */</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">MiniCssExtractPlugin</span> = webpackConfig.<span class="property">plugins</span>.<span class="title function_">find</span>(</span><br><span class="line">    <span class="title function_">pluginByName</span>(<span class="string">&#x27;MiniCssExtractPlugin&#x27;</span>)</span><br><span class="line">  );</span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">MiniCssExtractPlugin</span>) &#123;</span><br><span class="line">    <span class="title class_">MiniCssExtractPlugin</span>.<span class="property">options</span>.<span class="property">filename</span> = <span class="string">&#x27;static/css/[name].bundle.css&#x27;</span>;</span><br><span class="line">    <span class="title class_">MiniCssExtractPlugin</span>.<span class="property">options</span>.<span class="property">chunkFilename</span> =</span><br><span class="line">      <span class="string">&#x27;static/css/[id].[contenthash:8].chunk.css&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> splitChunks = &#123;</span><br><span class="line">    <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">      <span class="attr">vendor</span>: &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/[\\/]node_modules[\\/](react|react-dom|antd|moment|react-quill)[\\/]/</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;vendors&#x27;</span>,</span><br><span class="line">        <span class="attr">chunks</span>: <span class="string">&#x27;all&#x27;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">common</span>: &#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;common&#x27;</span>,</span><br><span class="line">        <span class="attr">chunks</span>: <span class="string">&#x27;all&#x27;</span>,</span><br><span class="line">        <span class="attr">minChunks</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">reuseExistingChunk</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  webpackConfig.<span class="property">optimization</span>.<span class="property">splitChunks</span> = splitChunks;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> webpackConfig;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  webpackConfigure,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="後端開啟入口點"><a href="#後端開啟入口點" class="headerlink" title="後端開啟入口點"></a>後端開啟入口點</h2><p>此入口為後端建立起 MVC 架構後的實際 menu，是後端與前端半分離的橋樑 1.</p>
+<ol>
+<li><p>在後端架構裡撰寫一段 <code>.ftl</code> 引入 React 打包成 module 檔後的 <code>my_module.bundle.css</code> 以及 <code>my_module.bundle.js</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span></span></span><br><span class="line"><span class="tag">    <span class="attr">href</span>=<span class="string">&quot;/my-project/static/css/my_module.bundle.css&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/my-project/modules/my_module.bundle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立入口路由與對應 View：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(value = &quot;/to_myProject&quot;)</span></span><br><span class="line"><span class="keyword">public</span> ModelAndView <span class="title function_">toServer</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">ModelAndView</span> <span class="variable">modelAndView</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ModelAndView</span>();</span><br><span class="line">    modelAndView.setViewName(<span class="string">&quot;/MVC_project/.../my_module&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>操作 sql 語法取得 menu 列表與路由權限</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">changeSet</span></span></span><br><span class="line"><span class="tag">  <span class="attr">author</span>=<span class="string">&quot;mawchu&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">id</span>=<span class="string">&quot;123&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">context</span>=<span class="string">&quot;global&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">sql</span>&gt;</span></span><br><span class="line">    SET @parentMenu = (select menuId from tb_my_table menuname =</span><br><span class="line">    &#x27;menu.parent.name&#x27; and parentMenu = 0); INSERT INTO tb_my_menu(....)</span><br><span class="line">    VALUES (&#x27;menu.my_module&#x27;, &#x27;menu.my_module&#x27;, &#x27;/.../to_myProject&#x27;, ...);</span><br><span class="line">    SET @menuid = (select menuId from tb_my_table menuname =</span><br><span class="line">    &#x27;menu.my_module&#x27;); INSERT INTO tb_my_permission(...) VALUES</span><br><span class="line">    (&#x27;menu.my_module&#x27;, ..., &#x27;menu.my_module&#x27;); INSERT INTO</span><br><span class="line">    tb_my_config(....) VALUES (&#x27;menu.my_module&#x27;, &#x27;模組名&#x27;, &#x27;Module Name&#x27;,</span><br><span class="line">    .....);</span><br><span class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">changeSet</span>&gt;</span></span><br><span class="line">```</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="React-架構分析"><a href="#React-架構分析" class="headerlink" title="React 架構分析"></a>React 架構分析</h1><p>由於我是 React 新手還無法使用的出神入化，先參考前人的開發架構當作打底再根據業務邏輯的不同稍做修改：</p>
+<h2 id="建立-Routers"><a href="#建立-Routers" class="headerlink" title="建立 Routers"></a>建立 Routers</h2><p>建立檔案在 &#x2F;my-project&#x2F;src&#x2F;routers&#x2F;modules&#x2F;parentCategory.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lazyLoad <span class="keyword">from</span> <span class="string">&#x27;@routers/utils/LazyLoad&#x27;</span>;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">MyRouteObject</span> = <span class="title class_">Omit</span>&lt;<span class="title class_">RouteObject</span>, <span class="string">&#x27;children&#x27;</span>&gt; &amp; &#123;</span><br><span class="line">  children?: <span class="title class_">MyRouteObject</span>[];</span><br><span class="line">  meta?: <span class="title class_">MetaProps</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">parentRouters</span>: <span class="title class_">MyRouteObject</span>[] = [</span><br><span class="line">  ...&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/parentCategory/my_module&#x27;</span>,</span><br><span class="line">    <span class="attr">element</span>: <span class="title function_">lazyLoad</span>(</span><br><span class="line">      <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;@src/pages/parentCategory/my_module/index&#x27;</span>)</span><br><span class="line">    ),</span><br><span class="line">    <span class="attr">meta</span>: &#123;</span><br><span class="line">      <span class="attr">key</span>: <span class="string">&#x27;my_module&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> parentRouters;</span><br></pre></td></tr></table></figure>
+
+<h2 id="前端入口點"><a href="#前端入口點" class="headerlink" title="前端入口點"></a>前端入口點</h2><ol>
+<li><p>在前端模擬頁面的 menu 新增一個入口點、本地起模擬伺服器脫離 MVC 架構方便除錯用：&#x2F;my-project&#x2F;src&#x2F;config&#x2F;menuConfig.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">const</span> <span class="attr">menuConfig</span>: menuItemProps[] = [</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="attr">icon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">Icon</span> <span class="attr">className</span>=<span class="string">&#x27;parent_A&#x27;</span> /&gt;</span></span>,</span><br><span class="line">    <span class="attr">label</span>: <span class="string">&#x27;ParentCategoryA&#x27;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;/parentCategoryA&#x27;</span>,</span><br><span class="line">    <span class="attr">includes</span>: [brandMap.<span class="property">D</span>],</span><br><span class="line">    <span class="attr">children</span>: [],</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="attr">icon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">Icon</span> <span class="attr">className</span>=<span class="string">&#x27;parent_B&#x27;</span> /&gt;</span></span>,</span><br><span class="line">    <span class="attr">label</span>: <span class="string">&#x27;ParentCategoryB&#x27;</span>,</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;/parentCategoryB&#x27;</span>,</span><br><span class="line">    <span class="comment">// popupOffset: [30, 0],</span></span><br><span class="line">    <span class="attr">popupClassName</span>: <span class="string">&#x27;menu_popup_class&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="attr">icon</span>: <span class="string">&#x27;Other Module&#x27;</span>,</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&#x27;Other Module&#x27;</span>,</span><br><span class="line">        <span class="attr">key</span>: <span class="string">&#x27;/parentCategory/other_module&#x27;</span>,</span><br><span class="line">        <span class="attr">excludes</span>: [brandMap.<span class="property">A</span>, brandMap.<span class="property">B</span>, brandMap.<span class="property">C</span>],</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="attr">icon</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">label</span>: <span class="string">&#x27;My Module&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;My Module&#x27;</span>,</span><br><span class="line">        <span class="attr">key</span>: <span class="string">&#x27;/parentCategory/my_module&#x27;</span>,</span><br><span class="line">        <span class="attr">includes</span>: [brandMap.<span class="property">A</span>],</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">    &#125;,</span><br><span class="line">];</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立菜單連結：&#x2F;my-project&#x2F;src&#x2F;layouts&#x2F;components&#x2F;SideMenu&#x2F;index.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useNavigate, useLocation &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">SiderMenu</span>: <span class="title class_">React</span>.<span class="property">FC</span>&lt;<span class="title class_">SiderMenuProps</span>&gt; = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line"> ...</span><br><span class="line"> <span class="keyword">const</span> navigate = <span class="title function_">useNavigate</span>();</span><br><span class="line"> <span class="keyword">const</span> <span class="attr">clickMenu</span>: <span class="title class_">MenuProps</span>[<span class="string">&#x27;onClick&#x27;</span>] = <span class="function">(<span class="params">&#123; key &#125;: &#123; key: <span class="built_in">string</span> &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">     <span class="title function_">setCollapsed</span>();</span><br><span class="line">     key &amp;&amp; <span class="title function_">navigate</span>(key);</span><br><span class="line"> &#125;;</span><br><span class="line"> ...</span><br><span class="line"> <span class="keyword">return</span> (</span><br><span class="line">     <span class="language-xml"><span class="tag">&lt;<span class="name">ConfigProvider</span> <span class="attr">theme</span>=<span class="string">&#123;MenuTheme&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">     <span class="tag">&lt;<span class="name">Menu</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">         <span class="attr">mode</span>=<span class="string">&#x27;inline&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">         <span class="attr">items</span>=<span class="string">&#123;menuList&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">         <span class="attr">onClick</span>=<span class="string">&#123;clickMenu&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">         <span class="attr">...</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">     /&gt;</span></span></span><br><span class="line"><span class="language-xml">     <span class="tag">&lt;/<span class="name">ConfigProvider</span>&gt;</span></span></span><br><span class="line"> );</span><br><span class="line">&#125;;</span><br><span class="line"> <span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">SiderMenu</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="串接-API"><a href="#串接-API" class="headerlink" title="串接 API"></a>串接 API</h2><p>此專案是根據模塊來分各自的 API：&#x2F;my-project&#x2F;src&#x2F;apis&#x2F;my_module&#x2F;index.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http <span class="keyword">from</span> <span class="string">&#x27;@cores/http&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">apiGetMyModuleData</span> = (<span class="params">params: Record&lt;<span class="built_in">string</span>, <span class="built_in">any</span>&gt;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> http.<span class="title function_">post</span>(<span class="string">`/api/parentCategory/myModule`</span>, params);</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立業務邏輯"><a href="#建立業務邏輯" class="headerlink" title="建立業務邏輯"></a>建立業務邏輯</h2><p>專案的打包點是根據 <code>build-module.js</code> 裡的 entry 入口點為一個模組打包的，所以這一次的專案邏輯由此處切入：</p>
+<h2 id="React-App-入口點"><a href="#React-App-入口點" class="headerlink" title="React App 入口點"></a>React App 入口點</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/my-project/src/pages-export/AppExport.jsx</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...匯入&#x27;antd&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;recoil&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;global api&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;ahooks useAsyncEffect&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;js-cookie&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;dayjs&#x27;;</span></span><br><span class="line"><span class="comment">//...設定語系 [&#x27;antd/locale/en_US&#x27;, &#x27;antd/locale/zh_CN&#x27;, ...];</span></span><br><span class="line"><span class="comment">//...設定 &#x27;dayjs locale&#x27; [&#x27;dayjs/locale/en&#x27;, &#x27;dayjs/locale/zh-cn&#x27;, ...];</span></span><br><span class="line"><span class="comment">//...匯入&#x27;@src/styles/index.less&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;@src/provider/ModalForm&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;lodash&#x27;;</span></span><br><span class="line"><span class="comment">//...匯入&#x27;react useState&#x27;;</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">AppExport</span> = (<span class="params">&#123; children &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [loadend, setLoadend] = <span class="title function_">useState</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//取得進入權限</span></span><br><span class="line">  <span class="keyword">const</span> updateGlobalPermission = <span class="title function_">useRecoilCallback</span>(</span><br><span class="line">    <span class="function">(<span class="params">&#123; set &#125;</span>) =&gt;</span></span><br><span class="line">      <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="keyword">const</span> &#123; <span class="attr">data</span>: permissions = &#123;&#125; &#125; = <span class="keyword">await</span> <span class="title function_">apiQueryPermission</span>();</span><br><span class="line">          <span class="title function_">set</span>(globalPermissionAtom, permissions);</span><br><span class="line">          <span class="title function_">setLoadend</span>(<span class="literal">true</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">          <span class="title function_">setLoadend</span>(<span class="literal">true</span>);</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Failed to fetch permissions:&#x27;</span>, error);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    [],</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useAsyncEffect</span>(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="title function_">updateGlobalPermission</span>();</span><br><span class="line">  &#125;, []);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ConfigProvider</span> <span class="attr">theme</span>=<span class="string">&#123;&#123;</span> <span class="attr">cssVar:</span> <span class="attr">true</span> &#125;&#125; <span class="attr">locale</span>=<span class="string">&#123;antdLang[localeLang]&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">FeatureProvider</span> <span class="attr">environment</span>=<span class="string">&#123;environment.embedded&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ModalFormProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          &#123;!loadend &amp;&amp; (</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">display:</span> &#x27;<span class="attr">flex</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">flex:</span> <span class="attr">1</span>,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">alignItems:</span> &#x27;<span class="attr">center</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">justifyContent:</span> &#x27;<span class="attr">center</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">width:</span> &#x27;<span class="attr">100</span>%&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">height:</span> &#x27;<span class="attr">100</span>%&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            &gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">Spin</span> <span class="attr">spinning</span>=<span class="string">&#123;true&#125;</span> <span class="attr">size</span>=<span class="string">&#x27;large&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          )&#125;</span></span><br><span class="line"><span class="language-xml">          &#123;loadend &amp;&amp; children&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">ModalFormProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">FeatureProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ConfigProvider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (&#123; children &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">RecoilRoot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">AppExport</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">AppExport</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">RecoilRoot</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="進入開發模塊核心邏輯入口"><a href="#進入開發模塊核心邏輯入口" class="headerlink" title="進入開發模塊核心邏輯入口"></a>進入開發模塊核心邏輯入口</h2><p>本次核心的開發邏輯放在以下路徑：</p>
+<ol>
+<li><p>專案精華：&#x2F;my_project&#x2F;src&#x2F;pages&#x2F;parentCategory&#x2F;my_module</p>
+</li>
+<li><p>模塊進入點：src&#x2F;pages&#x2F;parentModule&#x2F;my_module&#x2F;index-export.tsx</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createRoot &#125; <span class="keyword">from</span> <span class="string">&#x27;react-dom/client&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AppExport</span> <span class="keyword">from</span> <span class="string">&#x27;@src/pages-export/AppExport&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./index&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> root = <span class="title function_">createRoot</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;root&#x27;</span>) <span class="keyword">as</span> <span class="title class_">HTMLElement</span>);</span><br><span class="line"></span><br><span class="line">root.<span class="title function_">render</span>(</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">AppExport</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">App</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">AppExport</span>&gt;</span></span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模塊架構圖</p>
+<img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/my-first-react-task-0.jpg' width='min(100%, 600px)' height='auto'>
+
+<p>應用到的幾個技術點：<br>(1) 整併 API 取得的共用資源在 hooks 中：.&#x2F;hooks&#x2F;…</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    apiGetDataList,</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@src/apis/my_module&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">useQueryDatas</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; t &#125; = <span class="title function_">useTranslation</span>();</span><br><span class="line">    <span class="keyword">const</span> [dataList, setDataList] = useState&lt;<span class="title class_">IBlockList</span>&gt;([]);</span><br><span class="line">    <span class="keyword">const</span> [loading, setLoading] = useState&lt;<span class="built_in">boolean</span>&gt;(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">queryDataList</span> = (<span class="params">params: <span class="built_in">any</span>, isBlackList: <span class="built_in">boolean</span></span>) =&gt; &#123;</span><br><span class="line">        <span class="title function_">setLoading</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="title function_">apiGetDataList</span>(params)</span><br><span class="line">            .<span class="title function_">then</span>(<span class="function">(<span class="params">res: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> data =</span><br><span class="line">                res?.<span class="property">data</span>?.<span class="title function_">map</span>(</span><br><span class="line">                    <span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">                        &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">                            ...</span></span></span><br><span class="line"><span class="params"><span class="function">                        &#125;: <span class="built_in">any</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                        index: <span class="built_in">number</span>,</span></span></span><br><span class="line"><span class="params"><span class="function">                    </span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        ...</span><br><span class="line">                    &#125;;</span><br><span class="line">                    &#125;,</span><br><span class="line">                ) || [];</span><br><span class="line">                <span class="title function_">setDataList</span>(<span class="function">(<span class="params">prevList: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                    <span class="comment">//Filter Logic</span></span><br><span class="line">                    ...</span><br><span class="line">                    &#125;;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="comment">// console.log(&#x27;blockList:&#x27;, blockList);</span></span><br><span class="line">            &#125;)</span><br><span class="line">        .<span class="title function_">catch</span>(<span class="function">(<span class="params">error: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;error&#x27;</span>, error);</span><br><span class="line">        &#125;)</span><br><span class="line">        .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;loading&#x27;</span>, loading);</span><br><span class="line">            <span class="title function_">setLoading</span>(<span class="literal">false</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        loading,</span><br><span class="line">        handleLoading,</span><br><span class="line">        queryDataList,</span><br><span class="line">        setDataList,</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2) 使用 context 互享共用資源，包裝 useState 來偵測資料變化觸發巢狀元件渲染：.&#x2F;context&#x2F;…</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> useQueryDatas <span class="keyword">from</span> <span class="string">&#x27;../hooks/useQueryDatas&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">FC</span>, <span class="title class_">ReactNode</span>, createContext, useContext, useMemo, useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line">...</span><br><span class="line"><span class="comment">// 跳過型別設定</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">initialState</span>: myModuleState = &#123;</span><br><span class="line">    <span class="attr">deviceWidth</span>: <span class="number">0</span>, <span class="comment">// 跨元件共用資源可以放進來</span></span><br><span class="line">    <span class="attr">setDeviceWidth</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">    <span class="attr">setDataList</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">    <span class="attr">queryDataList</span>: <span class="function">() =&gt;</span> &#123;&#125;, <span class="comment">// Api Hook</span></span><br><span class="line">    <span class="attr">blockList</span>: [],</span><br><span class="line">    <span class="attr">loading</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">handleLoading</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> myModuleContext = createContext&lt;myModuleState&gt;(&#123;</span><br><span class="line">    ...initialState,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useMyModuleContext</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> state = <span class="title function_">useContext</span>(myModuleContext);</span><br><span class="line">    <span class="keyword">if</span> (state === <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;useStore must be used within a StoreProvider.&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// console.log(&#x27;state&#x27;, state);</span></span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">myModuleProvider</span>: <span class="variable constant_">FC</span>&lt;&#123; <span class="attr">children</span>: <span class="title class_">ReactNode</span> &#125;&gt; = <span class="function">(<span class="params">&#123; children &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;</span><br><span class="line">        deviceWidth,</span><br><span class="line">        setDeviceWidth,</span><br><span class="line">        setDataList,</span><br><span class="line">        queryDataList,</span><br><span class="line">        dataList,</span><br><span class="line">        loading,</span><br><span class="line">        handleLoading,</span><br><span class="line">        ...</span><br><span class="line">    &#125;: <span class="built_in">any</span> = <span class="title function_">useQueryDatas</span>();</span><br><span class="line">    <span class="keyword">const</span> [deviceWidth, setDeviceWidth] = useState&lt;<span class="built_in">number</span>&gt;(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> [isBlackList, setIsBlackList] = useState&lt;<span class="built_in">boolean</span> | <span class="literal">null</span>&gt;(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> value = <span class="title function_">useMemo</span>( <span class="comment">// 減少非必要的元件渲染</span></span><br><span class="line">        <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">            deviceWidth,</span><br><span class="line">            setDeviceWidth,</span><br><span class="line">            setDataList,</span><br><span class="line">            queryDataList,</span><br><span class="line">            dataList,</span><br><span class="line">            loading,</span><br><span class="line">            handleLoading,</span><br><span class="line">        &#125;),</span><br><span class="line">        [deviceWidth, dataList, loading], <span class="comment">// data dependencies for memo</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">myModuleContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;value&#125;</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">myModuleContext.Provider</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>(3) 在跨元件間複雜資料包裝 useReducer 操作表單資料：.&#x2F;hooks</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">myModuleReducer</span> = (<span class="params">state: myModuleParams, action: IAction</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="keyword">type</span>, payload &#125; = action;</span><br><span class="line">  <span class="comment">// 撰寫同一份資料的 CRUD 邏輯，要注意使用解構來保持其他資料或巢狀資料的原始參考（immutable update）</span></span><br><span class="line">  <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">EActionTypes</span>.<span class="property">SEARCH</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        ...payload,</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">EActionTypes</span>.<span class="property">SEARCH_RESET</span>:</span><br><span class="line">      <span class="keyword">delete</span> state.<span class="property">blockType</span>;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">keyData</span>: state.<span class="property">keyData</span>,</span><br><span class="line">        ...payload,</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="keyword">case</span> <span class="title class_">EActionTypes</span>.<span class="property">ADD_ITEM</span>:</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        ...state,</span><br><span class="line">        ...payload,</span><br><span class="line">      &#125;;</span><br><span class="line">    <span class="comment">// 陣列</span></span><br><span class="line">    <span class="attr">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="useContext-解決-props-drilling"><a href="#useContext-解決-props-drilling" class="headerlink" title="useContext 解決 props drilling"></a>useContext 解決 props drilling</h1><p>開發到一半時才發現多個元件都需要使用同一套資料，而且數量頗多的情況下，即便開發時程緊湊還是硬著頭皮在某個週末加班來釐清資料如何拆分，此篇應用可以結合閱讀<a href="/blog/2025/03/13/my-first-react-task/">React Context pitfalls - 踩雷經驗</a></p>
+<p>最大好處是可以避免 props drilling 並透過 hooks 只拿該元件需要的資料：.&#x2F;components&#x2F;…</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// reducer</span></span><br><span class="line"><span class="keyword">import</span> &#123; myModuleReducer &#125; <span class="keyword">from</span> <span class="string">&#x27;../hooks/useDataParams&#x27;</span>;</span><br><span class="line"><span class="comment">// context</span></span><br><span class="line"><span class="keyword">import</span> &#123; useMyModuleContext &#125; <span class="keyword">from</span> <span class="string">&#x27;../contexts/myModule&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// child component</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AddModal</span>: <span class="title class_">React</span>.<span class="property">FC</span>&lt;<span class="title class_">IAddModalProps</span>&gt; = <span class="function">(<span class="params">&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    ...</span></span></span><br><span class="line"><span class="params"><span class="function">    //props</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;: IAddModalProps</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 只拿該元件要用的 context 資料與 setter</span></span><br><span class="line">    <span class="keyword">const</span> &#123; dataList, handleLoading, ... &#125; = <span class="title function_">useMyModuleContext</span>();</span><br><span class="line">    <span class="comment">// 操作的業務邏輯放這裡</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">Modal</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">title</span>=<span class="string">&#123;title&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">open</span>=<span class="string">&#123;isModalOpen&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">okText</span>=<span class="string">&#x27;Submit&#x27;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">okButtonProps</span>=<span class="string">&#123;&#123;</span> <span class="attr">disabled:</span> !<span class="attr">submittable</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">onOk</span>=<span class="string">&#123;handleOk&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">onCancel</span>=<span class="string">&#123;handleCancel&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &gt;</span></span></span><br><span class="line"><span class="language-xml">            ...</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">Modal</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如此一來就可以輕鬆地在巢狀子元件提取需要的共用資源外，同時操控 Setter 修改資料並觸發渲染囉！<br>以上分享本次的開發經驗 :D</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/React/" rel="tag"># React</a>
+              <a href="/blog/tags/React-Context/" rel="tag"># React Context</a>
+              <a href="/blog/tags/React-Hooks/" rel="tag"># React Hooks</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/18/git-rebase-n-vim/" rel="prev" title="Git Rebase X Vim editor X Hexo 入門">
+                  <i class="fa fa-chevron-left"></i> Git Rebase X Vim editor X Hexo 入門
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/20/leecode-test-contains-duplicate/" rel="next" title="優化演算法練習 Leecode Test X Contains Duplicate">
+                  優化演算法練習 Leecode Test X Contains Duplicate <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

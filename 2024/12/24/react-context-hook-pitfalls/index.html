@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="React Context pitfalls -              React Context pitfalls -              React Context pitfalls -              ．．．                即便之前有使用過 React Context 的鉤子經驗仍不可避">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Context pitfalls - 踩雷經驗">
+<meta property="og:url" content="https://mawchu.github.io/blog/2024/12/24/react-context-hook-pitfalls/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="React Context pitfalls -              React Context pitfalls -              React Context pitfalls -              ．．．                即便之前有使用過 React Context 的鉤子經驗仍不可避">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-1.png">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-2.jpg">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-3.jpg">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-4.jpg">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-5.jpg">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-6.jpg">
+<meta property="article:published_time" content="2024-12-24T04:05:07.000Z">
+<meta property="article:modified_time" content="2025-03-23T08:18:53.066Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="mawchu、貓奴前端、毛球、謝佳芳、轉職前端工程師、前端、網頁技術、Javascript、Vue、React、React思維進化、平面設計、frontend。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mawchu.github.io/blog/images/react-context-hook-pitfalls-1.png">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2024/12/24/react-context-hook-pitfalls/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2024/12/24/react-context-hook-pitfalls/","path":"2024/12/24/react-context-hook-pitfalls/","title":"React Context pitfalls - 踩雷經驗"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React Context pitfalls - 踩雷經驗 | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E7%B5%90%E6%A7%8B"><span class="nav-number">1.</span> <span class="nav-text">專案結構</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Project-Structure"><span class="nav-number">1.1.</span> <span class="nav-text">Project Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Component-Structure"><span class="nav-number">1.2.</span> <span class="nav-text">Component Structure</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%80%E5%88%86%E5%85%B1%E7%94%A8%E8%88%87%E7%8D%A8%E7%AB%8B%E7%AE%A1%E7%90%86%E7%9A%84%E8%B3%87%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">區分共用與獨立管理的資料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8D%A8%E7%AB%8B%E7%AE%A1%E7%90%86%E7%9A%84%E8%B3%87%E6%96%99"><span class="nav-number">2.1.</span> <span class="nav-text">獨立管理的資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E7%94%A8%E6%93%8D%E4%BD%9C%E7%9A%84%E8%B3%87%E6%96%99"><span class="nav-number">2.2.</span> <span class="nav-text">共用操作的資料</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#useContext-intro"><span class="nav-number">3.</span> <span class="nav-text">useContext intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%95%8F%E9%A1%8C"><span class="nav-number">3.1.</span> <span class="nav-text">核心問題</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-useContext-%E9%AD%94%E6%B3%95%E9%99%A3"><span class="nav-number">3.1.1.</span> <span class="nav-text">建立 useContext 魔法陣</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AD%94%E6%B3%95%E5%95%9F%E7%94%A8%E5%A4%B1%E6%95%97"><span class="nav-number">3.1.2.</span> <span class="nav-text">魔法啟用失敗</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2024/12/24/react-context-hook-pitfalls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React Context pitfalls - 踩雷經驗 | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React Context pitfalls - 踩雷經驗
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 12:05:07" itemprop="dateCreated datePublished" datetime="2024-12-24T12:05:07+08:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-23 16:18:53" itemprop="dateModified" datetime="2025-03-23T16:18:53+08:00">2025-03-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React Context pitfalls - </div>
+            <div class="stroke">React Context pitfalls - </div>
+            <div class="plain main-title">React Context pitfalls - </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>即便之前有使用過 React Context 的鉤子經驗仍不可避免地在實際應用時遇到困難，本篇記錄下自己的使用踩坑經驗順便造福大眾 🤦‍♀️。</p>
+<span id="more"></span>
+
+<h1 id="專案結構"><a href="#專案結構" class="headerlink" title="專案結構"></a>專案結構</h1><h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><blockquote>
+<p>Since we are using FreeMarker Java Template Engine(FTL), it would be a bit tricky to integrate React with it. In this article, I’m going to explain how to run and write React codes in our existing au-admin project.</p>
+</blockquote>
+<p>簡單的介紹一下這次專案的結構，由於是從 MVC（Java）拉出來改造的前端庫所以結構上會有些與傳統建立的 React 專案不同，打包工具為 Craco，且各個模塊是區分團隊負責難免造成了元件、開發習慣跟使用技術上的差異，有純 Javascript、有 Typescript、有從舊邏輯拆出來也有新添加的業務邏輯頁面，呈現著一個各自為政的開發模式不是這次的討論重點，先聚焦在幾個技術應用的背景：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Code format</th>
+<th align="center">Data Management</th>
+<th align="left">Api Management</th>
+<th align="left">Style pre-processor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Typescript</td>
+<td align="center">useState, useContext, useReducer</td>
+<td align="left">Custom hooks</td>
+<td align="left">less</td>
+</tr>
+</tbody></table>
+<h2 id="Component-Structure"><a href="#Component-Structure" class="headerlink" title="Component Structure"></a>Component Structure</h2><p>資料管理的應用很大一部分取決於元件的結構怎麼長，會影響到資料的傳遞深淺與方式，本次的專案結構最深達到 3 層所以對於簡單資料使用 <code>useState</code> 做基礎控制、表單操作較複雜的元件使用 <code>useReducer</code> 以物件形式管理資料，在三層元件共同使用與操作的資料對象使用 <code>useContext</code>，以下是元件的結構圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-1.png' width='min(100%, 600px)' height='auto'><br>當 props 來到第三層時仍需要操作共同的資料就不是那麼方便整潔，容易造成資料瀑布（Props drilling）的傳遞結構，容易造成不必要的資料傳遞，如圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-2.jpg' width='min(100%, 600px)' height='auto' alt="https://ithelp.ithome.com.tw/articles/10336311" title="https://ithelp.ithome.com.tw/articles/10336311"></p>
+<h1 id="區分共用與獨立管理的資料"><a href="#區分共用與獨立管理的資料" class="headerlink" title="區分共用與獨立管理的資料"></a>區分共用與獨立管理的資料</h1><p>在業務邏輯上一定會有兩大類型的資料來影響元件的渲染：</p>
+<h2 id="獨立管理的資料"><a href="#獨立管理的資料" class="headerlink" title="獨立管理的資料"></a>獨立管理的資料</h2><p>此類型資料只需要 scoped 在元件內部即可（拷貝的獨立參考），例如上圖的 SearchForm 表單資料、AddConfigModal 與 ConfirmToggleModal 各自的 Modal 開關或按鈕的 disabled 狀態等「不需要共用」或者「跨元件使用」的資料類型就可以簡便規範就好，其中表單適合使用物件形式來便利管理所以我使用 <code>useReducer</code>，而布林純值的簡單資料可以使用最原始的 <code>useState</code> 來操控。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-3.jpg' width='min(100%, 600px)' height='auto'></p>
+<h2 id="共用操作的資料"><a href="#共用操作的資料" class="headerlink" title="共用操作的資料"></a>共用操作的資料</h2><p>此類型資料前提為跨元件操控的對象（同一份資料參考）並且會影響一個以上的元件渲染時，就需要透過訂閱（Subscription）跟監聽（Observing）的行為來管理資料，適合的管理工具很多例如 Redux、Recoil 或者 Atom，但此次使用的業務邏輯是簡單的 CRUD 所以採用 React 官方提供的 useContext。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-4.jpg' width='min(100%, 600px)' height='auto'></p>
+<h1 id="useContext-intro"><a href="#useContext-intro" class="headerlink" title="useContext intro"></a>useContext intro</h1><p>之前對於 useContext 有一篇文章<a href="/blog/2024/05/02/react-useContext/">入門介紹</a>了簡易的使用方式，但偏偏沒有特別解釋到具體哪個環節才能開始使用 useContext 的資料導致了這一次的坑，來描述一下這次開發中遭遇的困難。</p>
+<h2 id="核心問題"><a href="#核心問題" class="headerlink" title="核心問題"></a>核心問題</h2><h3 id="建立-useContext-魔法陣"><a href="#建立-useContext-魔法陣" class="headerlink" title="建立 useContext 魔法陣"></a>建立 useContext 魔法陣</h3><p>在 contexts 資料夾建立了一個共用資料中心並且引入 custom hooks（useQueryDatas）來管理 API 的邏輯避免每一次解構（destruction） custom hooks 的資料都造成新的參考，並且提升到 useContext scope 來實現多元件的共同訂閱與監聽：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-5.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="魔法啟用失敗"><a href="#魔法啟用失敗" class="headerlink" title="魔法啟用失敗"></a>魔法啟用失敗</h3><p>說得前面的鋪陳終於來到問題核心！若沒有將啟用資料的 Provider 移出獨立的 Function Component 中，並且將根部元件提取出來放置，從 Provider 提出的資料便不會有任何響應。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-6.jpg' width='min(100%, 600px)' height='auto'></p>
+<p>一開始我將根部元件直接放置在 Function Component 也就是圖中黃線的位置，會發現 useContext 的資料呼叫任何一個 setState 都不會改動到 state，也就是沒有正確啟用該資料作用域，直到提取出去並將根部元件以子元件的形式包裹才終於使得共用 useContext 中的 state 開始作用！<br>這一段邏輯是取自其他團隊開發人員的結構直接使用，封裝出來的 Context 必須以 Children 形式傳進去才能正確啟用魔法陣。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2024/09/09/html-direction-scss/" rel="prev" title="HTML 文本元素 dir - text directionality">
+                  <i class="fa fa-chevron-left"></i> HTML 文本元素 dir - text directionality
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/18/git-rebase-n-vim/" rel="next" title="Git Rebase X Vim editor X Hexo 入門">
+                  Git Rebase X Vim editor X Hexo 入門 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
