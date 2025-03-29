@@ -28,7 +28,7 @@
 <meta property="og:description" content="- Interview QA X CMoney              - Interview QA X CMoney              - Interview QA X CMoney             ．．．               在翻找 codepen 歷史資料的時候重新回顧了一年多前曾經在 CMon">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-29T13:12:22.000Z">
-<meta property="article:modified_time" content="2025-03-29T15:17:27.400Z">
+<meta property="article:modified_time" content="2025-03-29T15:19:51.045Z">
 <meta property="article:author" content="Mawchu">
 <meta property="article:tag" content="Interview">
 <meta property="article:tag" content="Algorithm">
@@ -247,7 +247,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-03-29 21:12:22 / Modified: 23:17:27" itemprop="dateCreated datePublished" datetime="2025-03-29T21:12:22+08:00">2025-03-29</time>
+      <time title="Created: 2025-03-29 21:12:22 / Modified: 23:19:51" itemprop="dateCreated datePublished" datetime="2025-03-29T21:12:22+08:00">2025-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -334,7 +334,7 @@
 <h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><h3 id="不單純是遍歷排序-Easy"><a href="#不單純是遍歷排序-Easy" class="headerlink" title="不單純是遍歷排序 (Easy)"></a>不單純是遍歷排序 (Easy)</h3><p>如果只是簡單將 <code>true</code> 和 <code>false</code> 分開排序，那會是 Easy 題型。<br>但這裡似乎涉及依順序、按規則分批重組，需要額外邏輯。</p>
 <h3 id="需要管理多個列表-Medium"><a href="#需要管理多個列表-Medium" class="headerlink" title="需要管理多個列表 (Medium)"></a>需要管理多個列表 (Medium)</h3><p>將 <code>true</code> 和 <code>false</code> 分開儲存，再依指定順序拼接，且可能涉及 **分批處理 (batching)**，這種設計通常在 <strong>Medium 難度</strong> 題目中常見。<br>涉及條件中斷或順序判斷，題目可能還需要根據當前組合的最後一個元素來判斷下一批應該塞 <code>true</code> 還是 <code>false</code>，這種依賴狀態的邏輯讓它比 Easy 更複雜。</p>
 <h3 id="LeetCode-難度對應："><a href="#LeetCode-難度對應：" class="headerlink" title="LeetCode 難度對應："></a>LeetCode 難度對應：</h3><p>Easy：遍歷或單一條件分類即可完成。<br>Medium：需要狀態管理、分批處理、順序或條件依賴。<br>Hard：通常涉及動態規劃、圖論或複雜數據結構。</p>
-<h1 id="題後優化"><a href="#題後優化" class="headerlink" title="題後優化"></a>題後優化</h1><p>題目裡面頻繁操作 <code>newArr</code> 的做法明顯讓我感覺效能應該不好，所以試探地問了下 ChatGpt：</p>
+<h1 id="題後優化"><a href="#題後優化" class="headerlink" title="題後優化"></a>題後優化</h1><p>題目裡面頻繁操作 <code>newMap</code> 與 <code>splice</code> 的做法明顯讓我感覺效能應該不好，所以試探地問了下 ChatGpt：</p>
 <blockquote>
 <p>splice 是 O(n) 複雜度：<br>每次刪除元素，後面的元素要往前移動，所以在大數據集會變慢。<br>counter 重置 &#x3D; 重複遍歷：<br>每次從 counter &#x3D; 0 重新掃描，導致無效遍歷次數增加。</p>
 </blockquote>
