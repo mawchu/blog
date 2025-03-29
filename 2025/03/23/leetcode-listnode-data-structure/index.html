@@ -28,7 +28,7 @@
 <meta property="og:description" content="Leetcode X ListNode               Leetcode X ListNode               Leetcode X ListNode              ．．．               Linked List (ListNode) 是最常與 Array 結構做比較的一種資料型">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-03-23T08:35:19.000Z">
-<meta property="article:modified_time" content="2025-03-23T09:27:17.668Z">
+<meta property="article:modified_time" content="2025-03-28T13:54:15.552Z">
 <meta property="article:author" content="Mawchu">
 <meta property="article:tag" content="mawchu、貓奴前端、毛球、謝佳芳、轉職前端工程師、前端、網頁技術、Javascript、Vue、React、React思維進化、平面設計、frontend。">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ListNode-v-s-Array"><span class="nav-number">1.</span> <span class="nav-text">ListNode v.s Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A2%E7%94%9F%E7%91%9C%EF%BC%8C%E4%BD%95%E7%94%9F%E4%BA%AE"><span class="nav-number">1.1.</span> <span class="nav-text">既生瑜，何生亮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%A8%98%E6%86%B6%E9%AB%94%E8%88%87%E6%8C%87%E6%A8%99%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">深入理解記憶體與指標概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked-List-%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">1.3.</span> <span class="nav-text">Linked List 是什麼</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E9%87%8D%E9%BB%9E"><span class="nav-number">1.3.1.</span> <span class="nav-text">理解重點</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">指向的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%80%E9%BB%9E%E4%B8%8D%E6%98%AF%E8%A2%AB%E5%88%AA%E9%99%A4%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%8D%E5%86%8D%E8%A2%AB%E6%8C%87%E5%90%91"><span class="nav-number">1.3.3.</span> <span class="nav-text">節點不是被刪除，而是不再被指向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E6%9C%89%E6%89%80%E9%95%B7"><span class="nav-number">1.4.</span> <span class="nav-text">各有所長</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linked-List-%E5%BB%B6%E4%BC%B8%E8%AA%B2%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">Linked List 延伸課題</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ListNode-v-s-Array"><span class="nav-number">1.</span> <span class="nav-text">ListNode v.s Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A2%E7%94%9F%E7%91%9C%EF%BC%8C%E4%BD%95%E7%94%9F%E4%BA%AE"><span class="nav-number">1.1.</span> <span class="nav-text">既生瑜，何生亮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%A8%98%E6%86%B6%E9%AB%94%E8%88%87%E6%8C%87%E6%A8%99%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">深入理解記憶體與指標概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linked-List-%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">1.3.</span> <span class="nav-text">Linked List 是什麼</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E9%87%8D%E9%BB%9E"><span class="nav-number">1.3.1.</span> <span class="nav-text">理解重點</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">指向的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%80%E9%BB%9E%E4%B8%8D%E6%98%AF%E8%A2%AB%E5%88%AA%E9%99%A4%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%8D%E5%86%8D%E8%A2%AB%E6%8C%87%E5%90%91"><span class="nav-number">1.3.3.</span> <span class="nav-text">節點不是被刪除，而是不再被指向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E6%9C%89%E6%89%80%E9%95%B7"><span class="nav-number">1.4.</span> <span class="nav-text">各有所長</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Random-access-amp-Search-%E9%9A%A8%E6%A9%9F%E5%AD%98%E5%8F%96%E8%88%87%E6%90%9C%E7%B4%A2"><span class="nav-number">1.4.1.</span> <span class="nav-text">Random access &amp; Search 隨機存取與搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Array"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Array</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frequent-insertions-x2F-deletions-%E9%A0%BB%E7%B9%81%E6%93%8D%E4%BD%9C%E6%8F%92%E5%85%A5-x2F-%E5%88%AA%E9%99%A4"><span class="nav-number">1.4.2.</span> <span class="nav-text">Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linked-List"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Linked List</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linked-List-%E5%BB%B6%E4%BC%B8%E8%AA%B2%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">Linked List 延伸課題</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/blog/tags/">
-        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -242,9 +242,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-03-23 16:35:19 / Modified: 17:27:17" itemprop="dateCreated datePublished" datetime="2025-03-23T16:35:19+08:00">2025-03-23</time>
+      <time title="Created: 2025-03-23 16:35:19" itemprop="dateCreated datePublished" datetime="2025-03-23T16:35:19+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-03-28 21:54:15" itemprop="dateModified" datetime="2025-03-28T21:54:15+08:00">2025-03-28</time>
     </span>
 
   
@@ -344,6 +350,13 @@
 <p>現在，BList 指向 <code>2 -&gt; 3 -&gt; null</code>，而原來的 <code>1 -&gt; 2 -&gt; 3 -&gt; null</code> 就沒有變數或引用再指向它。因此，<code>1</code> 節點就會變成孤立節點，即便他的 next 指向的是 <code>2</code>，但已無法被任何方式訪問 <code>1</code> 節點本身。<br>此時：節點 <code>1</code> 就變成了垃圾回收的候選對象，因為它不再有任何引用指向它；節點 <code>2</code> 和 <code>3</code> 仍然是可達的，因為它們是 BList 所指向的部分。</p>
 <p>不被指向的節點 <code>1</code> 仍然會佔用記憶體空間，直到垃圾回收器（Garbage Collector）回收它們為止。<br>這些節點會保持在記憶體中，直到它們不再被引用並被垃圾回收器檢測到為止。</p>
 <h2 id="各有所長"><a href="#各有所長" class="headerlink" title="各有所長"></a>各有所長</h2><p>來比較一下哪種競賽適合派誰出場：</p>
+<h3 id="Random-access-amp-Search-隨機存取與搜索"><a href="#Random-access-amp-Search-隨機存取與搜索" class="headerlink" title="Random access &amp; Search 隨機存取與搜索"></a>Random access &amp; Search 隨機存取與搜索</h3><h4 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h4><p>Keyword - find or search</p>
+<p>適用 LeetCode 題目：<br>📌 LeetCode Problem: Two Sum (Easy) - #1<br>(Given an array, find two numbers that sum to a target value.)</p>
+<p>日常範例：<br>📌 圖書館書架查找<br>📌 按照字母排列查找電話號碼聯絡人</p>
+<p>Why：<br>按序排列查找已知索引的 <code>O(1)</code> 優勢</p>
+<h3 id="Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除"><a href="#Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除" class="headerlink" title="Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除"></a>Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除</h3><h4 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h4><p>Keyword - remove or insert</p>
+<p>📌 LeetCode Problem: Remove Nth Node From End of List (Medium) - #19<br>(Remove the Nth node from the end of a linked list.)</p>
+<p>Why：<br>從特定位置移除節點的 <code>O(1)</code> 優勢</p>
 <h1 id="Linked-List-延伸課題"><a href="#Linked-List-延伸課題" class="headerlink" title="Linked List 延伸課題"></a>Linked List 延伸課題</h1><ul>
 <li>反轉鏈結串列（Reverse Linked List）</li>
 <li>合併兩個有序鏈結串列（Merge Two Sorted Lists）&#x2F;&#x2F; 本文重點</li>
@@ -395,6 +408,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/blog/2025/03/28/leetcode-linked-list-hascycle/" rel="next" title="優化演算法練習 Leetcode X ListNode 資料結構 X Cycle">
+                  優化演算法練習 Leetcode X ListNode 資料結構 X Cycle <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

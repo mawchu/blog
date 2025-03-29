@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="- Interview QA X CMoney              - Interview QA X CMoney              - Interview QA X CMoney             ．．．               在翻找 codepen 歷史資料的時候重新回顧了一年多前曾經在 CMon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面試問題集回顧 - Interview QA X CMoney">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/03/29/interview-question-cmoney-toggle-grouping-in-array/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="- Interview QA X CMoney              - Interview QA X CMoney              - Interview QA X CMoney             ．．．               在翻找 codepen 歷史資料的時候重新回顧了一年多前曾經在 CMon">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-29T13:12:22.000Z">
+<meta property="article:modified_time" content="2025-03-29T15:17:27.400Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Interview">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="CMoney">
+<meta property="article:tag" content="Medium">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/03/29/interview-question-cmoney-toggle-grouping-in-array/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/03/29/interview-question-cmoney-toggle-grouping-in-array/","path":"2025/03/29/interview-question-cmoney-toggle-grouping-in-array/","title":"面試問題集回顧 - Interview QA X CMoney"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面試問題集回顧 - Interview QA X CMoney | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%E8%AA%AA%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">題目說明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E6%B8%AC%E9%A1%8C%E7%9B%AE"><span class="nav-number">1.1.</span> <span class="nav-text">推測題目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">問題解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8F%9B%E9%82%8F%E8%BC%AF"><span class="nav-number">2.1.</span> <span class="nav-text">切換邏輯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E5%AD%A9%E5%AD%90%E6%89%8D%E5%81%9A%E9%81%B8%E6%93%87%EF%BC%8C%E6%88%91%E5%85%A8%E9%83%BD%E8%A6%81"><span class="nav-number">2.2.</span> <span class="nav-text">小孩子才做選擇，我全都要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%90%88%E6%A2%9D%E4%BB%B6%E5%8E%BB%E6%8E%89%E3%80%81%E4%B8%8D%E7%AC%A6%E6%A2%9D%E4%BB%B6%E4%B8%8B%E4%B8%80%E8%BC%AA%E7%94%A8%E4%B8%A6%E5%BE%9E%E9%A0%AD%E6%89%BE"><span class="nav-number">2.2.1.</span> <span class="nav-text">符合條件去掉、不符條件下一輪用並從頭找</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%B8%80"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">版本一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%BA%8C"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">版本二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E4%B8%89"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">版本三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9B"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">版本四</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E9%9B%A3%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">問題難度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">3.1.</span> <span class="nav-text">原因分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%96%AE%E7%B4%94%E6%98%AF%E9%81%8D%E6%AD%B7%E6%8E%92%E5%BA%8F-Easy"><span class="nav-number">3.1.1.</span> <span class="nav-text">不單純是遍歷排序 (Easy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E7%AE%A1%E7%90%86%E5%A4%9A%E5%80%8B%E5%88%97%E8%A1%A8-Medium"><span class="nav-number">3.1.2.</span> <span class="nav-text">需要管理多個列表 (Medium)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LeetCode-%E9%9B%A3%E5%BA%A6%E5%B0%8D%E6%87%89%EF%BC%9A"><span class="nav-number">3.1.3.</span> <span class="nav-text">LeetCode 難度對應：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E5%BE%8C%E5%84%AA%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">題後優化</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">111</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/03/29/interview-question-cmoney-toggle-grouping-in-array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="面試問題集回顧 - Interview QA X CMoney | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面試問題集回顧 - Interview QA X CMoney
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-03-29 21:12:22 / Modified: 23:17:27" itemprop="dateCreated datePublished" datetime="2025-03-29T21:12:22+08:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Interview/" itemprop="url" rel="index"><span itemprop="name">Interview</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Interview/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> - Interview QA X CMoney</div>
+            <div class="stroke"> - Interview QA X CMoney</div>
+            <div class="plain main-title"> - Interview QA X CMoney</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>在翻找 codepen 歷史資料的時候重新回顧了一年多前曾經在 CMoney 理財公司面試遇到的題目，當時太緊張能力也不足所以沒能解出來，趁最近在刷題的手感來重新挑戰一下吧！</p>
+<span id="more"></span>
+
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><p>由於紀錄的當下很匆忙沒有完整的問題敘述，只記得片段：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// input</span></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>];</span><br><span class="line"><span class="comment">// 預期的輸出結果</span></span><br><span class="line">[<span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>];</span><br><span class="line"><span class="comment">// 預期的輸出索引</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">11</span>];</span><br><span class="line"><span class="comment">// 可以確認 newArr 的長度 ％ 3 以及陣列最後一個是蛇麼值來判定下一個塞什麼</span></span><br></pre></td></tr></table></figure>
+
+<p>請 AI 幫助分析原始題目可能是？</p>
+<h2 id="推測題目"><a href="#推測題目" class="headerlink" title="推測題目"></a>推測題目</h2><p>給定一個布林值陣列 <code>arr</code>，要求將 <code>arr</code> 的布林值以 <strong>每 3 個為一組</strong> 按順序排列， <code>true</code> 和 <code>false</code> 切換。</p>
+<h1 id="問題解析"><a href="#問題解析" class="headerlink" title="問題解析"></a>問題解析</h1><p>最後一句是當初解題的時候留下的靈感，「可以確認 newArr 的長度 ％ 3 &#x3D;&#x3D; 0 以及陣列最後一個是什麼值來判定下一個塞什麼」。</p>
+<p>從題目看 <code>[0, 1, 3]</code> 是 <code>true</code>、<code>[2, 4, 5]</code> 是 <code>false</code> 並以此類推可以觀察出：<br>排列並且記住原始索引位置，3 個一組就改變布林值。</p>
+<h2 id="切換邏輯"><a href="#切換邏輯" class="headerlink" title="切換邏輯"></a>切換邏輯</h2><p>想了兩個小時加上沒吃早餐剛好要出門剪頭髮就先停下，最後在筆記本記錄一個靈感：<br>「(索引值 &#x2F; 3) % 2 &#x3D;&#x3D; 0 偶數次為 <code>true</code> 反之 <code>false</code>」</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> [ <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, | <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, | <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span> ]</span><br><span class="line"><span class="comment">//除 3 取整 0; 除3 取整 1;  除3 取整 2</span></span><br></pre></td></tr></table></figure>
+<p>就決定用此邏輯推算切換布林值的判斷式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> curr = (<span class="built_in">parseInt</span>(newArr.<span class="property">length</span> / <span class="number">3</span>)) % <span class="number">2</span> == <span class="number">0</span>; </span><br></pre></td></tr></table></figure>
+
+<h2 id="小孩子才做選擇，我全都要"><a href="#小孩子才做選擇，我全都要" class="headerlink" title="小孩子才做選擇，我全都要"></a>小孩子才做選擇，我全都要</h2><p>早上卡兩小時都是忽略一個致命的細節，不符條件的會被迴圈漏掉，最後發現整個 <code>newArr</code> 都是 <code>true</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr.<span class="title function_">forEach</span>(<span class="function">(<span class="params">bool, index</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// -- 只會跑一圈 true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>那要怎麼留下來並且一次次重新回頭找漏掉的呢？<br>咦？等等，我全都拿不就好了嗎？把當下符合的剔除後從頭再找？</p>
+<h3 id="符合條件去掉、不符條件下一輪用並從頭找"><a href="#符合條件去掉、不符條件下一輪用並從頭找" class="headerlink" title="符合條件去掉、不符條件下一輪用並從頭找"></a>符合條件去掉、不符條件下一輪用並從頭找</h3><p>最後我決定使用 <code>splice</code> 幫我在移除自己的同時保留漏掉的。</p>
+<h4 id="版本一"><a href="#版本一" class="headerlink" title="版本一"></a>版本一</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>];</span><br><span class="line"><span class="keyword">let</span> newArr = [];</span><br><span class="line"><span class="comment">// let target = [true, false, true];</span></span><br><span class="line"><span class="keyword">let</span> map = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">bool, index</span>) =&gt;</span> ( <span class="comment">// for memorizing index</span></span><br><span class="line">  &#123;</span><br><span class="line">    bool, <span class="attr">idx</span>: index</span><br><span class="line">  &#125;</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newMap = <span class="title class_">Object</span>.<span class="title function_">assign</span>(map);</span><br><span class="line"><span class="comment">// 拿完就刪掉</span></span><br><span class="line"><span class="keyword">while</span>(newMap.<span class="property">length</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> curr = (<span class="built_in">parseInt</span>(newArr.<span class="property">length</span> / <span class="number">3</span>)) % <span class="number">2</span> == <span class="number">0</span>; </span><br><span class="line">  arr.<span class="title function_">forEach</span>(<span class="function">(<span class="params">bool, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(newMap[index].<span class="property">bool</span> == curr) &#123;</span><br><span class="line">      newArr.<span class="title function_">push</span>(newMap[index]);</span><br><span class="line">      newMap.<span class="title function_">splice</span>(index, <span class="number">1</span>);</span><br><span class="line">    &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> nArr = newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> bool)</span><br><span class="line"><span class="keyword">let</span> nIdx = newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> idx)</span><br></pre></td></tr></table></figure>
+
+<p>上面的做法有幾個問題：</p>
+<ol>
+<li>Object.assign 的淺拷貝會導致 <code>map</code> 被 <code>newMap</code> 修改到參考。</li>
+<li><code>newMap[index]</code> 的索引值是 <code>arr</code> 的，會在過程記錄到 <code>arr</code> 而非 <code>newMap</code> 自己移除了錯誤的索引。</li>
+<li>迴圈的條件不應該是規律的 <code>arr.forEach</code> 而應該是根據 <code>newArr</code> 的長度是否已達標。</li>
+</ol>
+<h4 id="版本二"><a href="#版本二" class="headerlink" title="版本二"></a>版本二</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> newMap = [...map];</span><br><span class="line"><span class="keyword">let</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(newMap.<span class="property">length</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> curr = !(<span class="built_in">parseInt</span>(newArr.<span class="property">length</span> / <span class="number">3</span>)) % <span class="number">2</span> == <span class="number">0</span>; </span><br><span class="line">  <span class="keyword">if</span>(newMap[<span class="number">0</span>].<span class="property">bool</span> == curr) &#123;</span><br><span class="line">    newArr.<span class="title function_">push</span>(newMap[<span class="number">0</span>]);</span><br><span class="line">    newMap.<span class="title function_">splice</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> nArr = newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> bool)</span><br><span class="line"><span class="keyword">let</span> nIdx = newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> idx)</span><br></pre></td></tr></table></figure>
+<p>仍有幾個問題：</p>
+<ol>
+<li>永遠都從 0 開始，如果條件不符的沒有繼續往下一個訪查。</li>
+<li><code>newMap[index]</code> 的索引值是 <code>arr</code> 的，會在移除過程記錄到 <code>arr</code> 而非 <code>newMap</code> 自己。</li>
+</ol>
+<h4 id="版本三"><a href="#版本三" class="headerlink" title="版本三"></a>版本三</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">bool, index</span>) =&gt;</span> (</span><br><span class="line">  &#123;</span><br><span class="line">    bool, <span class="attr">idx</span>: index</span><br><span class="line">  &#125;</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newMap = [...map];</span><br><span class="line"><span class="keyword">let</span> mapLength = map.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">let</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 拿完就刪掉</span></span><br><span class="line"><span class="keyword">while</span>(newMap.<span class="property">length</span> &amp;&amp; counter &lt; arr.<span class="property">length</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> curr = (<span class="built_in">parseInt</span>(newArr.<span class="property">length</span> / <span class="number">3</span>)) % <span class="number">2</span> == <span class="number">0</span>; </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;curr&#x27;</span>, curr)</span><br><span class="line">  <span class="keyword">if</span>(newMap[counter].<span class="property">bool</span> !== curr) counter++;</span><br><span class="line">  <span class="keyword">if</span>(newMap[counter].<span class="property">bool</span> == curr) &#123;</span><br><span class="line">    counter = <span class="number">0</span>;</span><br><span class="line">    newArr.<span class="title function_">push</span>(newMap[counter]);</span><br><span class="line">    newMap.<span class="title function_">splice</span>(counter, <span class="number">1</span>);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仍有個問題：</p>
+<ol>
+<li><code>counter</code> 太早歸 0，當本次符合條件的對象（第一次或其他次不符條件的對象佔據前方）不在第一個時，會導致永遠推進與移除第一個。</li>
+<li><code>counter &lt; arr.length</code> 會觸發 <code>Uncaught TypeError: Cannot read properties of undefined (reading &#39;bool&#39;)</code> 的錯誤是因為當 <code>counter++</code> 大於 <code>newArr.length-1</code> 的時候會等於 <code>undefined</code>。</li>
+</ol>
+<p>很接近了！！繼續努力 🫣 👊</p>
+<h4 id="版本四"><a href="#版本四" class="headerlink" title="版本四"></a>版本四</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> map = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">bool, index</span>) =&gt;</span> (</span><br><span class="line">  &#123;</span><br><span class="line">    bool, <span class="attr">idx</span>: index</span><br><span class="line">  &#125;</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> newMap = [...map];</span><br><span class="line"><span class="keyword">let</span> mapLength = map.<span class="property">length</span>;</span><br><span class="line"><span class="keyword">let</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 拿完就刪掉</span></span><br><span class="line"><span class="keyword">while</span>(newMap.<span class="property">length</span> &amp;&amp; counter &lt; newMap.<span class="property">length</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> curr = (<span class="built_in">parseInt</span>(newArr.<span class="property">length</span> / <span class="number">3</span>)) % <span class="number">2</span> == <span class="number">0</span>; </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;curr&#x27;</span>, curr)</span><br><span class="line">  <span class="keyword">if</span>(newMap[counter].<span class="property">bool</span> !== curr) counter++;</span><br><span class="line">  <span class="keyword">if</span>(newMap[counter].<span class="property">bool</span> == curr) &#123;</span><br><span class="line">    newArr.<span class="title function_">push</span>(newMap[counter]);</span><br><span class="line">    newMap.<span class="title function_">splice</span>(counter, <span class="number">1</span>);</span><br><span class="line">    counter = <span class="number">0</span>; <span class="comment">// 避免太早重置了本次符合條件的位置</span></span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;newArr&#x27;</span>, newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> bool))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;newIdx&#x27;</span>, newArr.<span class="title function_">map</span>(<span class="function">(<span class="params">&#123;bool, idx&#125;</span>) =&gt;</span> idx))</span><br></pre></td></tr></table></figure>
+
+<p>完美印出答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [true, true, true, false, false, false, true, true, true, false, false, false];</span></span><br><span class="line"><span class="comment">// [0, 1, 3, 2, 4, 5, 7, 9, 10, 6, 8, 11];</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="問題難度"><a href="#問題難度" class="headerlink" title="問題難度"></a>問題難度</h1><p>解題過程能感受到邏輯拆分與重組的難度，好奇問了下題目的分級屬於？</p>
+<blockquote>
+<p>從目前的推測來看，這個問題的難度應該屬於 Medium。</p>
+</blockquote>
+<h2 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h2><h3 id="不單純是遍歷排序-Easy"><a href="#不單純是遍歷排序-Easy" class="headerlink" title="不單純是遍歷排序 (Easy)"></a>不單純是遍歷排序 (Easy)</h3><p>如果只是簡單將 <code>true</code> 和 <code>false</code> 分開排序，那會是 Easy 題型。<br>但這裡似乎涉及依順序、按規則分批重組，需要額外邏輯。</p>
+<h3 id="需要管理多個列表-Medium"><a href="#需要管理多個列表-Medium" class="headerlink" title="需要管理多個列表 (Medium)"></a>需要管理多個列表 (Medium)</h3><p>將 <code>true</code> 和 <code>false</code> 分開儲存，再依指定順序拼接，且可能涉及 **分批處理 (batching)**，這種設計通常在 <strong>Medium 難度</strong> 題目中常見。<br>涉及條件中斷或順序判斷，題目可能還需要根據當前組合的最後一個元素來判斷下一批應該塞 <code>true</code> 還是 <code>false</code>，這種依賴狀態的邏輯讓它比 Easy 更複雜。</p>
+<h3 id="LeetCode-難度對應："><a href="#LeetCode-難度對應：" class="headerlink" title="LeetCode 難度對應："></a>LeetCode 難度對應：</h3><p>Easy：遍歷或單一條件分類即可完成。<br>Medium：需要狀態管理、分批處理、順序或條件依賴。<br>Hard：通常涉及動態規劃、圖論或複雜數據結構。</p>
+<h1 id="題後優化"><a href="#題後優化" class="headerlink" title="題後優化"></a>題後優化</h1><p>題目裡面頻繁操作 <code>newArr</code> 的做法明顯讓我感覺效能應該不好，所以試探地問了下 ChatGpt：</p>
+<blockquote>
+<p>splice 是 O(n) 複雜度：<br>每次刪除元素，後面的元素要往前移動，所以在大數據集會變慢。<br>counter 重置 &#x3D; 重複遍歷：<br>每次從 counter &#x3D; 0 重新掃描，導致無效遍歷次數增加。</p>
+</blockquote>
+<blockquote>
+<p>時間複雜度	最差情況 O(n²) (每次 splice + 重置)。</p>
+</blockquote>
+<p>接下來延伸探討效能與邏輯更易維護的做法。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Interview/" rel="tag"># Interview</a>
+              <a href="/blog/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/blog/tags/CMoney/" rel="tag"># CMoney</a>
+              <a href="/blog/tags/Medium/" rel="tag"># Medium</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/03/28/leetcode-linked-list-hascycle/" rel="prev" title="優化演算法練習 Leetcode X ListNode 資料結構 X Cycle">
+                  <i class="fa fa-chevron-left"></i> 優化演算法練習 Leetcode X ListNode 資料結構 X Cycle
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
