@@ -219,90 +219,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何與 server 進行 ssh 連線</title>
-    <url>/blog/2023/03/05/establish-ssh-connection/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> server  ssh </div>
-            <div class="stroke"> server  ssh </div>
-            <div class="plain main-title"> server  ssh </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>本篇記錄一下經常使用到的 SSH 公私鑰產生流程。</p>
-<span id="more"></span>
-
-<h1 id="產生本機電腦的公私鑰"><a href="#產生本機電腦的公私鑰" class="headerlink" title="產生本機電腦的公私鑰"></a>產生本機電腦的公私鑰</h1><p>進入本地終端機後，輸入以下的命令就可以在 user （或者是設定的登入 id）資料夾自動產生隱藏的 <code>.ssh</code> 資料夾中一組公（public key）私 (private key)鑰。</p>
-<h2 id="ssh-cmd"><a href="#ssh-cmd" class="headerlink" title="ssh cmd"></a>ssh cmd</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -b 4096</span><br></pre></td></tr></table></figure>
-
-<p>其中的 <code>-t</code> 為公私鑰的類型 type； <code>-b</code> 為鑰匙的長度大小 bytes。<br>產生之後將得到的<strong>私鑰</strong>保存好並且記得在連線時輸入，<strong>公鑰</strong>則提供給系統管理員進行權限的設定。</p>
-<h2 id="查看產生的-SSH-Key"><a href="#查看產生的-SSH-Key" class="headerlink" title="查看產生的 SSH Key"></a>查看產生的 SSH Key</h2><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-9.jpg' width='80%' height='auto'>
-1. Ubuntu (WSL2)：`\\wsl.localhost\Ubuntu\home\${username}\.ssh`。
-
-<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-10.jpg' width='80%' height='auto'>
-2. 點開可以查看到私鑰(Private Key)。
-
-<h1 id="取得-FileZilla-連線"><a href="#取得-FileZilla-連線" class="headerlink" title="取得 FileZilla 連線"></a>取得 FileZilla 連線</h1><p>去 FileZilla 下載應用程式，協定選擇 SFTP - SSH file transfer protocol、登入形式選擇金鑰檔案，輸入伺服器的 ipv4、伺服器方設定好的 id、以及私鑰密碼檔案路徑後就可以進行連線。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-1.jpg' width='80%' height='auto'></p>
-<h1 id="下載-vscode-remote-ssh-套件"><a href="#下載-vscode-remote-ssh-套件" class="headerlink" title="下載 vscode remote - ssh 套件"></a>下載 vscode remote - ssh 套件</h1><p>若能在開發時直接與伺服器連線就可以省去手動上傳檔案的麻煩，首先至 vscode 的套件市場下載並安裝 remote - ssh，按照以下步驟完成連線與設定：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-2.jpg' width='80%' height='auto'></p>
-<h2 id="mac-pro-按下-fn-f1"><a href="#mac-pro-按下-fn-f1" class="headerlink" title="mac pro 按下 fn + f1"></a>mac pro 按下 <kbd>fn</kbd> + <kbd>f1</kbd></h2><p>開啟 vscode 的 f1 後在終端機輸入 Remote - ssh: Add New SSH Host…<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-3.jpg' width='80%' height='auto'></p>
-<h2 id="輸入-userId-與-server-ip-連線-SHH"><a href="#輸入-userId-與-server-ip-連線-SHH" class="headerlink" title="輸入 userId 與 server ip 連線 SHH"></a>輸入 userId 與 server ip 連線 SHH</h2><p>例如以下的格式：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mawchu@192.123.45.678</span><br></pre></td></tr></table></figure>
-
-<p>按下 enter 後就可以在左邊的側欄控制面板看見連線的伺服器：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-4.jpg' width='80%' height='auto'></p>
-<h2 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h2><p>若連線伺服器後無法對檔案新增或刪除等寫入功能，可以進行以下設定，終端機輸入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add &lt;path-to-private-key&gt;</span><br></pre></td></tr></table></figure>
-
-<p>路徑為使用者根目錄下的隱藏資料夾，路徑可輸入：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-
-<p>確認私鑰密碼是否正確可以輸入以下的命令行查看：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br></pre></td></tr></table></figure>
-
-<h2 id="切換專案資料夾"><a href="#切換專案資料夾" class="headerlink" title="切換專案資料夾"></a>切換專案資料夾</h2><p>點選左下角的遠端伺服器 ip，連線到主機後出現選擇資料夾，就可以隨意切換想要的路徑：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-5.jpg' width='80%' height='auto'></p>
-<h1 id="在-Gitbucket-應用-SSH-Keys"><a href="#在-Gitbucket-應用-SSH-Keys" class="headerlink" title="在 Gitbucket 應用 SSH Keys"></a>在 Gitbucket 應用 SSH Keys</h1><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-11.jpg' width='80%' height='auto'>
-使用 Terminal vim 指令打開 pub 公鑰檔案
-
-<h2 id="使用-Vim-取得公鑰-rsa"><a href="#使用-Vim-取得公鑰-rsa" class="headerlink" title="使用 Vim 取得公鑰 rsa"></a>使用 Vim 取得公鑰 rsa</h2><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-12.jpg' width='80%' height='auto'>
-
-<h3 id="打開檔案複製。"><a href="#打開檔案複製。" class="headerlink" title="打開檔案複製。"></a>打開檔案複製。</h3><h4 id="安裝-clipboard-套件"><a href="#安裝-clipboard-套件" class="headerlink" title="安裝 clipboard 套件"></a>安裝 clipboard 套件</h4><ol>
-<li>安裝跨軟體複製貼上 clipboard 套件：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim --version | grep clipboard</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>若顯示 <code>-clipboard</code> &amp; <code>-xterm_clipboard</code> 則需要安裝，否則複製 yank 會失效。</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-clipboard         +keymap            +printer           +vertsplit</span><br><span class="line">+<span class="built_in">eval</span>              -mouse_jsbterm     -sun_workshop      -xterm_clipboard</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Ubuntu sudo 安裝指令</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install vim-gtk3 <span class="comment"># go for vim-gtk if vim-gtk3 is not available</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="全選公鑰"><a href="#全選公鑰" class="headerlink" title="全選公鑰"></a>全選公鑰</h4><p><kbd>g</kbd> <kbd>g</kbd> <kbd>V</kbd> <kbd>G</kbd> 全選<br><kbd>"</kbd> <kbd>+</kbd> <kbd>y</kbd> 複製(Yank)</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<h3 id="前往-Gitbucket-設定-SSH-Keys"><a href="#前往-Gitbucket-設定-SSH-Keys" class="headerlink" title="前往 Gitbucket 設定 SSH Keys"></a>前往 Gitbucket 設定 SSH Keys</h3><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-6.jpg' width='80%' height='auto'>
-1. 個人頭像 > 齒輪 > 個人化設定
-<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-7.jpg' width='80%' height='auto'>
-2. SSH keys > Add key > 將公鑰貼上 > 命名
-<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-8.jpg' width='80%' height='auto'>
-3. 將公鑰貼上 > 命名
-]]></content>
-      <categories>
-        <category>SSH</category>
-      </categories>
-      <tags>
-        <tag>ssh</tag>
-        <tag>rsa</tag>
-        <tag>publicKey</tag>
-        <tag>privateKey</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ultralearnning 高速學習的技巧 II</title>
     <url>/blog/2023/03/20/fast-learning/</url>
     <content><![CDATA[<div class="visual-image">
@@ -329,35 +245,6 @@
       </categories>
       <tags>
         <tag>Ultralearnning</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Find &amp; Remove 占用的埠號 :PORT</title>
-    <url>/blog/2024/05/07/find-and-remove-port/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Find & Remove  :PORT</div>
-            <div class="stroke">Find & Remove  :PORT</div>
-            <div class="plain main-title">Find & Remove  :PORT</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>VSCODE 若沒有正確地按垃圾桶關閉 terminal、或者遇到視窗當機 的話，再次打開會發現 PORT 號是被佔領的狀態，以下筆記怎麼移除跟關閉被占用的 PORT：</p>
-<span id="more"></span>
-
-<h1 id="打開-CMD-介面"><a href="#打開-CMD-介面" class="headerlink" title="打開 CMD 介面"></a>打開 CMD 介面</h1><p>開啟搜尋列輸入 cmd</p>
-<h1 id="尋找被占用的埠號-PORT-TASK-ID"><a href="#尋找被占用的埠號-PORT-TASK-ID" class="headerlink" title="尋找被占用的埠號 PORT TASK ID"></a>尋找被占用的埠號 PORT TASK ID</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ano | findstr :&lt;PORT&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="刪除與停止被占用的埠號-PORT-TASK-ID"><a href="#刪除與停止被占用的埠號-PORT-TASK-ID" class="headerlink" title="刪除與停止被占用的埠號 PORT TASK ID"></a>刪除與停止被占用的埠號 PORT TASK ID</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">taskkill /PID &lt;PORT&gt; /F</span><br></pre></td></tr></table></figure>
-
-<p><img src="/blog/images/find-and-remove-port-0.jpg" alt="mawchu-blog-find-and-remove-port"></p>
-]]></content>
-      <categories>
-        <category>CMD</category>
-      </categories>
-      <tags>
-        <tag>port</tag>
       </tags>
   </entry>
   <entry>
@@ -512,6 +399,119 @@
         <tag>Git</tag>
         <tag>Git Rebase</tag>
         <tag>Vim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何與 server 進行 ssh 連線</title>
+    <url>/blog/2023/03/05/establish-ssh-connection/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> server  ssh </div>
+            <div class="stroke"> server  ssh </div>
+            <div class="plain main-title"> server  ssh </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇記錄一下經常使用到的 SSH 公私鑰產生流程。</p>
+<span id="more"></span>
+
+<h1 id="產生本機電腦的公私鑰"><a href="#產生本機電腦的公私鑰" class="headerlink" title="產生本機電腦的公私鑰"></a>產生本機電腦的公私鑰</h1><p>進入本地終端機後，輸入以下的命令就可以在 user （或者是設定的登入 id）資料夾自動產生隱藏的 <code>.ssh</code> 資料夾中一組公（public key）私 (private key)鑰。</p>
+<h2 id="ssh-cmd"><a href="#ssh-cmd" class="headerlink" title="ssh cmd"></a>ssh cmd</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -b 4096</span><br></pre></td></tr></table></figure>
+
+<p>其中的 <code>-t</code> 為公私鑰的類型 type； <code>-b</code> 為鑰匙的長度大小 bytes。<br>產生之後將得到的<strong>私鑰</strong>保存好並且記得在連線時輸入，<strong>公鑰</strong>則提供給系統管理員進行權限的設定。</p>
+<h2 id="查看產生的-SSH-Key"><a href="#查看產生的-SSH-Key" class="headerlink" title="查看產生的 SSH Key"></a>查看產生的 SSH Key</h2><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-9.jpg' width='80%' height='auto'>
+1. Ubuntu (WSL2)：`\\wsl.localhost\Ubuntu\home\${username}\.ssh`。
+
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-10.jpg' width='80%' height='auto'>
+2. 點開可以查看到私鑰(Private Key)。
+
+<h1 id="取得-FileZilla-連線"><a href="#取得-FileZilla-連線" class="headerlink" title="取得 FileZilla 連線"></a>取得 FileZilla 連線</h1><p>去 FileZilla 下載應用程式，協定選擇 SFTP - SSH file transfer protocol、登入形式選擇金鑰檔案，輸入伺服器的 ipv4、伺服器方設定好的 id、以及私鑰密碼檔案路徑後就可以進行連線。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-1.jpg' width='80%' height='auto'></p>
+<h1 id="下載-vscode-remote-ssh-套件"><a href="#下載-vscode-remote-ssh-套件" class="headerlink" title="下載 vscode remote - ssh 套件"></a>下載 vscode remote - ssh 套件</h1><p>若能在開發時直接與伺服器連線就可以省去手動上傳檔案的麻煩，首先至 vscode 的套件市場下載並安裝 remote - ssh，按照以下步驟完成連線與設定：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-2.jpg' width='80%' height='auto'></p>
+<h2 id="mac-pro-按下-fn-f1"><a href="#mac-pro-按下-fn-f1" class="headerlink" title="mac pro 按下 fn + f1"></a>mac pro 按下 <kbd>fn</kbd> + <kbd>f1</kbd></h2><p>開啟 vscode 的 f1 後在終端機輸入 Remote - ssh: Add New SSH Host…<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-3.jpg' width='80%' height='auto'></p>
+<h2 id="輸入-userId-與-server-ip-連線-SHH"><a href="#輸入-userId-與-server-ip-連線-SHH" class="headerlink" title="輸入 userId 與 server ip 連線 SHH"></a>輸入 userId 與 server ip 連線 SHH</h2><p>例如以下的格式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mawchu@192.123.45.678</span><br></pre></td></tr></table></figure>
+
+<p>按下 enter 後就可以在左邊的側欄控制面板看見連線的伺服器：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-4.jpg' width='80%' height='auto'></p>
+<h2 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h2><p>若連線伺服器後無法對檔案新增或刪除等寫入功能，可以進行以下設定，終端機輸入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add &lt;path-to-private-key&gt;</span><br></pre></td></tr></table></figure>
+
+<p>路徑為使用者根目錄下的隱藏資料夾，路徑可輸入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>確認私鑰密碼是否正確可以輸入以下的命令行查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ssh-add -l</span><br></pre></td></tr></table></figure>
+
+<h2 id="切換專案資料夾"><a href="#切換專案資料夾" class="headerlink" title="切換專案資料夾"></a>切換專案資料夾</h2><p>點選左下角的遠端伺服器 ip，連線到主機後出現選擇資料夾，就可以隨意切換想要的路徑：<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-5.jpg' width='80%' height='auto'></p>
+<h1 id="在-Gitbucket-應用-SSH-Keys"><a href="#在-Gitbucket-應用-SSH-Keys" class="headerlink" title="在 Gitbucket 應用 SSH Keys"></a>在 Gitbucket 應用 SSH Keys</h1><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-11.jpg' width='80%' height='auto'>
+使用 Terminal vim 指令打開 pub 公鑰檔案
+
+<h2 id="使用-Vim-取得公鑰-rsa"><a href="#使用-Vim-取得公鑰-rsa" class="headerlink" title="使用 Vim 取得公鑰 rsa"></a>使用 Vim 取得公鑰 rsa</h2><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-12.jpg' width='80%' height='auto'>
+
+<h3 id="打開檔案複製。"><a href="#打開檔案複製。" class="headerlink" title="打開檔案複製。"></a>打開檔案複製。</h3><h4 id="安裝-clipboard-套件"><a href="#安裝-clipboard-套件" class="headerlink" title="安裝 clipboard 套件"></a>安裝 clipboard 套件</h4><ol>
+<li>安裝跨軟體複製貼上 clipboard 套件：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim --version | grep clipboard</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>若顯示 <code>-clipboard</code> &amp; <code>-xterm_clipboard</code> 則需要安裝，否則複製 yank 會失效。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-clipboard         +keymap            +printer           +vertsplit</span><br><span class="line">+<span class="built_in">eval</span>              -mouse_jsbterm     -sun_workshop      -xterm_clipboard</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Ubuntu sudo 安裝指令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install vim-gtk3 <span class="comment"># go for vim-gtk if vim-gtk3 is not available</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="全選公鑰"><a href="#全選公鑰" class="headerlink" title="全選公鑰"></a>全選公鑰</h4><p><kbd>g</kbd> <kbd>g</kbd> <kbd>V</kbd> <kbd>G</kbd> 全選<br><kbd>"</kbd> <kbd>+</kbd> <kbd>y</kbd> 複製(Yank)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<h3 id="前往-Gitbucket-設定-SSH-Keys"><a href="#前往-Gitbucket-設定-SSH-Keys" class="headerlink" title="前往 Gitbucket 設定 SSH Keys"></a>前往 Gitbucket 設定 SSH Keys</h3><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-6.jpg' width='80%' height='auto'>
+1. 個人頭像 > 齒輪 > 個人化設定
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-7.jpg' width='80%' height='auto'>
+2. SSH keys > Add key > 將公鑰貼上 > 命名
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/establish-ssh-connection-8.jpg' width='80%' height='auto'>
+3. 將公鑰貼上 > 命名
+]]></content>
+      <categories>
+        <category>SSH</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+        <tag>rsa</tag>
+        <tag>publicKey</tag>
+        <tag>privateKey</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Find &amp; Remove 占用的埠號 :PORT</title>
+    <url>/blog/2024/05/07/find-and-remove-port/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Find & Remove  :PORT</div>
+            <div class="stroke">Find & Remove  :PORT</div>
+            <div class="plain main-title">Find & Remove  :PORT</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>VSCODE 若沒有正確地按垃圾桶關閉 terminal、或者遇到視窗當機 的話，再次打開會發現 PORT 號是被佔領的狀態，以下筆記怎麼移除跟關閉被占用的 PORT：</p>
+<span id="more"></span>
+
+<h1 id="打開-CMD-介面"><a href="#打開-CMD-介面" class="headerlink" title="打開 CMD 介面"></a>打開 CMD 介面</h1><p>開啟搜尋列輸入 cmd</p>
+<h1 id="尋找被占用的埠號-PORT-TASK-ID"><a href="#尋找被占用的埠號-PORT-TASK-ID" class="headerlink" title="尋找被占用的埠號 PORT TASK ID"></a>尋找被占用的埠號 PORT TASK ID</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">netstat -ano | findstr :&lt;PORT&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="刪除與停止被占用的埠號-PORT-TASK-ID"><a href="#刪除與停止被占用的埠號-PORT-TASK-ID" class="headerlink" title="刪除與停止被占用的埠號 PORT TASK ID"></a>刪除與停止被占用的埠號 PORT TASK ID</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">taskkill /PID &lt;PORT&gt; /F</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog/images/find-and-remove-port-0.jpg" alt="mawchu-blog-find-and-remove-port"></p>
+]]></content>
+      <categories>
+        <category>CMD</category>
+      </categories>
+      <tags>
+        <tag>port</tag>
       </tags>
   </entry>
   <entry>
@@ -768,38 +768,6 @@
       </tags>
   </entry>
   <entry>
-    <title>iframe 嵌入 PDF Reader</title>
-    <url>/blog/2024/05/07/iframe-pdf-reader/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">iframe  PDF Reader</div>
-            <div class="stroke">iframe  PDF Reader</div>
-            <div class="plain main-title">iframe  PDF Reader</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>這篇記錄一下合約更新後提供 PDF 閱讀器提醒使用者合約條款更新的優雅作法，以為很難其實超簡單！</p>
-<span id="more"></span>
-
-<h1 id="準備一個-iframe"><a href="#準備一個-iframe" class="headerlink" title="準備一個 iframe"></a>準備一個 iframe</h1><p>常見場景是使用一個彈出視窗提醒使用者閱畢後同意條款，簡單的展示一下結構。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">url</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="將-PDF-url-傳入-iframe"><a href="#將-PDF-url-傳入-iframe" class="headerlink" title="將 PDF url 傳入 iframe"></a>將 PDF url 傳入 iframe</h1><p>PDF 上傳到 server 獲得網址後塞進 iframe。</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">title</span>=<span class="string">&quot;contract update&quot;</span> <span class="attr">url</span>=<span class="string">&#123;pdfURL&#125;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>呈現的畫面會如下，超簡單吧！<br><img src="/blog/images/iframe-pdf-reader-0.jpg" alt="mawchu blog - iframe pdf reader"></p>
-]]></content>
-      <categories>
-        <category>Javascript</category>
-      </categories>
-      <tags>
-        <tag>iframe</tag>
-        <tag>pdf</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>面試問題集回顧 - Interview QA X CMoney</title>
     <url>/blog/2025/03/29/interview-question-cmoney-toggle-grouping-in-array/</url>
     <content><![CDATA[<div class="visual-image">
@@ -921,6 +889,38 @@
       </tags>
   </entry>
   <entry>
+    <title>iframe 嵌入 PDF Reader</title>
+    <url>/blog/2024/05/07/iframe-pdf-reader/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">iframe  PDF Reader</div>
+            <div class="stroke">iframe  PDF Reader</div>
+            <div class="plain main-title">iframe  PDF Reader</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>這篇記錄一下合約更新後提供 PDF 閱讀器提醒使用者合約條款更新的優雅作法，以為很難其實超簡單！</p>
+<span id="more"></span>
+
+<h1 id="準備一個-iframe"><a href="#準備一個-iframe" class="headerlink" title="準備一個 iframe"></a>準備一個 iframe</h1><p>常見場景是使用一個彈出視窗提醒使用者閱畢後同意條款，簡單的展示一下結構。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">url</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="將-PDF-url-傳入-iframe"><a href="#將-PDF-url-傳入-iframe" class="headerlink" title="將 PDF url 傳入 iframe"></a>將 PDF url 傳入 iframe</h1><p>PDF 上傳到 server 獲得網址後塞進 iframe。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Dialog</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">title</span>=<span class="string">&quot;contract update&quot;</span> <span class="attr">url</span>=<span class="string">&#123;pdfURL&#125;</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CheckBox</span> /&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Button</span>&gt;</span>Agree<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Dialog</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>呈現的畫面會如下，超簡單吧！<br><img src="/blog/images/iframe-pdf-reader-0.jpg" alt="mawchu blog - iframe pdf reader"></p>
+]]></content>
+      <categories>
+        <category>Javascript</category>
+      </categories>
+      <tags>
+        <tag>iframe</tag>
+        <tag>pdf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>保存畫布 createImageBitmap X visibilitychange</title>
     <url>/blog/2024/05/20/keep-canvas-switch-tabs/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1001,111 +1001,6 @@
       <tags>
         <tag>Ultralearnning</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>優化演算法練習 Leetcode X ListNode 資料結構</title>
-    <url>/blog/2025/03/23/leetcode-1-listnode-data-structure/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> Leetcode X ListNode </div>
-            <div class="stroke"> Leetcode X ListNode </div>
-            <div class="plain main-title"> Leetcode X ListNode </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p><strong>Linked List</strong> (ListNode) 是最常與 <strong>Array</strong> 結構做比較的一種資料型態，對於非資工背景的小夥伴來說比較陌生，我們可以用幾個情境快速理解：</p>
-<span id="more"></span>
-
-<h1 id="ListNode-v-s-Array"><a href="#ListNode-v-s-Array" class="headerlink" title="ListNode v.s Array"></a>ListNode v.s Array</h1><p><strong>ListNode 鏈結串列 (Linked List)</strong> 並不存在 JavaScript 原生的型別與其語言特性有很大關係：</p>
-<ul>
-<li>JavaScript 的內建資料結構通常以物件 ({})、陣列 ([])、Map、Set 為主</li>
-<li>鏈結串列 (Linked List) 主要在低階語言 (如 C、C++) 中使用較多，ListNode 適合的情境在於極大化利用電腦內存，因為這些語言可以直接操作記憶體指標。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">特性</th>
-<th align="center">陣列 (Array)</th>
-<th align="center">鏈結串列 (Linked List)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">訪問速度</td>
-<td align="center">O(1)(隨機訪問)</td>
-<td align="center">O(n)(需從頭遍歷)</td>
-</tr>
-<tr>
-<td align="center">插入&#x2F;刪除速度</td>
-<td align="center">O(n)(需搬移數據)</td>
-<td align="center">O(1)(改變指針即可)</td>
-</tr>
-<tr>
-<td align="center">內存使用</td>
-<td align="center">需要連續內存空間</td>
-<td align="center">分散內存，靈活但內存開銷大</td>
-</tr>
-<tr>
-<td align="center">適用場景</td>
-<td align="center">需要快速隨機訪問</td>
-<td align="center">頻繁的插入、刪除、動態長度</td>
-</tr>
-<tr>
-<td align="center">日常例子</td>
-<td align="center">商品系統、分數記錄</td>
-<td align="center">地鐵站、排隊系統</td>
-</tr>
-</tbody></table>
-<h2 id="既生瑜，何生亮"><a href="#既生瑜，何生亮" class="headerlink" title="既生瑜，何生亮"></a>既生瑜，何生亮</h2><p>在 JavaScript 實務開發中，鏈結串列並不常用，因為：</p>
-<ul>
-<li>JavaScript 的陣列已經是動態分配的，比鏈結串列更容易使用。</li>
-<li>陣列的 <code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code> 等操作非常方便。</li>
-<li>鏈結串列的遍歷 <strong>O(n)</strong> 可能比陣列索引 <strong>O(1)</strong> 更慢。</li>
-</ul>
-<p>不過，在演算法練習或需要高效刪除<strong>中間節點</strong>的場景，鏈結串列還是有其價值。</p>
-<blockquote>
-<p>Array 在操作資料頭尾以及<strong>已知索引訪問</strong>有效率，操作新增或刪除中間需要移動位置 <code>n ~ last</code>。<br>Linked List 在操作新增或刪除中間有效率，可以直接改變 <code>指標 (Pointers)</code>，操作頭尾需要依序查找(next)。</p>
-</blockquote>
-<h2 id="深入理解記憶體與指標概念"><a href="#深入理解記憶體與指標概念" class="headerlink" title="深入理解記憶體與指標概念"></a>深入理解記憶體與指標概念</h2><p>雖然 JS 是高階語言，不需要手動管理記憶體，但學習鏈結串列可以讓你理解：</p>
-<ul>
-<li>指標 (Pointers) 的概念</li>
-<li>記憶體分配</li>
-<li>為什麼某些資料結構（如陣列、物件）比鏈結串列更適合 JavaScript</li>
-</ul>
-<blockquote>
-<p>鏈結串列雖然不常見於前端，但在 <strong>記憶體受限的環境、處理大數據流</strong> 時，可能比陣列更有效率。</p>
-</blockquote>
-<h2 id="Linked-List-是什麼"><a href="#Linked-List-是什麼" class="headerlink" title="Linked List 是什麼"></a>Linked List 是什麼</h2><p>來看一下如何創建一個 <code>ListNode</code>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ListNode</span>(<span class="params">val, next</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">val</span> = (val === <span class="literal">undefined</span> ? <span class="number">0</span> : val); <span class="comment">// Value of the node</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">next</span> = (next === <span class="literal">undefined</span> ? <span class="literal">null</span> : next); <span class="comment">// Reference to the next node</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 以上等同於：</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    constructor &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">val</span> = (val === <span class="literal">undefined</span> ? <span class="number">0</span> : val); <span class="comment">// Value of the node</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">next</span> = (next === <span class="literal">undefined</span> ? <span class="literal">null</span> : next); <span class="comment">// Reference to the next node</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立測試鏈結串列 1 -&gt; 3 -&gt; 5</span></span><br><span class="line"><span class="keyword">let</span> list1 = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">3</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">5</span>)));</span><br><span class="line"><span class="comment">// 建立測試鏈結串列 2 -&gt; 4 -&gt; 6</span></span><br><span class="line"><span class="keyword">let</span> list2 = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">4</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">6</span>)));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="理解重點"><a href="#理解重點" class="headerlink" title="理解重點"></a>理解重點</h3><p>底層其實就是一個建構子函式建立的物件並具有兩個屬性：</p>
-<ul>
-<li>val：該節點 (node) 儲存的資料。</li>
-<li>next：鏈結指向的下一個節點 (node)。</li>
-<li>reference：指向的節點(Node)其實就是一種參考。</li>
-</ul>
-<h3 id="指向的方式"><a href="#指向的方式" class="headerlink" title="指向的方式"></a>指向的方式</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">ListB</span>.<span class="property">next</span> = <span class="title class_">ListA</span>; <span class="comment">// 這裡 current.next 應該指向一個 ListNode，確保賦值的是新的節點物件</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="節點不是被刪除，而是不再被指向"><a href="#節點不是被刪除，而是不再被指向" class="headerlink" title="節點不是被刪除，而是不再被指向"></a>節點不是被刪除，而是不再被指向</h3><p>查看以下的節點訪問改變範例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title class_">BList</span> = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">3</span>))); <span class="comment">// 1 -&gt; 2 -&gt; 3 -&gt; null</span></span><br><span class="line"><span class="title class_">BList</span> = <span class="title class_">BList</span>.<span class="property">next</span>; <span class="comment">// 2 -&gt; 3 -&gt; null</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
-
-<p>現在，BList 指向 <code>2 -&gt; 3 -&gt; null</code>，而原來的 <code>1 -&gt; 2 -&gt; 3 -&gt; null</code> 就沒有變數或引用再指向它。因此，<code>1</code> 節點就會變成孤立節點，即便他的 next 指向的是 <code>2</code>，但已無法被任何方式訪問 <code>1</code> 節點本身。<br>此時：節點 <code>1</code> 就變成了垃圾回收的候選對象，因為它不再有任何引用指向它；節點 <code>2</code> 和 <code>3</code> 仍然是可達的，因為它們是 BList 所指向的部分。</p>
-<p>不被指向的節點 <code>1</code> 仍然會佔用記憶體空間，直到垃圾回收器（Garbage Collector）回收它們為止。<br>這些節點會保持在記憶體中，直到它們不再被引用並被垃圾回收器檢測到為止。</p>
-<h2 id="各有所長"><a href="#各有所長" class="headerlink" title="各有所長"></a>各有所長</h2><p>來比較一下哪種競賽適合派誰出場：</p>
-<h3 id="Random-access-amp-Search-隨機存取與搜索"><a href="#Random-access-amp-Search-隨機存取與搜索" class="headerlink" title="Random access &amp; Search 隨機存取與搜索"></a>Random access &amp; Search 隨機存取與搜索</h3><h4 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h4><p>Keyword - find or search</p>
-<p>適用 LeetCode 題目：<br>📌 LeetCode Problem: Two Sum (Easy) - #1<br>(Given an array, find two numbers that sum to a target value.)</p>
-<p>日常範例：<br>📌 圖書館書架查找<br>📌 按照字母排列查找電話號碼聯絡人</p>
-<p>Why：<br>按序排列查找已知索引的 <code>O(1)</code> 優勢</p>
-<h3 id="Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除"><a href="#Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除" class="headerlink" title="Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除"></a>Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除</h3><h4 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h4><p>Keyword - remove or insert</p>
-<p>📌 LeetCode Problem: Remove Nth Node From End of List (Medium) - #19<br>(Remove the Nth node from the end of a linked list.)</p>
-<p>Why：<br>從特定位置移除節點的 <code>O(1)</code> 優勢</p>
-<h1 id="Linked-List-延伸課題"><a href="#Linked-List-延伸課題" class="headerlink" title="Linked List 延伸課題"></a>Linked List 延伸課題</h1><ul>
-<li>反轉鏈結串列（Reverse Linked List）</li>
-<li>合併兩個有序鏈結串列（Merge Two Sorted Lists）&#x2F;&#x2F; 本文重點</li>
-<li>找到鏈結串列的環（Linked List Cycle Detection）</li>
-<li>刪除鏈結串列中的節點（Delete Node in a Linked List）</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>優化演算法練習 Leecode Test I X HashMap</title>
@@ -1253,6 +1148,111 @@
 </blockquote>
 <h3 id="起跑點必須相同"><a href="#起跑點必須相同" class="headerlink" title="起跑點必須相同"></a>起跑點必須相同</h3><p>相同起跑點才能拉出差異並且如果存在閉環最終必定相遇。</p>
 <h3 id="閉環內的指標不會指到-Null"><a href="#閉環內的指標不會指到-Null" class="headerlink" title="閉環內的指標不會指到 Null"></a>閉環內的指標不會指到 Null</h3><p>規律走訪的邏輯如果存在閉環永遠都能指向下一個節點而非 <code>null</code>。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>優化演算法練習 Leetcode X ListNode 資料結構</title>
+    <url>/blog/2025/03/23/leetcode-1-listnode-data-structure/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leetcode X ListNode </div>
+            <div class="stroke"> Leetcode X ListNode </div>
+            <div class="plain main-title"> Leetcode X ListNode </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p><strong>Linked List</strong> (ListNode) 是最常與 <strong>Array</strong> 結構做比較的一種資料型態，對於非資工背景的小夥伴來說比較陌生，我們可以用幾個情境快速理解：</p>
+<span id="more"></span>
+
+<h1 id="ListNode-v-s-Array"><a href="#ListNode-v-s-Array" class="headerlink" title="ListNode v.s Array"></a>ListNode v.s Array</h1><p><strong>ListNode 鏈結串列 (Linked List)</strong> 並不存在 JavaScript 原生的型別與其語言特性有很大關係：</p>
+<ul>
+<li>JavaScript 的內建資料結構通常以物件 ({})、陣列 ([])、Map、Set 為主</li>
+<li>鏈結串列 (Linked List) 主要在低階語言 (如 C、C++) 中使用較多，ListNode 適合的情境在於極大化利用電腦內存，因為這些語言可以直接操作記憶體指標。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">特性</th>
+<th align="center">陣列 (Array)</th>
+<th align="center">鏈結串列 (Linked List)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">訪問速度</td>
+<td align="center">O(1)(隨機訪問)</td>
+<td align="center">O(n)(需從頭遍歷)</td>
+</tr>
+<tr>
+<td align="center">插入&#x2F;刪除速度</td>
+<td align="center">O(n)(需搬移數據)</td>
+<td align="center">O(1)(改變指針即可)</td>
+</tr>
+<tr>
+<td align="center">內存使用</td>
+<td align="center">需要連續內存空間</td>
+<td align="center">分散內存，靈活但內存開銷大</td>
+</tr>
+<tr>
+<td align="center">適用場景</td>
+<td align="center">需要快速隨機訪問</td>
+<td align="center">頻繁的插入、刪除、動態長度</td>
+</tr>
+<tr>
+<td align="center">日常例子</td>
+<td align="center">商品系統、分數記錄</td>
+<td align="center">地鐵站、排隊系統</td>
+</tr>
+</tbody></table>
+<h2 id="既生瑜，何生亮"><a href="#既生瑜，何生亮" class="headerlink" title="既生瑜，何生亮"></a>既生瑜，何生亮</h2><p>在 JavaScript 實務開發中，鏈結串列並不常用，因為：</p>
+<ul>
+<li>JavaScript 的陣列已經是動態分配的，比鏈結串列更容易使用。</li>
+<li>陣列的 <code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code> 等操作非常方便。</li>
+<li>鏈結串列的遍歷 <strong>O(n)</strong> 可能比陣列索引 <strong>O(1)</strong> 更慢。</li>
+</ul>
+<p>不過，在演算法練習或需要高效刪除<strong>中間節點</strong>的場景，鏈結串列還是有其價值。</p>
+<blockquote>
+<p>Array 在操作資料頭尾以及<strong>已知索引訪問</strong>有效率，操作新增或刪除中間需要移動位置 <code>n ~ last</code>。<br>Linked List 在操作新增或刪除中間有效率，可以直接改變 <code>指標 (Pointers)</code>，操作頭尾需要依序查找(next)。</p>
+</blockquote>
+<h2 id="深入理解記憶體與指標概念"><a href="#深入理解記憶體與指標概念" class="headerlink" title="深入理解記憶體與指標概念"></a>深入理解記憶體與指標概念</h2><p>雖然 JS 是高階語言，不需要手動管理記憶體，但學習鏈結串列可以讓你理解：</p>
+<ul>
+<li>指標 (Pointers) 的概念</li>
+<li>記憶體分配</li>
+<li>為什麼某些資料結構（如陣列、物件）比鏈結串列更適合 JavaScript</li>
+</ul>
+<blockquote>
+<p>鏈結串列雖然不常見於前端，但在 <strong>記憶體受限的環境、處理大數據流</strong> 時，可能比陣列更有效率。</p>
+</blockquote>
+<h2 id="Linked-List-是什麼"><a href="#Linked-List-是什麼" class="headerlink" title="Linked List 是什麼"></a>Linked List 是什麼</h2><p>來看一下如何創建一個 <code>ListNode</code>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ListNode</span>(<span class="params">val, next</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">val</span> = (val === <span class="literal">undefined</span> ? <span class="number">0</span> : val); <span class="comment">// Value of the node</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">next</span> = (next === <span class="literal">undefined</span> ? <span class="literal">null</span> : next); <span class="comment">// Reference to the next node</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 以上等同於：</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ListNode</span> &#123;</span><br><span class="line">    constructor &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">val</span> = (val === <span class="literal">undefined</span> ? <span class="number">0</span> : val); <span class="comment">// Value of the node</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">next</span> = (next === <span class="literal">undefined</span> ? <span class="literal">null</span> : next); <span class="comment">// Reference to the next node</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立測試鏈結串列 1 -&gt; 3 -&gt; 5</span></span><br><span class="line"><span class="keyword">let</span> list1 = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">3</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">5</span>)));</span><br><span class="line"><span class="comment">// 建立測試鏈結串列 2 -&gt; 4 -&gt; 6</span></span><br><span class="line"><span class="keyword">let</span> list2 = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">4</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">6</span>)));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="理解重點"><a href="#理解重點" class="headerlink" title="理解重點"></a>理解重點</h3><p>底層其實就是一個建構子函式建立的物件並具有兩個屬性：</p>
+<ul>
+<li>val：該節點 (node) 儲存的資料。</li>
+<li>next：鏈結指向的下一個節點 (node)。</li>
+<li>reference：指向的節點(Node)其實就是一種參考。</li>
+</ul>
+<h3 id="指向的方式"><a href="#指向的方式" class="headerlink" title="指向的方式"></a>指向的方式</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">ListB</span>.<span class="property">next</span> = <span class="title class_">ListA</span>; <span class="comment">// 這裡 current.next 應該指向一個 ListNode，確保賦值的是新的節點物件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="節點不是被刪除，而是不再被指向"><a href="#節點不是被刪除，而是不再被指向" class="headerlink" title="節點不是被刪除，而是不再被指向"></a>節點不是被刪除，而是不再被指向</h3><p>查看以下的節點訪問改變範例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="title class_">BList</span> = <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">1</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">2</span>, <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">3</span>))); <span class="comment">// 1 -&gt; 2 -&gt; 3 -&gt; null</span></span><br><span class="line"><span class="title class_">BList</span> = <span class="title class_">BList</span>.<span class="property">next</span>; <span class="comment">// 2 -&gt; 3 -&gt; null</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+
+<p>現在，BList 指向 <code>2 -&gt; 3 -&gt; null</code>，而原來的 <code>1 -&gt; 2 -&gt; 3 -&gt; null</code> 就沒有變數或引用再指向它。因此，<code>1</code> 節點就會變成孤立節點，即便他的 next 指向的是 <code>2</code>，但已無法被任何方式訪問 <code>1</code> 節點本身。<br>此時：節點 <code>1</code> 就變成了垃圾回收的候選對象，因為它不再有任何引用指向它；節點 <code>2</code> 和 <code>3</code> 仍然是可達的，因為它們是 BList 所指向的部分。</p>
+<p>不被指向的節點 <code>1</code> 仍然會佔用記憶體空間，直到垃圾回收器（Garbage Collector）回收它們為止。<br>這些節點會保持在記憶體中，直到它們不再被引用並被垃圾回收器檢測到為止。</p>
+<h2 id="各有所長"><a href="#各有所長" class="headerlink" title="各有所長"></a>各有所長</h2><p>來比較一下哪種競賽適合派誰出場：</p>
+<h3 id="Random-access-amp-Search-隨機存取與搜索"><a href="#Random-access-amp-Search-隨機存取與搜索" class="headerlink" title="Random access &amp; Search 隨機存取與搜索"></a>Random access &amp; Search 隨機存取與搜索</h3><h4 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h4><p>Keyword - find or search</p>
+<p>適用 LeetCode 題目：<br>📌 LeetCode Problem: Two Sum (Easy) - #1<br>(Given an array, find two numbers that sum to a target value.)</p>
+<p>日常範例：<br>📌 圖書館書架查找<br>📌 按照字母排列查找電話號碼聯絡人</p>
+<p>Why：<br>按序排列查找已知索引的 <code>O(1)</code> 優勢</p>
+<h3 id="Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除"><a href="#Frequent-insertions-x2F-deletions-頻繁操作插入-x2F-刪除" class="headerlink" title="Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除"></a>Frequent insertions&#x2F;deletions 頻繁操作插入&#x2F;刪除</h3><h4 id="Linked-List"><a href="#Linked-List" class="headerlink" title="Linked List"></a>Linked List</h4><p>Keyword - remove or insert</p>
+<p>📌 LeetCode Problem: Remove Nth Node From End of List (Medium) - #19<br>(Remove the Nth node from the end of a linked list.)</p>
+<p>Why：<br>從特定位置移除節點的 <code>O(1)</code> 優勢</p>
+<h1 id="Linked-List-延伸課題"><a href="#Linked-List-延伸課題" class="headerlink" title="Linked List 延伸課題"></a>Linked List 延伸課題</h1><ul>
+<li>反轉鏈結串列（Reverse Linked List）</li>
+<li>合併兩個有序鏈結串列（Merge Two Sorted Lists）&#x2F;&#x2F; 本文重點</li>
+<li>找到鏈結串列的環（Linked List Cycle Detection）</li>
+<li>刪除鏈結串列中的節點（Delete Node in a Linked List）</li>
+</ul>
 ]]></content>
   </entry>
   <entry>
@@ -1555,6 +1555,47 @@
       </tags>
   </entry>
   <entry>
+    <title>Web Workers - Main thread&#39;s helper 主執行緒的好幫手</title>
+    <url>/blog/2024/07/12/main-thread-and-web-workers/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Web Workers - Main threads helper </div>
+            <div class="stroke">Web Workers - Main threads helper </div>
+            <div class="plain main-title">Web Workers - Main threads helper </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇介紹幕後的那隻推手——Web Workers 的運作基本概念與架構。</p>
+<span id="more"></span>
+
+<p>前端新時代根據 <strong>異步執行(Asynchronous)</strong> 原理產生新的技術與套件，例如 Promise 與 Async Await 使得 <strong>宏任務(Macro Task)</strong> 與 <strong>微任務(Micro Task)</strong> 在 <strong>事件迴圈(Event Loop)</strong> 的完美委派下讓人忘記 Javascript 其實是 <strong>單線程(Single Thread)</strong> 的程式語言，而昂貴或者繁雜的計算成本很可能會阻塞(Block)主執行緒的前進，這時候分擔任務的好幫手 Web workers 就是出場的好時機了。</p>
+<h1 id="Parallel-Executive-Concept-平行的工作節奏"><a href="#Parallel-Executive-Concept-平行的工作節奏" class="headerlink" title="Parallel Executive Concept 平行的工作節奏"></a>Parallel Executive Concept 平行的工作節奏</h1><p>主執行緒與 Web worker 的工作模式是併發的(Concurrency)，同時並且消耗_額外的 CPU 空間來運算_而不會導致當下的工作會互享影響，能更有效率的分工合作完成任務外還營造給使用者絲滑的使用體驗(User Experience)，使用之前先有基本的概念：</p>
+<h2 id="Accessing-the-DOM"><a href="#Accessing-the-DOM" class="headerlink" title="Accessing the DOM"></a>Accessing the DOM</h2><p>主執行緒(Main Thread)與工作夥伴(Workers，自己翻得比較親切)最大差異在於前者可以取得 DOM 的應用權，而後者不行；所以主執行緒才是操作使用介面(UI)的主人。</p>
+<blockquote>
+<p>Web Workers are all about keeping a seperate thread on the browser different than the main thread which runs all the rendering efforts of the UI.<br><a href="https://hwclass.medium.com/web-workers-in-a-nutshell-809f1dbe7fbf">Web Workers in a Nutshell</a></p>
+</blockquote>
+<h2 id="Web-Workers-work-on-background"><a href="#Web-Workers-work-on-background" class="headerlink" title="Web Workers work on background"></a>Web Workers work on background</h2><p>Web Workers 的運算是在背景執行的，有自己的 CPU 運算空間。</p>
+<h2 id="Seperate-scope"><a href="#Seperate-scope" class="headerlink" title="Seperate scope"></a>Seperate scope</h2><p>基於每個執行緒(Thread)都是獨立的作用域，主執行緒(Main Thread)與工作夥伴(Workers)之間不共享資料須要透過 Message Event 互相傳遞與溝通，<code>postMessage</code> 發送、<code>onMessage</code> 監聽。</p>
+<h2 id="Main-Thread-creates-Web-Workers"><a href="#Main-Thread-creates-Web-Workers" class="headerlink" title="Main Thread creates Web Workers"></a>Main Thread creates Web Workers</h2><p>工作夥伴(Workers)是基於主執行緒的執行環境產生的次執行緒，生命週期由主執行緒決定產生(Creating)與毀滅(Closing)，但彼此的工作執行是併發的不會互相影響，避免 Blocking the Thread。</p>
+<img src="/blog/images/main-thread-and-web-workers-0.jpg" class="" title="Resource: https:&#x2F;&#x2F;hwclass.medium.com&#x2F;web-workers-in-a-nutshell-809f1dbe7fbf">
+<img src="/blog/images/main-thread-and-web-workers-1.jpg" class="" title="Resource: https:&#x2F;&#x2F;viblo.asia&#x2F;p&#x2F;simple-web-workers-workflow-with-webpack-3P0lPkobZox">
+
+<h1 id="Demo-example"><a href="#Demo-example" class="headerlink" title="Demo example"></a>Demo example</h1><p>範例使用龐大的 For loop 來佔用執行緒的計算空間，體驗不同執行序工作下卡頓的情況：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="js - Web Workers" src="https://codepen.io/mawchu/embed/yLdLZmQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/yLdLZmQ">
+  js - Web Workers</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>]]></content>
+      <categories>
+        <category>Web worker</category>
+      </categories>
+      <tags>
+        <tag>client</tag>
+        <tag>browser</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Macbook 錄製影音工具 - timeplayer</title>
     <url>/blog/2023/02/05/macbook-timeplayer-recording-knowhow/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1729,93 +1770,6 @@
         <tag>NX</tag>
         <tag>monorepo</tag>
         <tag>polyrepo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React Context pitfalls - 踩雷經驗</title>
-    <url>/blog/2024/12/24/react-context-hook-pitfalls/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React Context pitfalls - </div>
-            <div class="stroke">React Context pitfalls - </div>
-            <div class="plain main-title">React Context pitfalls - </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>即便之前有使用過 React Context 的鉤子經驗仍不可避免地在實際應用時遇到困難，本篇記錄下自己的使用踩坑經驗順便造福大眾 🤦‍♀️。</p>
-<span id="more"></span>
-
-<h1 id="專案結構"><a href="#專案結構" class="headerlink" title="專案結構"></a>專案結構</h1><h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><blockquote>
-<p>Since we are using FreeMarker Java Template Engine(FTL), it would be a bit tricky to integrate React with it. In this article, I’m going to explain how to run and write React codes in our existing au-admin project.</p>
-</blockquote>
-<p>簡單的介紹一下這次專案的結構，由於是從 MVC（Java）拉出來改造的前端庫所以結構上會有些與傳統建立的 React 專案不同，打包工具為 Craco，且各個模塊是區分團隊負責難免造成了元件、開發習慣跟使用技術上的差異，有純 Javascript、有 Typescript、有從舊邏輯拆出來也有新添加的業務邏輯頁面，呈現著一個各自為政的開發模式不是這次的討論重點，先聚焦在幾個技術應用的背景：</p>
-<table>
-<thead>
-<tr>
-<th align="left">Code format</th>
-<th align="center">Data Management</th>
-<th align="left">Api Management</th>
-<th align="left">Style pre-processor</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Typescript</td>
-<td align="center">useState, useContext, useReducer</td>
-<td align="left">Custom hooks</td>
-<td align="left">less</td>
-</tr>
-</tbody></table>
-<h2 id="Component-Structure"><a href="#Component-Structure" class="headerlink" title="Component Structure"></a>Component Structure</h2><p>資料管理的應用很大一部分取決於元件的結構怎麼長，會影響到資料的傳遞深淺與方式，本次的專案結構最深達到 3 層所以對於簡單資料使用 <code>useState</code> 做基礎控制、表單操作較複雜的元件使用 <code>useReducer</code> 以物件形式管理資料，在三層元件共同使用與操作的資料對象使用 <code>useContext</code>，以下是元件的結構圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-1.png' width='min(100%, 600px)' height='auto'><br>當 props 來到第三層時仍需要操作共同的資料就不是那麼方便整潔，容易造成資料瀑布（Props drilling）的傳遞結構，容易造成不必要的資料傳遞，如圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-2.jpg' width='min(100%, 600px)' height='auto' alt="https://ithelp.ithome.com.tw/articles/10336311" title="https://ithelp.ithome.com.tw/articles/10336311"></p>
-<h1 id="區分共用與獨立管理的資料"><a href="#區分共用與獨立管理的資料" class="headerlink" title="區分共用與獨立管理的資料"></a>區分共用與獨立管理的資料</h1><p>在業務邏輯上一定會有兩大類型的資料來影響元件的渲染：</p>
-<h2 id="獨立管理的資料"><a href="#獨立管理的資料" class="headerlink" title="獨立管理的資料"></a>獨立管理的資料</h2><p>此類型資料只需要 scoped 在元件內部即可（拷貝的獨立參考），例如上圖的 SearchForm 表單資料、AddConfigModal 與 ConfirmToggleModal 各自的 Modal 開關或按鈕的 disabled 狀態等「不需要共用」或者「跨元件使用」的資料類型就可以簡便規範就好，其中表單適合使用物件形式來便利管理所以我使用 <code>useReducer</code>，而布林純值的簡單資料可以使用最原始的 <code>useState</code> 來操控。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-3.jpg' width='min(100%, 600px)' height='auto'></p>
-<h2 id="共用操作的資料"><a href="#共用操作的資料" class="headerlink" title="共用操作的資料"></a>共用操作的資料</h2><p>此類型資料前提為跨元件操控的對象（同一份資料參考）並且會影響一個以上的元件渲染時，就需要透過訂閱（Subscription）跟監聽（Observing）的行為來管理資料，適合的管理工具很多例如 Redux、Recoil 或者 Atom，但此次使用的業務邏輯是簡單的 CRUD 所以採用 React 官方提供的 useContext。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-4.jpg' width='min(100%, 600px)' height='auto'></p>
-<h1 id="useContext-intro"><a href="#useContext-intro" class="headerlink" title="useContext intro"></a>useContext intro</h1><p>之前對於 useContext 有一篇文章<a href="/blog/2024/05/02/react-useContext/">入門介紹</a>了簡易的使用方式，但偏偏沒有特別解釋到具體哪個環節才能開始使用 useContext 的資料導致了這一次的坑，來描述一下這次開發中遭遇的困難。</p>
-<h2 id="核心問題"><a href="#核心問題" class="headerlink" title="核心問題"></a>核心問題</h2><h3 id="建立-useContext-魔法陣"><a href="#建立-useContext-魔法陣" class="headerlink" title="建立 useContext 魔法陣"></a>建立 useContext 魔法陣</h3><p>在 contexts 資料夾建立了一個共用資料中心並且引入 custom hooks（useQueryDatas）來管理 API 的邏輯避免每一次解構（destruction） custom hooks 的資料都造成新的參考，並且提升到 useContext scope 來實現多元件的共同訂閱與監聽：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-5.jpg' width='min(100%, 600px)' height='auto'></p>
-<h3 id="魔法啟用失敗"><a href="#魔法啟用失敗" class="headerlink" title="魔法啟用失敗"></a>魔法啟用失敗</h3><p>說得前面的鋪陳終於來到問題核心！若沒有將啟用資料的 Provider 移出獨立的 Function Component 中，並且將根部元件提取出來放置，從 Provider 提出的資料便不會有任何響應。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-6.jpg' width='min(100%, 600px)' height='auto'></p>
-<p>一開始我將根部元件直接放置在 Function Component 也就是圖中黃線的位置，會發現 useContext 的資料呼叫任何一個 setState 都不會改動到 state，也就是沒有正確啟用該資料作用域，直到提取出去並將根部元件以子元件的形式包裹才終於使得共用 useContext 中的 state 開始作用！<br>這一段邏輯是取自其他團隊開發人員的結構直接使用，封裝出來的 Context 必須以 Children 形式傳進去才能正確啟用魔法陣。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Web Workers - Main thread&#39;s helper 主執行緒的好幫手</title>
-    <url>/blog/2024/07/12/main-thread-and-web-workers/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Web Workers - Main threads helper </div>
-            <div class="stroke">Web Workers - Main threads helper </div>
-            <div class="plain main-title">Web Workers - Main threads helper </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>本篇介紹幕後的那隻推手——Web Workers 的運作基本概念與架構。</p>
-<span id="more"></span>
-
-<p>前端新時代根據 <strong>異步執行(Asynchronous)</strong> 原理產生新的技術與套件，例如 Promise 與 Async Await 使得 <strong>宏任務(Macro Task)</strong> 與 <strong>微任務(Micro Task)</strong> 在 <strong>事件迴圈(Event Loop)</strong> 的完美委派下讓人忘記 Javascript 其實是 <strong>單線程(Single Thread)</strong> 的程式語言，而昂貴或者繁雜的計算成本很可能會阻塞(Block)主執行緒的前進，這時候分擔任務的好幫手 Web workers 就是出場的好時機了。</p>
-<h1 id="Parallel-Executive-Concept-平行的工作節奏"><a href="#Parallel-Executive-Concept-平行的工作節奏" class="headerlink" title="Parallel Executive Concept 平行的工作節奏"></a>Parallel Executive Concept 平行的工作節奏</h1><p>主執行緒與 Web worker 的工作模式是併發的(Concurrency)，同時並且消耗_額外的 CPU 空間來運算_而不會導致當下的工作會互享影響，能更有效率的分工合作完成任務外還營造給使用者絲滑的使用體驗(User Experience)，使用之前先有基本的概念：</p>
-<h2 id="Accessing-the-DOM"><a href="#Accessing-the-DOM" class="headerlink" title="Accessing the DOM"></a>Accessing the DOM</h2><p>主執行緒(Main Thread)與工作夥伴(Workers，自己翻得比較親切)最大差異在於前者可以取得 DOM 的應用權，而後者不行；所以主執行緒才是操作使用介面(UI)的主人。</p>
-<blockquote>
-<p>Web Workers are all about keeping a seperate thread on the browser different than the main thread which runs all the rendering efforts of the UI.<br><a href="https://hwclass.medium.com/web-workers-in-a-nutshell-809f1dbe7fbf">Web Workers in a Nutshell</a></p>
-</blockquote>
-<h2 id="Web-Workers-work-on-background"><a href="#Web-Workers-work-on-background" class="headerlink" title="Web Workers work on background"></a>Web Workers work on background</h2><p>Web Workers 的運算是在背景執行的，有自己的 CPU 運算空間。</p>
-<h2 id="Seperate-scope"><a href="#Seperate-scope" class="headerlink" title="Seperate scope"></a>Seperate scope</h2><p>基於每個執行緒(Thread)都是獨立的作用域，主執行緒(Main Thread)與工作夥伴(Workers)之間不共享資料須要透過 Message Event 互相傳遞與溝通，<code>postMessage</code> 發送、<code>onMessage</code> 監聽。</p>
-<h2 id="Main-Thread-creates-Web-Workers"><a href="#Main-Thread-creates-Web-Workers" class="headerlink" title="Main Thread creates Web Workers"></a>Main Thread creates Web Workers</h2><p>工作夥伴(Workers)是基於主執行緒的執行環境產生的次執行緒，生命週期由主執行緒決定產生(Creating)與毀滅(Closing)，但彼此的工作執行是併發的不會互相影響，避免 Blocking the Thread。</p>
-<img src="/blog/images/main-thread-and-web-workers-0.jpg" class="" title="Resource: https:&#x2F;&#x2F;hwclass.medium.com&#x2F;web-workers-in-a-nutshell-809f1dbe7fbf">
-<img src="/blog/images/main-thread-and-web-workers-1.jpg" class="" title="Resource: https:&#x2F;&#x2F;viblo.asia&#x2F;p&#x2F;simple-web-workers-workflow-with-webpack-3P0lPkobZox">
-
-<h1 id="Demo-example"><a href="#Demo-example" class="headerlink" title="Demo example"></a>Demo example</h1><p>範例使用龐大的 For loop 來佔用執行緒的計算空間，體驗不同執行序工作下卡頓的情況：</p>
-<iframe height="300" style="width: 100%;" scrolling="no" title="js - Web Workers" src="https://codepen.io/mawchu/embed/yLdLZmQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/yLdLZmQ">
-  js - Web Workers</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>]]></content>
-      <categories>
-        <category>Web worker</category>
-      </categories>
-      <tags>
-        <tag>client</tag>
-        <tag>browser</tag>
       </tags>
   </entry>
   <entry>
@@ -2117,6 +2071,52 @@ on <a href="https://codepen.io">CodePen</a>.
       </tags>
   </entry>
   <entry>
+    <title>React Context pitfalls - 踩雷經驗</title>
+    <url>/blog/2024/12/24/react-context-hook-pitfalls/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React Context pitfalls - </div>
+            <div class="stroke">React Context pitfalls - </div>
+            <div class="plain main-title">React Context pitfalls - </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>即便之前有使用過 React Context 的鉤子經驗仍不可避免地在實際應用時遇到困難，本篇記錄下自己的使用踩坑經驗順便造福大眾 🤦‍♀️。</p>
+<span id="more"></span>
+
+<h1 id="專案結構"><a href="#專案結構" class="headerlink" title="專案結構"></a>專案結構</h1><h2 id="Project-Structure"><a href="#Project-Structure" class="headerlink" title="Project Structure"></a>Project Structure</h2><blockquote>
+<p>Since we are using FreeMarker Java Template Engine(FTL), it would be a bit tricky to integrate React with it. In this article, I’m going to explain how to run and write React codes in our existing au-admin project.</p>
+</blockquote>
+<p>簡單的介紹一下這次專案的結構，由於是從 MVC（Java）拉出來改造的前端庫所以結構上會有些與傳統建立的 React 專案不同，打包工具為 Craco，且各個模塊是區分團隊負責難免造成了元件、開發習慣跟使用技術上的差異，有純 Javascript、有 Typescript、有從舊邏輯拆出來也有新添加的業務邏輯頁面，呈現著一個各自為政的開發模式不是這次的討論重點，先聚焦在幾個技術應用的背景：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Code format</th>
+<th align="center">Data Management</th>
+<th align="left">Api Management</th>
+<th align="left">Style pre-processor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Typescript</td>
+<td align="center">useState, useContext, useReducer</td>
+<td align="left">Custom hooks</td>
+<td align="left">less</td>
+</tr>
+</tbody></table>
+<h2 id="Component-Structure"><a href="#Component-Structure" class="headerlink" title="Component Structure"></a>Component Structure</h2><p>資料管理的應用很大一部分取決於元件的結構怎麼長，會影響到資料的傳遞深淺與方式，本次的專案結構最深達到 3 層所以對於簡單資料使用 <code>useState</code> 做基礎控制、表單操作較複雜的元件使用 <code>useReducer</code> 以物件形式管理資料，在三層元件共同使用與操作的資料對象使用 <code>useContext</code>，以下是元件的結構圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-1.png' width='min(100%, 600px)' height='auto'><br>當 props 來到第三層時仍需要操作共同的資料就不是那麼方便整潔，容易造成資料瀑布（Props drilling）的傳遞結構，容易造成不必要的資料傳遞，如圖：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-2.jpg' width='min(100%, 600px)' height='auto' alt="https://ithelp.ithome.com.tw/articles/10336311" title="https://ithelp.ithome.com.tw/articles/10336311"></p>
+<h1 id="區分共用與獨立管理的資料"><a href="#區分共用與獨立管理的資料" class="headerlink" title="區分共用與獨立管理的資料"></a>區分共用與獨立管理的資料</h1><p>在業務邏輯上一定會有兩大類型的資料來影響元件的渲染：</p>
+<h2 id="獨立管理的資料"><a href="#獨立管理的資料" class="headerlink" title="獨立管理的資料"></a>獨立管理的資料</h2><p>此類型資料只需要 scoped 在元件內部即可（拷貝的獨立參考），例如上圖的 SearchForm 表單資料、AddConfigModal 與 ConfirmToggleModal 各自的 Modal 開關或按鈕的 disabled 狀態等「不需要共用」或者「跨元件使用」的資料類型就可以簡便規範就好，其中表單適合使用物件形式來便利管理所以我使用 <code>useReducer</code>，而布林純值的簡單資料可以使用最原始的 <code>useState</code> 來操控。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-3.jpg' width='min(100%, 600px)' height='auto'></p>
+<h2 id="共用操作的資料"><a href="#共用操作的資料" class="headerlink" title="共用操作的資料"></a>共用操作的資料</h2><p>此類型資料前提為跨元件操控的對象（同一份資料參考）並且會影響一個以上的元件渲染時，就需要透過訂閱（Subscription）跟監聽（Observing）的行為來管理資料，適合的管理工具很多例如 Redux、Recoil 或者 Atom，但此次使用的業務邏輯是簡單的 CRUD 所以採用 React 官方提供的 useContext。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-4.jpg' width='min(100%, 600px)' height='auto'></p>
+<h1 id="useContext-intro"><a href="#useContext-intro" class="headerlink" title="useContext intro"></a>useContext intro</h1><p>之前對於 useContext 有一篇文章<a href="/blog/2024/05/02/react-useContext/">入門介紹</a>了簡易的使用方式，但偏偏沒有特別解釋到具體哪個環節才能開始使用 useContext 的資料導致了這一次的坑，來描述一下這次開發中遭遇的困難。</p>
+<h2 id="核心問題"><a href="#核心問題" class="headerlink" title="核心問題"></a>核心問題</h2><h3 id="建立-useContext-魔法陣"><a href="#建立-useContext-魔法陣" class="headerlink" title="建立 useContext 魔法陣"></a>建立 useContext 魔法陣</h3><p>在 contexts 資料夾建立了一個共用資料中心並且引入 custom hooks（useQueryDatas）來管理 API 的邏輯避免每一次解構（destruction） custom hooks 的資料都造成新的參考，並且提升到 useContext scope 來實現多元件的共同訂閱與監聽：<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-5.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="魔法啟用失敗"><a href="#魔法啟用失敗" class="headerlink" title="魔法啟用失敗"></a>魔法啟用失敗</h3><p>說得前面的鋪陳終於來到問題核心！若沒有將啟用資料的 Provider 移出獨立的 Function Component 中，並且將根部元件提取出來放置，從 Provider 提出的資料便不會有任何響應。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-6.jpg' width='min(100%, 600px)' height='auto'></p>
+<p>一開始我將根部元件直接放置在 Function Component 也就是圖中黃線的位置，會發現 useContext 的資料呼叫任何一個 setState 都不會改動到 state，也就是沒有正確啟用該資料作用域，直到提取出去並將根部元件以子元件的形式包裹才終於使得共用 useContext 中的 state 開始作用！<br>這一段邏輯是取自其他團隊開發人員的結構直接使用，封裝出來的 Context 必須以 Children 形式傳進去才能正確啟用魔法陣。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>React 思維進化 - One-way dataflow</title>
     <url>/blog/2024/02/24/react-one-way-dataflow/</url>
     <content><![CDATA[<div class="visual-image">
@@ -2151,119 +2151,6 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>react</tag>
         <tag>one-way dataflow</tag>
         <tag>virtual dom</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React - useEffect hook 使用說明</title>
-    <url>/blog/2024/05/02/react-useEffect/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React - useEffect hook </div>
-            <div class="stroke">React - useEffect hook </div>
-            <div class="plain main-title">React - useEffect hook </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>這一篇來記錄一下初學 React 時界定最模糊但最常用的鉤子 <code>useEffect()</code>，到底怎麼用、為什麼這樣用？</p>
-<span id="more"></span>
-
-<p>React 所有鉤子都不容易在閱讀官方解說之後馬上理解，需要透過案例演練或者採坑的經驗後慢慢掌握。</p>
-<h1 id="useEffect-為何稱之為「副作用」"><a href="#useEffect-為何稱之為「副作用」" class="headerlink" title="useEffect 為何稱之為「副作用」"></a>useEffect 為何稱之為「副作用」</h1><p>就像吃藥治療了身體病痛的同時也會帶來一些額外的影響，例如偏頭痛、喉嚨乾燥等等，<code>useEffect()</code> 就是提供你的應用程式一些「額外的影響」。<br>影響的範圍與作用透過第一個函式參數來定義，依賴更新的資料則是第二個 Dependency 參數。</p>
-<h1 id="useEffect-與生命週期的關係"><a href="#useEffect-與生命週期的關係" class="headerlink" title="useEffect 與生命週期的關係"></a>useEffect 與生命週期的關係</h1><p>而副作用與<strong>元件 component 的生命週期</strong>息息相關，這一點在很多教學重點裡往往沒有提到，感謝 Fireship 的 YT 大佬講解得非常好懂，直接拆解出幾個核心架構：</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TNhaISOUy6Q?si=_aN_Q57_fOyp6vYa&t;start=230" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<h2 id="class-life-cycle-event"><a href="#class-life-cycle-event" class="headerlink" title="class life cycle event"></a>class life cycle event</h2><p>在 React 16.8 釋出 functional hooks 以前元件都是以 <strong>class 形式</strong>為基礎延伸的，而學習過 Javascript 核心的小夥伴都理解 class 語法糖其實是 function X this constructor 寫法的包裝，畢竟 Javascript 本來就沒有強硬的物件導向(OOP)寫法，完全看開發者如何應用而已。</p>
-<p>回到 React useEffect 與生命週期的關係，class component 提供了三個基本的<strong>元件生命週期事件</strong>：</p>
-<h3 id="componentDidMount-元件初創"><a href="#componentDidMount-元件初創" class="headerlink" title="componentDidMount 元件初創"></a>componentDidMount 元件初創</h3><p>在這個階段類似 Vue 的 <code>mounted()</code> 鉤子，會在元件<strong>初創時期</strong>啟動並執行。<br>useEffect 的寫法經常會搭配 Fetch API X <strong>empty dependency array</strong>，不用依賴任何資料的變化否則容易進入無限迴圈(Infinite Loop)，這個寫法會執行在瀏覽器首次完成渲染時。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-1.jpg' width='min(100%, 600px)' height='auto'></p>
-<h3 id="componentDidUpdate-元件初創"><a href="#componentDidUpdate-元件初創" class="headerlink" title="componentDidUpdate 元件初創"></a>componentDidUpdate 元件初創</h3><p>在這個階段類似 Vue 的 <code>update()</code> 鉤子，會在元件<strong>資料更新</strong>時啟動並執行。<br>如果搭配 useEffect dependency array 的依賴就類似 Vue 的 <code>watch</code> 行為，根據資料變化啟動副作用。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-2.jpg' width='min(100%, 600px)' height='auto'></p>
-<h3 id="componentWillUnmount-元件毀滅"><a href="#componentWillUnmount-元件毀滅" class="headerlink" title="componentWillUnmount 元件毀滅"></a>componentWillUnmount 元件毀滅</h3><p>在這個階段類似 Vue 的 <code>destroy()</code> 鉤子，會在元件<strong>從畫面移除時</strong>啟動並執行。<br>useEffect 的寫法會在 <strong>return function</strong> 內，標記著元件移除時要啟動的副作用，例如移除事件監聽器。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-3.jpg' width='min(100%, 600px)' height='auto'></p>
-<h2 id="等同-useEffect-DidMount-階段的寫法"><a href="#等同-useEffect-DidMount-階段的寫法" class="headerlink" title="等同 useEffect DidMount 階段的寫法"></a>等同 useEffect DidMount 階段的寫法</h2><p>其實剛學 useEffect 鉤子不太理解加與不加的差別，因為有的行為我只想執行一次又不想加重首次渲染的負擔時就不一定會使用到，例如以下的情況：</p>
-<iframe height="300" style="width: 100%;" scrolling="no" title="React.useEffect" src="https://codepen.io/mawchu/embed/GRLaabv?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/GRLaabv">
-  React.useEffect</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>
-
-<p>若資料在<strong>不會改變</strong>的前提下平心而論確實差不多，因為沒有重新渲染的問題；倘若資料會改變而影響 component re-render 就會開始看到差異。</p>
-<p>使用 <code>useEffect</code> 可以將函式區域內的資料都維持在<strong>第一次渲染後</strong>、<strong>資料更新前</strong>的版本，例如以上範例，即使非同步 SetTimeout Callback 的執行其實更早(0 毫秒早於首次渲染以前)，data 仍凍結在初始值 <code>I&#39;m a data.</code>，體現了 useEffect 在這裡的優點。</p>
-<p>然而撰寫在 function component 內、useEffect 外且沒有使用其他 Hooks 的函式，會緊跟隨每次元件的渲染重建、渲染前執行計算、渲染後顯示結果，生命週期因渲染重新誕生、因元件毀滅而消失（除了監聽事件）。</p>
-<h1 id="useEffect-X-empty-array-是微任務"><a href="#useEffect-X-empty-array-是微任務" class="headerlink" title="useEffect X empty array 是微任務"></a>useEffect X empty array 是微任務</h1><p>用 <strong>宏任務(Macro task)</strong> 或 <strong>微任務(Micro task)</strong> 來理解 React hooks 是狹隘的做法，畢竟怎麼為 event loop 安排還是取決於開發者的程式邏輯與使用鉤子的目的上，不過在上一個案例中 useEffect X empty array 的搭配就很接近微任務了，React 設計這些接口的初衷就是提供符合設計動機的時間點，讓開發者根據業務需求信手拈來安排想要的流程脈絡，不過理解背後的運作順序還是有助於避免採坑。</p>
-<p>以下是 chatGpt 的解說，有時候會胡說八道需要斟酌觀看 xd</p>
-<blockquote>
-<p>When you use a hook like <code>useState</code>, <code>useEffect</code>, <code>useContext</code>, etc., it’s not the hook itself that determines whether its execution is scheduled as a micro task or a macro task. Instead, it’s the way React schedules and processes updates that determines <strong>when the hook’s associated functions are called</strong>.<br>However, some hooks, like <strong>useEffect with an empty dependency array []</strong>, are often used for tasks that are more closely associated with micro tasks, such as updating the DOM after rendering, it runs its effect callback after the browser <strong>has finished painting and before the next paint</strong>. This ensures that any DOM updates caused by the effect are applied before the browser repaints the screen. In these cases, the effect of the hook may be scheduled as a micro task, but it’s not a rule that applies to all hooks.<br>–chatGpt</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-        <tag>React hooks</tag>
-        <tag>useEffect</tag>
-        <tag>class life cycle</tag>
-        <tag>mounted</tag>
-        <tag>updated</tag>
-        <tag>destroy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React useRef X DOM 操作實例</title>
-    <url>/blog/2024/05/06/react-useRef-dom/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React useRef X DOM </div>
-            <div class="stroke">React useRef X DOM </div>
-            <div class="plain main-title">React useRef X DOM </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>React 裡的鉤子 <code>useRef</code> 是誰？哦！你寫過 Vue 的話記不記得 <code>$refs</code> 老朋友呢？這樣想就簡單些了，但不表示他們用法一樣哦！想了解就看下去。</p>
-<span id="more"></span>
-
-<h1 id="尋常的-Javascript-DOM-操作在-React-會失敗"><a href="#尋常的-Javascript-DOM-操作在-React-會失敗" class="headerlink" title="尋常的 Javascript DOM 操作在 React 會失敗"></a>尋常的 Javascript DOM 操作在 React 會失敗</h1><p><code>useRef</code> 最常見的做法就是用來 DOM 操作，尋常的 Javascript DOM 操作為什麼不起作用呢？這是因為初始化的元件必須在第一次的 return render function 渲染後才會存在 DOM，也才能被選擇、操作，Javascript 基本用法 <code>querySelector</code>、<code>getElementById</code> 都需要 DOM 已經生成為前提。</p>
-<h1 id="利用-useRef-保持參考的特性存取-DOM"><a href="#利用-useRef-保持參考的特性存取-DOM" class="headerlink" title="利用 useRef 保持參考的特性存取 DOM"></a>利用 useRef 保持參考的特性存取 DOM</h1><p>由於 <code>useRef</code> 可以 <strong>不受限於渲染迭代階段</strong> ，即便每一次的渲染無論在 React 啟動了 <strong>diff 機制</strong> 刪改或保留真實 DOM 後，都能以渲染為最小時間單位重新綁定參考或者維持參考，這也解釋了為什麼該 hook 能夠幫助開發者追蹤 DOM 並且持續取得值或者綁定事件。</p>
-<p>該鉤子的命名也能很自然與 Vue 的 <code>$refs</code> 應用與連結。</p>
-<h1 id="useRef-DOM-的範例"><a href="#useRef-DOM-的範例" class="headerlink" title="useRef DOM 的範例"></a>useRef DOM 的範例</h1><p>以下範例提出開發介面經常遇到的情境：給 Element 增加高度伸縮動畫，但內容有長有短而 <strong>transition 無法知道高度 (Height) <code>auto</code> 的值導致動畫失效</strong> 的情境。工作上踩過幾次坑印象深刻　(๑´ㅂ&#96;๑)。</p>
-<p>這時候就需要借助 Javascript 取得實際高度 <code>auto</code> 的值時做出絲滑的動畫。</p>
-<iframe height="300" style="width: 100%;" scrolling="no" title="React.useRef X DOM - Collapse" src="https://codepen.io/mawchu/embed/QWPeOdx?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/QWPeOdx">
-  React.useRef X DOM - Collapse</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>
-
-<p>這個範例實做了幾個經常應用的使用體驗：</p>
-<h2 id="useRef-指向參考以綁定-DOM-元素"><a href="#useRef-指向參考以綁定-DOM-元素" class="headerlink" title="useRef 指向參考以綁定 DOM 元素"></a>useRef 指向參考以綁定 DOM 元素</h2><p><a href="">這一篇有詳細說明</a></p>
-<h2 id="利用陣列管理列表狀態"><a href="#利用陣列管理列表狀態" class="headerlink" title="利用陣列管理列表狀態"></a>利用陣列管理列表狀態</h2><p>想要達到其中一個元件打開、其他的關閉時就可以針對陣列的每個獨立參考來控制，先關閉所有的元件、再針對特定元件打開也可以節省跑回圈的演算效能(Big O)，</p>
-<h2 id="父元件綁定事件需要為子元件忽視"><a href="#父元件綁定事件需要為子元件忽視" class="headerlink" title="父元件綁定事件需要為子元件忽視"></a>父元件綁定事件需要為子元件忽視</h2><p>結合兩個做法達成目的：</p>
-<ul>
-<li>父元件達成點擊子元件以外範圍、關閉全部子元件。</li>
-<li>子元件設定 <code>e.stopPropagation()</code> 來阻止事件冒泡。</li>
-</ul>
-<h2 id="vue-版本的寫法"><a href="#vue-版本的寫法" class="headerlink" title="vue 版本的寫法"></a>vue 版本的寫法</h2><ul>
-<li><p>父元件達成點擊子元件以外範圍、關閉全部子元件。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleParentClick&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Collapse</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">v-for</span>=<span class="string">&quot;(collapse, index) in collapseItems&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:label</span>=<span class="string">&quot;collapse.label&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:isOpen</span>=<span class="string">&quot;isOpenList[index]&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      @<span class="attr">toggle</span>=<span class="string">&quot;handleToggle(index)&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;&#123; collapse.children || &#x27;Default text...&#x27; &#125;&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Collapse</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">Collapse</span> <span class="keyword">from</span> <span class="string">&#x27;./components/Collapse.vue&#x27;</span>; <span class="comment">// Assuming Collapse component is defined in a separate file</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">collapseItems</span>: [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="attr">label</span>: <span class="string">&quot;Happy day&quot;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="attr">children</span>: <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;<span class="name">strong</span>&gt;</span>I&#x27;m the children text.<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus consectetur obcaecati sunt quaerat quam odio pariatur hic molestiae repellat?<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;/&gt;</span></span></span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;Show content!&quot;</span>,</span><br><span class="line">            <span class="attr">children</span>: <span class="literal">null</span> <span class="comment">// If content is null, Collapse component will render without children</span></span><br><span class="line">        &#125;, </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;🥰&quot;</span>,</span><br><span class="line">            <span class="attr">children</span>: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">isOpenList</span>: <span class="title class_">Array</span>(<span class="number">3</span>).<span class="title function_">fill</span>(<span class="literal">false</span>) <span class="comment">// Initialize isOpenList with false values</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">handleToggle</span>(<span class="params">index</span>) &#123;</span><br><span class="line">      <span class="comment">// This method is called when a child component is toggled</span></span><br><span class="line">      <span class="comment">// We&#x27;ll ignore the toggle action in this parent component</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleParentClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// This method is called when the parent component is clicked</span></span><br><span class="line">      <span class="comment">// Perform actions specific to the parent here</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">isOpenList</span> = <span class="title class_">Array</span>(<span class="variable language_">this</span>.<span class="property">collapseItems</span>.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">components</span>: &#123;</span><br><span class="line">    <span class="title class_">Collapse</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子元件設定 <code>e.stopPropagation()</code> 來阻止事件冒泡。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;py-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;rounded-lg bg-amber-200 px-2 py-1 my-2 font-semibold relative z-10&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleClick&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;&#123; label &#125;&#125; <span class="tag">&lt;<span class="name">i</span> <span class="attr">:class</span>=<span class="string">&quot;isOpen ? &#x27;fa-solid fa-chevron-up&#x27; : &#x27;fa-solid fa-chevron-down&#x27; &quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">   </span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-wrapper -translate-y-6&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; height: isOpen ? parentHeight + &#x27;px&#x27; : &#x27;0px&#x27; &#125;&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;parentRef&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content border-2 border-grey-600 w-[calc(100%-12px)] sm:w-2/3 px-3 py-4 ml-2 relative&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">label</span>: <span class="title class_">String</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">isOpen</span>: <span class="title class_">Boolean</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">parentHeight</span>: <span class="number">0</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">handleClick</span>(<span class="params">e</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      e.<span class="title function_">stopPropagation</span>(); <span class="comment">// Prevent click event from bubbling up to the parent component</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;toggle&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="comment">// Get the height of the content div after it&#x27;s rendered</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">this</span>.<span class="property">parentHeight</span> = <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">parentRef</span>.<span class="property">scrollHeight</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="comment">/* Add your component-specific styles here */</span></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="修飾符（Event-Modifiers）"><a href="#修飾符（Event-Modifiers）" class="headerlink" title="修飾符（Event Modifiers）"></a>修飾符（Event Modifiers）</h3><p>阻止事件冒泡也可以用 Vue 提供的 <strong>修飾符（Event Modifiers）</strong> 來完成：<br>詳細可以<a href="https://book.vue.tw/CH1/1-5-events.html#v-on-%E8%88%87%E4%BF%AE%E9%A3%BE%E5%AD%90">參考 Kuro 大大這篇</a>。</p>
-<blockquote>
-<p><code>.stop</code> 的作用就如同大家熟知的 <code>event.strpPropagation()</code>，用來阻止事件冒泡。</p>
-</blockquote>
-<br />
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="comment">/* 修飾符寫法 */</span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;py-2&quot;</span> @<span class="attr">click.stop</span>=<span class="string">&quot;handleClick&quot;</span>&gt;</span> </span></span><br><span class="line"><span class="language-xml">    ...</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;toggle&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>React</category>
-        <category>Book learning</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
-        <tag>React</tag>
-        <tag>React hooks</tag>
-        <tag>useRef</tag>
-        <tag>Event.stopPropagation</tag>
       </tags>
   </entry>
   <entry>
@@ -2326,9 +2213,173 @@ on <a href="https://codepen.io">CodePen</a>.
       <tags>
         <tag>React</tag>
         <tag>React hooks</tag>
-        <tag>class life cycle</tag>
         <tag>useContext</tag>
         <tag>provide &amp; inject</tag>
+        <tag>class life cycle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React useRef X DOM 操作實例</title>
+    <url>/blog/2024/05/06/react-useRef-dom/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React useRef X DOM </div>
+            <div class="stroke">React useRef X DOM </div>
+            <div class="plain main-title">React useRef X DOM </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>React 裡的鉤子 <code>useRef</code> 是誰？哦！你寫過 Vue 的話記不記得 <code>$refs</code> 老朋友呢？這樣想就簡單些了，但不表示他們用法一樣哦！想了解就看下去。</p>
+<span id="more"></span>
+
+<h1 id="尋常的-Javascript-DOM-操作在-React-會失敗"><a href="#尋常的-Javascript-DOM-操作在-React-會失敗" class="headerlink" title="尋常的 Javascript DOM 操作在 React 會失敗"></a>尋常的 Javascript DOM 操作在 React 會失敗</h1><p><code>useRef</code> 最常見的做法就是用來 DOM 操作，尋常的 Javascript DOM 操作為什麼不起作用呢？這是因為初始化的元件必須在第一次的 return render function 渲染後才會存在 DOM，也才能被選擇、操作，Javascript 基本用法 <code>querySelector</code>、<code>getElementById</code> 都需要 DOM 已經生成為前提。</p>
+<h1 id="利用-useRef-保持參考的特性存取-DOM"><a href="#利用-useRef-保持參考的特性存取-DOM" class="headerlink" title="利用 useRef 保持參考的特性存取 DOM"></a>利用 useRef 保持參考的特性存取 DOM</h1><p>由於 <code>useRef</code> 可以 <strong>不受限於渲染迭代階段</strong> ，即便每一次的渲染無論在 React 啟動了 <strong>diff 機制</strong> 刪改或保留真實 DOM 後，都能以渲染為最小時間單位重新綁定參考或者維持參考，這也解釋了為什麼該 hook 能夠幫助開發者追蹤 DOM 並且持續取得值或者綁定事件。</p>
+<p>該鉤子的命名也能很自然與 Vue 的 <code>$refs</code> 應用與連結。</p>
+<h1 id="useRef-DOM-的範例"><a href="#useRef-DOM-的範例" class="headerlink" title="useRef DOM 的範例"></a>useRef DOM 的範例</h1><p>以下範例提出開發介面經常遇到的情境：給 Element 增加高度伸縮動畫，但內容有長有短而 <strong>transition 無法知道高度 (Height) <code>auto</code> 的值導致動畫失效</strong> 的情境。工作上踩過幾次坑印象深刻　(๑´ㅂ&#96;๑)。</p>
+<p>這時候就需要借助 Javascript 取得實際高度 <code>auto</code> 的值時做出絲滑的動畫。</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="React.useRef X DOM - Collapse" src="https://codepen.io/mawchu/embed/QWPeOdx?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/QWPeOdx">
+  React.useRef X DOM - Collapse</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>這個範例實做了幾個經常應用的使用體驗：</p>
+<h2 id="useRef-指向參考以綁定-DOM-元素"><a href="#useRef-指向參考以綁定-DOM-元素" class="headerlink" title="useRef 指向參考以綁定 DOM 元素"></a>useRef 指向參考以綁定 DOM 元素</h2><p><a href="">這一篇有詳細說明</a></p>
+<h2 id="利用陣列管理列表狀態"><a href="#利用陣列管理列表狀態" class="headerlink" title="利用陣列管理列表狀態"></a>利用陣列管理列表狀態</h2><p>想要達到其中一個元件打開、其他的關閉時就可以針對陣列的每個獨立參考來控制，先關閉所有的元件、再針對特定元件打開也可以節省跑回圈的演算效能(Big O)，</p>
+<h2 id="父元件綁定事件需要為子元件忽視"><a href="#父元件綁定事件需要為子元件忽視" class="headerlink" title="父元件綁定事件需要為子元件忽視"></a>父元件綁定事件需要為子元件忽視</h2><p>結合兩個做法達成目的：</p>
+<ul>
+<li>父元件達成點擊子元件以外範圍、關閉全部子元件。</li>
+<li>子元件設定 <code>e.stopPropagation()</code> 來阻止事件冒泡。</li>
+</ul>
+<h2 id="vue-版本的寫法"><a href="#vue-版本的寫法" class="headerlink" title="vue 版本的寫法"></a>vue 版本的寫法</h2><ul>
+<li><p>父元件達成點擊子元件以外範圍、關閉全部子元件。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;wrapper&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleParentClick&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">Collapse</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">v-for</span>=<span class="string">&quot;(collapse, index) in collapseItems&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:label</span>=<span class="string">&quot;collapse.label&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">:isOpen</span>=<span class="string">&quot;isOpenList[index]&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      @<span class="attr">toggle</span>=<span class="string">&quot;handleToggle(index)&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;&#123; collapse.children || &#x27;Default text...&#x27; &#125;&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Collapse</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">Collapse</span> <span class="keyword">from</span> <span class="string">&#x27;./components/Collapse.vue&#x27;</span>; <span class="comment">// Assuming Collapse component is defined in a separate file</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">collapseItems</span>: [</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="attr">label</span>: <span class="string">&quot;Happy day&quot;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="attr">children</span>: <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;<span class="name">strong</span>&gt;</span>I&#x27;m the children text.<span class="tag">&lt;/<span class="name">strong</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. A ducimus consectetur obcaecati sunt quaerat quam odio pariatur hic molestiae repellat?<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span></span></span><br><span class="line"><span class="language-xml"><span class="language-javascript"><span class="language-xml">            <span class="tag">&lt;/&gt;</span></span></span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;Show content!&quot;</span>,</span><br><span class="line">            <span class="attr">children</span>: <span class="literal">null</span> <span class="comment">// If content is null, Collapse component will render without children</span></span><br><span class="line">        &#125;, </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">label</span>: <span class="string">&quot;🥰&quot;</span>,</span><br><span class="line">            <span class="attr">children</span>: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">isOpenList</span>: <span class="title class_">Array</span>(<span class="number">3</span>).<span class="title function_">fill</span>(<span class="literal">false</span>) <span class="comment">// Initialize isOpenList with false values</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">handleToggle</span>(<span class="params">index</span>) &#123;</span><br><span class="line">      <span class="comment">// This method is called when a child component is toggled</span></span><br><span class="line">      <span class="comment">// We&#x27;ll ignore the toggle action in this parent component</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">handleParentClick</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// This method is called when the parent component is clicked</span></span><br><span class="line">      <span class="comment">// Perform actions specific to the parent here</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">isOpenList</span> = <span class="title class_">Array</span>(<span class="variable language_">this</span>.<span class="property">collapseItems</span>.<span class="property">length</span>).<span class="title function_">fill</span>(<span class="literal">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">components</span>: &#123;</span><br><span class="line">    <span class="title class_">Collapse</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子元件設定 <code>e.stopPropagation()</code> 來阻止事件冒泡。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;py-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;rounded-lg bg-amber-200 px-2 py-1 my-2 font-semibold relative z-10&quot;</span> @<span class="attr">click</span>=<span class="string">&quot;handleClick&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;&#123; label &#125;&#125; <span class="tag">&lt;<span class="name">i</span> <span class="attr">:class</span>=<span class="string">&quot;isOpen ? &#x27;fa-solid fa-chevron-up&#x27; : &#x27;fa-solid fa-chevron-down&#x27; &quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">   </span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content-wrapper -translate-y-6&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; height: isOpen ? parentHeight + &#x27;px&#x27; : &#x27;0px&#x27; &#125;&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;parentRef&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content border-2 border-grey-600 w-[calc(100%-12px)] sm:w-2/3 px-3 py-4 ml-2 relative&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">label</span>: <span class="title class_">String</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">isOpen</span>: <span class="title class_">Boolean</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">parentHeight</span>: <span class="number">0</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">handleClick</span>(<span class="params">e</span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      e.<span class="title function_">stopPropagation</span>(); <span class="comment">// Prevent click event from bubbling up to the parent component</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;toggle&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">mounted</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="comment">// Get the height of the content div after it&#x27;s rendered</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">this</span>.<span class="property">parentHeight</span> = <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">parentRef</span>.<span class="property">scrollHeight</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="comment">/* Add your component-specific styles here */</span></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="修飾符（Event-Modifiers）"><a href="#修飾符（Event-Modifiers）" class="headerlink" title="修飾符（Event Modifiers）"></a>修飾符（Event Modifiers）</h3><p>阻止事件冒泡也可以用 Vue 提供的 <strong>修飾符（Event Modifiers）</strong> 來完成：<br>詳細可以<a href="https://book.vue.tw/CH1/1-5-events.html#v-on-%E8%88%87%E4%BF%AE%E9%A3%BE%E5%AD%90">參考 Kuro 大大這篇</a>。</p>
+<blockquote>
+<p><code>.stop</code> 的作用就如同大家熟知的 <code>event.strpPropagation()</code>，用來阻止事件冒泡。</p>
+</blockquote>
+<br />
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="comment">/* 修飾符寫法 */</span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">class</span>=<span class="string">&quot;py-2&quot;</span> @<span class="attr">click.stop</span>=<span class="string">&quot;handleClick&quot;</span>&gt;</span> </span></span><br><span class="line"><span class="language-xml">    ...</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">handleClick</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;toggle&#x27;</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  ...</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>React</category>
+        <category>Book learning</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+        <tag>React</tag>
+        <tag>React hooks</tag>
+        <tag>useRef</tag>
+        <tag>Event.stopPropagation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React - useEffect hook 使用說明</title>
+    <url>/blog/2024/05/02/react-useEffect/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React - useEffect hook </div>
+            <div class="stroke">React - useEffect hook </div>
+            <div class="plain main-title">React - useEffect hook </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>這一篇來記錄一下初學 React 時界定最模糊但最常用的鉤子 <code>useEffect()</code>，到底怎麼用、為什麼這樣用？</p>
+<span id="more"></span>
+
+<p>React 所有鉤子都不容易在閱讀官方解說之後馬上理解，需要透過案例演練或者採坑的經驗後慢慢掌握。</p>
+<h1 id="useEffect-為何稱之為「副作用」"><a href="#useEffect-為何稱之為「副作用」" class="headerlink" title="useEffect 為何稱之為「副作用」"></a>useEffect 為何稱之為「副作用」</h1><p>就像吃藥治療了身體病痛的同時也會帶來一些額外的影響，例如偏頭痛、喉嚨乾燥等等，<code>useEffect()</code> 就是提供你的應用程式一些「額外的影響」。<br>影響的範圍與作用透過第一個函式參數來定義，依賴更新的資料則是第二個 Dependency 參數。</p>
+<h1 id="useEffect-與生命週期的關係"><a href="#useEffect-與生命週期的關係" class="headerlink" title="useEffect 與生命週期的關係"></a>useEffect 與生命週期的關係</h1><p>而副作用與<strong>元件 component 的生命週期</strong>息息相關，這一點在很多教學重點裡往往沒有提到，感謝 Fireship 的 YT 大佬講解得非常好懂，直接拆解出幾個核心架構：</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TNhaISOUy6Q?si=_aN_Q57_fOyp6vYa&t;start=230" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="class-life-cycle-event"><a href="#class-life-cycle-event" class="headerlink" title="class life cycle event"></a>class life cycle event</h2><p>在 React 16.8 釋出 functional hooks 以前元件都是以 <strong>class 形式</strong>為基礎延伸的，而學習過 Javascript 核心的小夥伴都理解 class 語法糖其實是 function X this constructor 寫法的包裝，畢竟 Javascript 本來就沒有強硬的物件導向(OOP)寫法，完全看開發者如何應用而已。</p>
+<p>回到 React useEffect 與生命週期的關係，class component 提供了三個基本的<strong>元件生命週期事件</strong>：</p>
+<h3 id="componentDidMount-元件初創"><a href="#componentDidMount-元件初創" class="headerlink" title="componentDidMount 元件初創"></a>componentDidMount 元件初創</h3><p>在這個階段類似 Vue 的 <code>mounted()</code> 鉤子，會在元件<strong>初創時期</strong>啟動並執行。<br>useEffect 的寫法經常會搭配 Fetch API X <strong>empty dependency array</strong>，不用依賴任何資料的變化否則容易進入無限迴圈(Infinite Loop)，這個寫法會執行在瀏覽器首次完成渲染時。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-1.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="componentDidUpdate-元件初創"><a href="#componentDidUpdate-元件初創" class="headerlink" title="componentDidUpdate 元件初創"></a>componentDidUpdate 元件初創</h3><p>在這個階段類似 Vue 的 <code>update()</code> 鉤子，會在元件<strong>資料更新</strong>時啟動並執行。<br>如果搭配 useEffect dependency array 的依賴就類似 Vue 的 <code>watch</code> 行為，根據資料變化啟動副作用。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-2.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="componentWillUnmount-元件毀滅"><a href="#componentWillUnmount-元件毀滅" class="headerlink" title="componentWillUnmount 元件毀滅"></a>componentWillUnmount 元件毀滅</h3><p>在這個階段類似 Vue 的 <code>destroy()</code> 鉤子，會在元件<strong>從畫面移除時</strong>啟動並執行。<br>useEffect 的寫法會在 <strong>return function</strong> 內，標記著元件移除時要啟動的副作用，例如移除事件監聽器。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-3.jpg' width='min(100%, 600px)' height='auto'></p>
+<h2 id="等同-useEffect-DidMount-階段的寫法"><a href="#等同-useEffect-DidMount-階段的寫法" class="headerlink" title="等同 useEffect DidMount 階段的寫法"></a>等同 useEffect DidMount 階段的寫法</h2><p>其實剛學 useEffect 鉤子不太理解加與不加的差別，因為有的行為我只想執行一次又不想加重首次渲染的負擔時就不一定會使用到，例如以下的情況：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="React.useEffect" src="https://codepen.io/mawchu/embed/GRLaabv?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/GRLaabv">
+  React.useEffect</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p>若資料在<strong>不會改變</strong>的前提下平心而論確實差不多，因為沒有重新渲染的問題；倘若資料會改變而影響 component re-render 就會開始看到差異。</p>
+<p>使用 <code>useEffect</code> 可以將函式區域內的資料都維持在<strong>第一次渲染後</strong>、<strong>資料更新前</strong>的版本，例如以上範例，即使非同步 SetTimeout Callback 的執行其實更早(0 毫秒早於首次渲染以前)，data 仍凍結在初始值 <code>I&#39;m a data.</code>，體現了 useEffect 在這裡的優點。</p>
+<p>然而撰寫在 function component 內、useEffect 外且沒有使用其他 Hooks 的函式，會緊跟隨每次元件的渲染重建、渲染前執行計算、渲染後顯示結果，生命週期因渲染重新誕生、因元件毀滅而消失（除了監聽事件）。</p>
+<h1 id="useEffect-X-empty-array-是微任務"><a href="#useEffect-X-empty-array-是微任務" class="headerlink" title="useEffect X empty array 是微任務"></a>useEffect X empty array 是微任務</h1><p>用 <strong>宏任務(Macro task)</strong> 或 <strong>微任務(Micro task)</strong> 來理解 React hooks 是狹隘的做法，畢竟怎麼為 event loop 安排還是取決於開發者的程式邏輯與使用鉤子的目的上，不過在上一個案例中 useEffect X empty array 的搭配就很接近微任務了，React 設計這些接口的初衷就是提供符合設計動機的時間點，讓開發者根據業務需求信手拈來安排想要的流程脈絡，不過理解背後的運作順序還是有助於避免採坑。</p>
+<p>以下是 chatGpt 的解說，有時候會胡說八道需要斟酌觀看 xd</p>
+<blockquote>
+<p>When you use a hook like <code>useState</code>, <code>useEffect</code>, <code>useContext</code>, etc., it’s not the hook itself that determines whether its execution is scheduled as a micro task or a macro task. Instead, it’s the way React schedules and processes updates that determines <strong>when the hook’s associated functions are called</strong>.<br>However, some hooks, like <strong>useEffect with an empty dependency array []</strong>, are often used for tasks that are more closely associated with micro tasks, such as updating the DOM after rendering, it runs its effect callback after the browser <strong>has finished painting and before the next paint</strong>. This ensures that any DOM updates caused by the effect are applied before the browser repaints the screen. In these cases, the effect of the hook may be scheduled as a micro task, but it’s not a rule that applies to all hooks.<br>–chatGpt</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>React hooks</tag>
+        <tag>class life cycle</tag>
+        <tag>useEffect</tag>
+        <tag>mounted</tag>
+        <tag>updated</tag>
+        <tag>destroy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React 思維進化 - Virtual dom</title>
+    <url>/blog/2024/02/18/virtual-dom/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">React  - Virtual dom</div>
+            <div class="stroke">React  - Virtual dom</div>
+            <div class="plain main-title">React  - Virtual dom</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。</p>
+<span id="more"></span>
+
+<p>對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的<a href="https://www.zhihu.com/question/31809713?utm_id=0">濃縮精華文章</a>。</p>
+<h1 id="Virtual-dom-真的必要嗎？又沒比較快！"><a href="#Virtual-dom-真的必要嗎？又沒比較快！" class="headerlink" title="Virtual dom 真的必要嗎？又沒比較快！"></a>Virtual dom 真的必要嗎？又沒比較快！</h1><p>文章開頭的疑問是，在測試操作原生方法來改變渲染的 DOM 結構之後發現 React 或 Angular 都不見效率(時間)上的優勢，那為何要這些框架？這個提問的人顯然非常簡單粗暴說出大部分新手的知識誤區：「快就是好！沒必要優化。」</p>
+<p>但發明框架一定有它的道理，從三個方面來說：</p>
+<h2 id="好維護"><a href="#好維護" class="headerlink" title="好維護"></a>好維護</h2><p>如果不使用框架開發應用程式，將一個肥大的專案打開後滿滿的都是 document.querySelector，你想要從某個功能入手修改的時候你不頭疼？就邏輯歸納來說就好像幫你雜亂的桌子理出個櫃子，每個抽屜好好放入同一個分類的東西，當你想找或者想使用的時候難道沒幫你省下不少時間嗎？<br>分類的優勢若從 vue 與 react 來說可以切入：</p>
+<ul>
+<li>vue 的 三大模組切分法(template, style, script)</li>
+<li>react 的函式導向設計法(functional programming) + hooks</li>
+</ul>
+<p>框架幫你掩蓋了底層的操作邏輯，給予多個易於操作的 api 讓你專注開發。</p>
+<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴——重新渲染。</p>
+<p>瀏覽器在 DOM 改變後、渲染畫面經歷的階段：</p>
+<ol>
+<li>DOM Tree Update</li>
+<li>Reflow&#x2F;Layout-計算畫面的位置與大小</li>
+<li>Repaint</li>
+<li>Composite-將畫面元素與 css 繪製合成</li>
+<li>Rendering</li>
+</ol>
+<p>當這一連串的執行經常發生，就會造成瀏覽畫面的卡頓，其一原理包含了瀏覽器在背後每 16 FPS 渲染畫面的動作，也就是每秒刷新頁面 60 次。<br>而省去這些成本的大功臣來自於 Virtual dom 背後的辛苦。</p>
+<h2 id="Virtual-dom-為什麼重要"><a href="#Virtual-dom-為什麼重要" class="headerlink" title="Virtual dom 為什麼重要"></a>Virtual dom 為什麼重要</h2><p>先講結論：只更新 『必要的』元素。</p>
+<p>不同於原生 DOM 操作習慣，例如 innerHTML 每次必定全部渲染，虛擬 DOM 先在藍圖草稿上，操作低成本的 js 對象，規劃與彩排各種情況的 DOM tree，多次演練編排過後的結果才會真正地透過瀏覽器操作原生 DOM。這個過程之所以比預期的慢，是因為進行了幾個背後的努力：</p>
+<h3 id="Virtual-dom-react"><a href="#Virtual-dom-react" class="headerlink" title="Virtual dom - react"></a>Virtual dom - react</h3><p>React 採取持續不斷的檢查與比對 DOM 結構(Diff)，過程中建立與修改一個個 js dom object 規劃新的 DOM 長相，包含 type, prop, children 等敘述，以便 Diff 完成以後的最終版(patch) 如實透過原生 DOM 產出。</p>
+<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track by $index 躍升了效能，與之平起平坐。</p>
+<h1 id="效率並非時間導向"><a href="#效率並非時間導向" class="headerlink" title="效率並非時間導向"></a>效率並非時間導向</h1><p>效率這個假議題從『時間』被拉出來討論背後實際的『渲染』問題才是重點，框架解決的從不是快不快，而是好不好用，能不能直觀開發與維護。</p>
+]]></content>
+      <categories>
+        <category>React</category>
+        <category>Book learning</category>
+      </categories>
+      <tags>
+        <tag>browser</tag>
+        <tag>react</tag>
+        <tag>virtual-dom</tag>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -2444,57 +2495,6 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>React hooks</tag>
         <tag>useRef</tag>
         <tag>useState</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>React 思維進化 - Virtual dom</title>
-    <url>/blog/2024/02/18/virtual-dom/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React  - Virtual dom</div>
-            <div class="stroke">React  - Virtual dom</div>
-            <div class="plain main-title">React  - Virtual dom</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>新年換新工作後的第一篇文章，就獻給來自『React 思維進化』本書提到的動量級概念——Virtual dom。</p>
-<span id="more"></span>
-
-<p>對於主流框架來說操作原生 DOM 的代價無疑是巨大的，所以紛紛發展出各自的優秀手段來減少操作所耗費的能量，以下歸納出來自書中提及的、關於為什麼要操作虛擬 DOM 以及操作手法的重點，源自一篇優秀的<a href="https://www.zhihu.com/question/31809713?utm_id=0">濃縮精華文章</a>。</p>
-<h1 id="Virtual-dom-真的必要嗎？又沒比較快！"><a href="#Virtual-dom-真的必要嗎？又沒比較快！" class="headerlink" title="Virtual dom 真的必要嗎？又沒比較快！"></a>Virtual dom 真的必要嗎？又沒比較快！</h1><p>文章開頭的疑問是，在測試操作原生方法來改變渲染的 DOM 結構之後發現 React 或 Angular 都不見效率(時間)上的優勢，那為何要這些框架？這個提問的人顯然非常簡單粗暴說出大部分新手的知識誤區：「快就是好！沒必要優化。」</p>
-<p>但發明框架一定有它的道理，從三個方面來說：</p>
-<h2 id="好維護"><a href="#好維護" class="headerlink" title="好維護"></a>好維護</h2><p>如果不使用框架開發應用程式，將一個肥大的專案打開後滿滿的都是 document.querySelector，你想要從某個功能入手修改的時候你不頭疼？就邏輯歸納來說就好像幫你雜亂的桌子理出個櫃子，每個抽屜好好放入同一個分類的東西，當你想找或者想使用的時候難道沒幫你省下不少時間嗎？<br>分類的優勢若從 vue 與 react 來說可以切入：</p>
-<ul>
-<li>vue 的 三大模組切分法(template, style, script)</li>
-<li>react 的函式導向設計法(functional programming) + hooks</li>
-</ul>
-<p>框架幫你掩蓋了底層的操作邏輯，給予多個易於操作的 api 讓你專注開發。</p>
-<h2 id="瀏覽器的渲染行為"><a href="#瀏覽器的渲染行為" class="headerlink" title="瀏覽器的渲染行為"></a>瀏覽器的渲染行為</h2><p>當你在享受著框架帶來的便利與舒適，一邊訴說與原生 js 的 DOM 操作無差別時，應該思考虛擬 DOM 被發明的意義與出發點，首先對於瀏覽器來說為什麼 DOM 操作代價昂貴——重新渲染。</p>
-<p>瀏覽器在 DOM 改變後、渲染畫面經歷的階段：</p>
-<ol>
-<li>DOM Tree Update</li>
-<li>Reflow&#x2F;Layout-計算畫面的位置與大小</li>
-<li>Repaint</li>
-<li>Composite-將畫面元素與 css 繪製合成</li>
-<li>Rendering</li>
-</ol>
-<p>當這一連串的執行經常發生，就會造成瀏覽畫面的卡頓，其一原理包含了瀏覽器在背後每 16 FPS 渲染畫面的動作，也就是每秒刷新頁面 60 次。<br>而省去這些成本的大功臣來自於 Virtual dom 背後的辛苦。</p>
-<h2 id="Virtual-dom-為什麼重要"><a href="#Virtual-dom-為什麼重要" class="headerlink" title="Virtual dom 為什麼重要"></a>Virtual dom 為什麼重要</h2><p>先講結論：只更新 『必要的』元素。</p>
-<p>不同於原生 DOM 操作習慣，例如 innerHTML 每次必定全部渲染，虛擬 DOM 先在藍圖草稿上，操作低成本的 js 對象，規劃與彩排各種情況的 DOM tree，多次演練編排過後的結果才會真正地透過瀏覽器操作原生 DOM。這個過程之所以比預期的慢，是因為進行了幾個背後的努力：</p>
-<h3 id="Virtual-dom-react"><a href="#Virtual-dom-react" class="headerlink" title="Virtual dom - react"></a>Virtual dom - react</h3><p>React 採取持續不斷的檢查與比對 DOM 結構(Diff)，過程中建立與修改一個個 js dom object 規劃新的 DOM 長相，包含 type, prop, children 等敘述，以便 Diff 完成以後的最終版(patch) 如實透過原生 DOM 產出。</p>
-<h3 id="Virtual-dom-vue"><a href="#Virtual-dom-vue" class="headerlink" title="Virtual dom - vue"></a>Virtual dom - vue</h3><p>Vue 則是透過 MVVM 的資料繫結、數據收集後比對差異與變化，各自對應的最小範圍資料經由 ViewModel&#x2F;Scope 歸納、決定哪些虛擬 DOM 受到影響，這中間產生的複用議題則不如 React 表現好，但仍透過 track by $index 躍升了效能，與之平起平坐。</p>
-<h1 id="效率並非時間導向"><a href="#效率並非時間導向" class="headerlink" title="效率並非時間導向"></a>效率並非時間導向</h1><p>效率這個假議題從『時間』被拉出來討論背後實際的『渲染』問題才是重點，框架解決的從不是快不快，而是好不好用，能不能直觀開發與維護。</p>
-]]></content>
-      <categories>
-        <category>React</category>
-        <category>Book learning</category>
-      </categories>
-      <tags>
-        <tag>browser</tag>
-        <tag>react</tag>
-        <tag>virtual-dom</tag>
-        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
