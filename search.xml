@@ -53,6 +53,73 @@
       </tags>
   </entry>
   <entry>
+    <title>部署 Hexo 部落格至 Github Pages</title>
+    <url>/blog/2023/02/25/deploy-hexo-by-github-pages/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Hexo  Github Pages</div>
+            <div class="stroke"> Hexo  Github Pages</div>
+            <div class="plain main-title"> Hexo  Github Pages</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>建置 Hexo 部落格已經兩年多，如今更換 Ｍ ac 之後建制的新環境 Node 版本已經不相容，peer packages 貼心的設計也種下了難以收拾的坑 （難解的 sass loader），舊的部落格所選用的 Minos 框架在少數的使用量與停止維護下造就了相容性衝突也是在所難免，如今只能硬著頭皮重新學習建置一包 Hexo 了。</p>
+<span id="more"></span>
+
+<p>踩過的坑我們懂得避免，這次選用最多人使用與維護的 Ｎ exT 模板作為新部落格的皮膚。</p>
+<h1 id="建立-N-exT-主題專案包"><a href="#建立-N-exT-主題專案包" class="headerlink" title="建立 Ｎ exT 主題專案包"></a>建立 Ｎ exT 主題專案包</h1><p>NexT 建置了貼心的官網提供完整的說明，<a href="https://theme-next.js.org/">點我</a>。<br>再建置好 Hexo 專案包後，執行以下命令取得 Ｎ exT theme。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo-site</span><br><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
+
+<h4 id="更換-config-yml-主題"><a href="#更換-config-yml-主題" class="headerlink" title="更換 __config.yml 主題"></a>更換 __config.yml 主題</h4><p>將 Hexo 專案根目錄下的 __config.yml 配置更改為：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ theme: next</span><br></pre></td></tr></table></figure>
+
+<h4 id="新增部落格文章"><a href="#新增部落格文章" class="headerlink" title="新增部落格文章"></a>新增部落格文章</h4><p>cd 至專案目錄後，透過以下指令建立文章：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post your-post-name</span><br></pre></td></tr></table></figure>
+
+<h1 id="如何搭配-Github-pages-部署網站"><a href="#如何搭配-Github-pages-部署網站" class="headerlink" title="如何搭配 Github pages 部署網站"></a>如何搭配 Github pages 部署網站</h1><p>先說我個人的案例，去年第一個部落格我的做法是去建立新的 Github 帳號，將專案直接部署在 <my-name>.github.io 的 repository 上，原因是個人帳號的 github.io 已經被舊專案所佔據了，這個做法不是很好，白白浪費了舊帳號的 pages 空間。於是乎在新部落格建置後決定好好利用舊帳號的 Github pages。<br>原先在 google 搜尋引擎上查不太到好的解法，所以就求救了 ChatGpt 老師～，沒想到各種問題都能一一擊破，真的是太厲害了！</p>
+<h4 id="建立新的-Git-repository"><a href="#建立新的-Git-repository" class="headerlink" title="建立新的 Git repository"></a>建立新的 Git repository</h4><p>去想要使用的 Account 建立一個新的倉庫，並且隨意命名，我使用 blog 這個名稱當作主網站的 router。</p>
+<h4 id="專案包中安裝自動部署工具"><a href="#專案包中安裝自動部署工具" class="headerlink" title="專案包中安裝自動部署工具"></a>專案包中安裝自動部署工具</h4><p>cd 至專案包路徑後，執行以下的命令安裝 Hexo 自動部署工具。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="連結-Github-repository-至部落格"><a href="#連結-Github-repository-至部落格" class="headerlink" title="連結 Github repository 至部落格"></a>連結 Github repository 至部落格</h4><p>cd 開啟專案中的 __config.yml 檔案改寫以下內容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/your-username/blog.git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  tkn: your-pat-tkn</span><br></pre></td></tr></table></figure>
+
+<p>直得注意的是分支 <code>gh-pages</code> 會為 github 部屬時自動辨別為子專案使用，待下一個步驟設定完成並建立後將子專案推至此分支。<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/deploy-hexo-by-github-pages-1.jpg" height="auto"></p>
+<h4 id="事前作業"><a href="#事前作業" class="headerlink" title="事前作業"></a>事前作業</h4><p>為了讓 url 可以指向正確的路徑，需要調整 <code>__config.yml</code> 中的幾個設定：</p>
+<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">    url: https://user-name.github.io/blog</span><br><span class="line">    root: /</span><br></pre></td></tr></table></figure>
+
+<h4 id="public-dir"><a href="#public-dir" class="headerlink" title="public dir"></a>public dir</h4><p>調整發布的資料夾名稱為 docs，在部署後會自動建立一個資料夾名稱為 docs。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line">    source_dir: <span class="built_in">source</span></span><br><span class="line">    public_dir: docs</span><br></pre></td></tr></table></figure>
+
+<p>執行命令建立該資料夾：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<h5 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h5><p>在部署後有發生錯誤訊息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ github-pages 228 | Error: No such file or directory @ dir_chdir - /github/workspace/docs</span><br></pre></td></tr></table></figure>
+
+<p>ChatGpt 的回覆：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">You can also update the url setting <span class="keyword">in</span> your Hexo project<span class="string">&#x27;s _config.yml file to match your new deployment environment. For example, if your site is deployed to https://your-username.github.io/blog, you can update your url setting like this:</span></span><br></pre></td></tr></table></figure>
+
+<p>原因是我忘了將上一個步驟中的 url 指向調整到 <code>/blog</code>，導致網站開啟後 css 與 javascript 直接掛掉找不到路徑。<br>將這一段調整後重新操作部署指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>就可以在子路由中看到 Hexo 部落格搭建好囉！完美的與舊專案並存在 github.io domain 下啦！</p>
+<h1 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h1><p><a href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始 用 github pages 上傳靜態網站</a><br><a href="https://chat.openai.com/chat/">ChatGpt</a></p>
+]]></content>
+      <categories>
+        <category>Github</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+        <tag>github pages</tag>
+        <tag>next themec</tag>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP error handler 錯誤控制</title>
     <url>/blog/2024/06/20/error-handle-in-axios/</url>
     <content><![CDATA[<div class="visual-image">
@@ -291,73 +358,6 @@
       </categories>
       <tags>
         <tag>port</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>部署 Hexo 部落格至 Github Pages</title>
-    <url>/blog/2023/02/25/deploy-hexo-by-github-pages/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke"> Hexo  Github Pages</div>
-            <div class="stroke"> Hexo  Github Pages</div>
-            <div class="plain main-title"> Hexo  Github Pages</div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-
-<p>建置 Hexo 部落格已經兩年多，如今更換 Ｍ ac 之後建制的新環境 Node 版本已經不相容，peer packages 貼心的設計也種下了難以收拾的坑 （難解的 sass loader），舊的部落格所選用的 Minos 框架在少數的使用量與停止維護下造就了相容性衝突也是在所難免，如今只能硬著頭皮重新學習建置一包 Hexo 了。</p>
-<span id="more"></span>
-
-<p>踩過的坑我們懂得避免，這次選用最多人使用與維護的 Ｎ exT 模板作為新部落格的皮膚。</p>
-<h1 id="建立-N-exT-主題專案包"><a href="#建立-N-exT-主題專案包" class="headerlink" title="建立 Ｎ exT 主題專案包"></a>建立 Ｎ exT 主題專案包</h1><p>NexT 建置了貼心的官網提供完整的說明，<a href="https://theme-next.js.org/">點我</a>。<br>再建置好 Hexo 專案包後，執行以下命令取得 Ｎ exT theme。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> hexo-site</span><br><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
-
-<h4 id="更換-config-yml-主題"><a href="#更換-config-yml-主題" class="headerlink" title="更換 __config.yml 主題"></a>更換 __config.yml 主題</h4><p>將 Hexo 專案根目錄下的 __config.yml 配置更改為：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ theme: next</span><br></pre></td></tr></table></figure>
-
-<h4 id="新增部落格文章"><a href="#新增部落格文章" class="headerlink" title="新增部落格文章"></a>新增部落格文章</h4><p>cd 至專案目錄後，透過以下指令建立文章：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new post your-post-name</span><br></pre></td></tr></table></figure>
-
-<h1 id="如何搭配-Github-pages-部署網站"><a href="#如何搭配-Github-pages-部署網站" class="headerlink" title="如何搭配 Github pages 部署網站"></a>如何搭配 Github pages 部署網站</h1><p>先說我個人的案例，去年第一個部落格我的做法是去建立新的 Github 帳號，將專案直接部署在 <my-name>.github.io 的 repository 上，原因是個人帳號的 github.io 已經被舊專案所佔據了，這個做法不是很好，白白浪費了舊帳號的 pages 空間。於是乎在新部落格建置後決定好好利用舊帳號的 Github pages。<br>原先在 google 搜尋引擎上查不太到好的解法，所以就求救了 ChatGpt 老師～，沒想到各種問題都能一一擊破，真的是太厲害了！</p>
-<h4 id="建立新的-Git-repository"><a href="#建立新的-Git-repository" class="headerlink" title="建立新的 Git repository"></a>建立新的 Git repository</h4><p>去想要使用的 Account 建立一個新的倉庫，並且隨意命名，我使用 blog 這個名稱當作主網站的 router。</p>
-<h4 id="專案包中安裝自動部署工具"><a href="#專案包中安裝自動部署工具" class="headerlink" title="專案包中安裝自動部署工具"></a>專案包中安裝自動部署工具</h4><p>cd 至專案包路徑後，執行以下的命令安裝 Hexo 自動部署工具。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<h4 id="連結-Github-repository-至部落格"><a href="#連結-Github-repository-至部落格" class="headerlink" title="連結 Github repository 至部落格"></a>連結 Github repository 至部落格</h4><p>cd 開啟專案中的 __config.yml 檔案改寫以下內容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/your-username/blog.git</span><br><span class="line">  branch: gh-pages</span><br><span class="line">  tkn: your-pat-tkn</span><br></pre></td></tr></table></figure>
-
-<p>直得注意的是分支 <code>gh-pages</code> 會為 github 部屬時自動辨別為子專案使用，待下一個步驟設定完成並建立後將子專案推至此分支。<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/deploy-hexo-by-github-pages-1.jpg" height="auto"></p>
-<h4 id="事前作業"><a href="#事前作業" class="headerlink" title="事前作業"></a>事前作業</h4><p>為了讓 url 可以指向正確的路徑，需要調整 <code>__config.yml</code> 中的幾個設定：</p>
-<h5 id="url"><a href="#url" class="headerlink" title="url"></a>url</h5><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line">    url: https://user-name.github.io/blog</span><br><span class="line">    root: /</span><br></pre></td></tr></table></figure>
-
-<h4 id="public-dir"><a href="#public-dir" class="headerlink" title="public dir"></a>public dir</h4><p>調整發布的資料夾名稱為 docs，在部署後會自動建立一個資料夾名稱為 docs。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Directory</span></span><br><span class="line">    source_dir: <span class="built_in">source</span></span><br><span class="line">    public_dir: docs</span><br></pre></td></tr></table></figure>
-
-<p>執行命令建立該資料夾：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<h5 id="錯誤處理"><a href="#錯誤處理" class="headerlink" title="錯誤處理"></a>錯誤處理</h5><p>在部署後有發生錯誤訊息：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ github-pages 228 | Error: No such file or directory @ dir_chdir - /github/workspace/docs</span><br></pre></td></tr></table></figure>
-
-<p>ChatGpt 的回覆：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">You can also update the url setting <span class="keyword">in</span> your Hexo project<span class="string">&#x27;s _config.yml file to match your new deployment environment. For example, if your site is deployed to https://your-username.github.io/blog, you can update your url setting like this:</span></span><br></pre></td></tr></table></figure>
-
-<p>原因是我忘了將上一個步驟中的 url 指向調整到 <code>/blog</code>，導致網站開啟後 css 與 javascript 直接掛掉找不到路徑。<br>將這一段調整後重新操作部署指令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>就可以在子路由中看到 Hexo 部落格搭建好囉！完美的與舊專案並存在 github.io domain 下啦！</p>
-<h1 id="參考網站"><a href="#參考網站" class="headerlink" title="參考網站"></a>參考網站</h1><p><a href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始 用 github pages 上傳靜態網站</a><br><a href="https://chat.openai.com/chat/">ChatGpt</a></p>
-]]></content>
-      <categories>
-        <category>Github</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>blog</tag>
-        <tag>github pages</tag>
-        <tag>next themec</tag>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -1587,47 +1587,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Web Workers - Main thread&#39;s helper 主執行緒的好幫手</title>
-    <url>/blog/2024/07/12/main-thread-and-web-workers/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Web Workers - Main threads helper </div>
-            <div class="stroke">Web Workers - Main threads helper </div>
-            <div class="plain main-title">Web Workers - Main threads helper </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>本篇介紹幕後的那隻推手——Web Workers 的運作基本概念與架構。</p>
-<span id="more"></span>
-
-<p>前端新時代根據 <strong>異步執行(Asynchronous)</strong> 原理產生新的技術與套件，例如 Promise 與 Async Await 使得 <strong>宏任務(Macro Task)</strong> 與 <strong>微任務(Micro Task)</strong> 在 <strong>事件迴圈(Event Loop)</strong> 的完美委派下讓人忘記 Javascript 其實是 <strong>單線程(Single Thread)</strong> 的程式語言，而昂貴或者繁雜的計算成本很可能會阻塞(Block)主執行緒的前進，這時候分擔任務的好幫手 Web workers 就是出場的好時機了。</p>
-<h1 id="Parallel-Executive-Concept-平行的工作節奏"><a href="#Parallel-Executive-Concept-平行的工作節奏" class="headerlink" title="Parallel Executive Concept 平行的工作節奏"></a>Parallel Executive Concept 平行的工作節奏</h1><p>主執行緒與 Web worker 的工作模式是併發的(Concurrency)，同時並且消耗_額外的 CPU 空間來運算_而不會導致當下的工作會互享影響，能更有效率的分工合作完成任務外還營造給使用者絲滑的使用體驗(User Experience)，使用之前先有基本的概念：</p>
-<h2 id="Accessing-the-DOM"><a href="#Accessing-the-DOM" class="headerlink" title="Accessing the DOM"></a>Accessing the DOM</h2><p>主執行緒(Main Thread)與工作夥伴(Workers，自己翻得比較親切)最大差異在於前者可以取得 DOM 的應用權，而後者不行；所以主執行緒才是操作使用介面(UI)的主人。</p>
-<blockquote>
-<p>Web Workers are all about keeping a seperate thread on the browser different than the main thread which runs all the rendering efforts of the UI.<br><a href="https://hwclass.medium.com/web-workers-in-a-nutshell-809f1dbe7fbf">Web Workers in a Nutshell</a></p>
-</blockquote>
-<h2 id="Web-Workers-work-on-background"><a href="#Web-Workers-work-on-background" class="headerlink" title="Web Workers work on background"></a>Web Workers work on background</h2><p>Web Workers 的運算是在背景執行的，有自己的 CPU 運算空間。</p>
-<h2 id="Seperate-scope"><a href="#Seperate-scope" class="headerlink" title="Seperate scope"></a>Seperate scope</h2><p>基於每個執行緒(Thread)都是獨立的作用域，主執行緒(Main Thread)與工作夥伴(Workers)之間不共享資料須要透過 Message Event 互相傳遞與溝通，<code>postMessage</code> 發送、<code>onMessage</code> 監聽。</p>
-<h2 id="Main-Thread-creates-Web-Workers"><a href="#Main-Thread-creates-Web-Workers" class="headerlink" title="Main Thread creates Web Workers"></a>Main Thread creates Web Workers</h2><p>工作夥伴(Workers)是基於主執行緒的執行環境產生的次執行緒，生命週期由主執行緒決定產生(Creating)與毀滅(Closing)，但彼此的工作執行是併發的不會互相影響，避免 Blocking the Thread。</p>
-<img src="/blog/images/main-thread-and-web-workers-0.jpg" class="" title="Resource: https:&#x2F;&#x2F;hwclass.medium.com&#x2F;web-workers-in-a-nutshell-809f1dbe7fbf">
-<img src="/blog/images/main-thread-and-web-workers-1.jpg" class="" title="Resource: https:&#x2F;&#x2F;viblo.asia&#x2F;p&#x2F;simple-web-workers-workflow-with-webpack-3P0lPkobZox">
-
-<h1 id="Demo-example"><a href="#Demo-example" class="headerlink" title="Demo example"></a>Demo example</h1><p>範例使用龐大的 For loop 來佔用執行緒的計算空間，體驗不同執行序工作下卡頓的情況：</p>
-<iframe height="300" style="width: 100%;" scrolling="no" title="js - Web Workers" src="https://codepen.io/mawchu/embed/yLdLZmQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/yLdLZmQ">
-  js - Web Workers</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>]]></content>
-      <categories>
-        <category>Web worker</category>
-      </categories>
-      <tags>
-        <tag>client</tag>
-        <tag>browser</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>我的第一個完整 React developing note</title>
     <url>/blog/2025/03/18/my-first-react-task/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1734,6 +1693,45 @@
       </tags>
   </entry>
   <entry>
+    <title>NX powerful monorepo tool - 前端微服務框架</title>
+    <url>/blog/2024/08/27/nx-intro/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">NX powerful monorepo tool - </div>
+            <div class="stroke">NX powerful monorepo tool - </div>
+            <div class="plain main-title">NX powerful monorepo tool - </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>一次工作機會上偶遇了 NX 建置起來的 Monorepo 的專案架構，此時不記錄更待何時！</p>
+<span id="more"></span>
+
+<h1 id="NX-的誕生背景"><a href="#NX-的誕生背景" class="headerlink" title="NX 的誕生背景"></a>NX 的誕生背景</h1><p>當公司發展迅速到成熟階段時 <strong>業務模型（Business model）</strong> 通常會有既定運作框架，衍生許多附屬的品牌或者多樣的 <strong>微前端服務（Micro Frontends）</strong> 需要在此框架下進行維護（通常是庫 Repository），將組織的各種業務邏輯拆分成單元讓同仁分工又不耦合（Coupling）。<br>但每每建置整個專案架構都是多體庫（polyrepo）必須將設定重來一遍：前端框架、UI SCSS 主題、node modules、打包設定甚至到 CICD 等前期準備工作總是挺佔時間的，一方面專案之間共享套件又需要推上雲端（ex Npm），這時候 NX 就出現了！</p>
+<blockquote>
+<p>You can use Nx to</p>
+<ul>
+<li>speed up your existing project’s builds and tests, locally and on CI (whether that’s a monorepo or standalone application)</li>
+<li>quickly scaffold a new project (using Nx plugins) without having to configure any lower-level build tools</li>
+<li>easily integrate new tooling (e.g., Storybook, Tailwind etc), into your project.</li>
+<li>ensure consistency and code quality with custom generators and lint rules</li>
+<li>update your frameworks and tools and keep your workspace evergreen using the automated code migration feature</li>
+</ul>
+</blockquote>
+<h1 id="Monorepo-讓你一個庫解決所有專案"><a href="#Monorepo-讓你一個庫解決所有專案" class="headerlink" title="Monorepo 讓你一個庫解決所有專案"></a>Monorepo 讓你一個庫解決所有專案</h1><p>不同於多體庫（polyrepo）一個專案下就可以衍生多個業務邏輯與專案，根基在基礎架構下又不用重建真的減少許多不便也能讓開發人員不用重新熟悉，快快上手!</p>
+<h1 id="Quickly-scaffold-是核心優勢"><a href="#Quickly-scaffold-是核心優勢" class="headerlink" title="Quickly scaffold 是核心優勢"></a>Quickly scaffold 是核心優勢</h1><p>個人覺得搭鷹架（scaffold）是專案最費時間的地方，如果能在既有框架下增加快速的新專案搭建時間對開發人員會大大的助益，以下是 NX 的架構圖：<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/nx-intro-0.jpg"></p>
+<p>應用的範圍很大，從 CI（Continuous Integration）持續整合到專案配置（前端框架、UI SCSS 主題、node modules、打包設定）、自動化測試、遷移（migration）與快取（cache），對於前端工程師來說應該是專案配置上的省事最有感，讓專案間共享設定與邏輯並且可以客製化。</p>
+]]></content>
+      <categories>
+        <category>Structure</category>
+      </categories>
+      <tags>
+        <tag>NX</tag>
+        <tag>monorepo</tag>
+        <tag>polyrepo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>React Context pitfalls - 踩雷經驗</title>
     <url>/blog/2024/12/24/react-context-hook-pitfalls/</url>
     <content><![CDATA[<div class="visual-image">
@@ -1778,6 +1776,47 @@
 <h3 id="魔法啟用失敗"><a href="#魔法啟用失敗" class="headerlink" title="魔法啟用失敗"></a>魔法啟用失敗</h3><p>說得前面的鋪陳終於來到問題核心！若沒有將啟用資料的 Provider 移出獨立的 Function Component 中，並且將根部元件提取出來放置，從 Provider 提出的資料便不會有任何響應。<br><img style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-context-hook-pitfalls-6.jpg' width='min(100%, 600px)' height='auto'></p>
 <p>一開始我將根部元件直接放置在 Function Component 也就是圖中黃線的位置，會發現 useContext 的資料呼叫任何一個 setState 都不會改動到 state，也就是沒有正確啟用該資料作用域，直到提取出去並將根部元件以子元件的形式包裹才終於使得共用 useContext 中的 state 開始作用！<br>這一段邏輯是取自其他團隊開發人員的結構直接使用，封裝出來的 Context 必須以 Children 形式傳進去才能正確啟用魔法陣。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Web Workers - Main thread&#39;s helper 主執行緒的好幫手</title>
+    <url>/blog/2024/07/12/main-thread-and-web-workers/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Web Workers - Main threads helper </div>
+            <div class="stroke">Web Workers - Main threads helper </div>
+            <div class="plain main-title">Web Workers - Main threads helper </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇介紹幕後的那隻推手——Web Workers 的運作基本概念與架構。</p>
+<span id="more"></span>
+
+<p>前端新時代根據 <strong>異步執行(Asynchronous)</strong> 原理產生新的技術與套件，例如 Promise 與 Async Await 使得 <strong>宏任務(Macro Task)</strong> 與 <strong>微任務(Micro Task)</strong> 在 <strong>事件迴圈(Event Loop)</strong> 的完美委派下讓人忘記 Javascript 其實是 <strong>單線程(Single Thread)</strong> 的程式語言，而昂貴或者繁雜的計算成本很可能會阻塞(Block)主執行緒的前進，這時候分擔任務的好幫手 Web workers 就是出場的好時機了。</p>
+<h1 id="Parallel-Executive-Concept-平行的工作節奏"><a href="#Parallel-Executive-Concept-平行的工作節奏" class="headerlink" title="Parallel Executive Concept 平行的工作節奏"></a>Parallel Executive Concept 平行的工作節奏</h1><p>主執行緒與 Web worker 的工作模式是併發的(Concurrency)，同時並且消耗_額外的 CPU 空間來運算_而不會導致當下的工作會互享影響，能更有效率的分工合作完成任務外還營造給使用者絲滑的使用體驗(User Experience)，使用之前先有基本的概念：</p>
+<h2 id="Accessing-the-DOM"><a href="#Accessing-the-DOM" class="headerlink" title="Accessing the DOM"></a>Accessing the DOM</h2><p>主執行緒(Main Thread)與工作夥伴(Workers，自己翻得比較親切)最大差異在於前者可以取得 DOM 的應用權，而後者不行；所以主執行緒才是操作使用介面(UI)的主人。</p>
+<blockquote>
+<p>Web Workers are all about keeping a seperate thread on the browser different than the main thread which runs all the rendering efforts of the UI.<br><a href="https://hwclass.medium.com/web-workers-in-a-nutshell-809f1dbe7fbf">Web Workers in a Nutshell</a></p>
+</blockquote>
+<h2 id="Web-Workers-work-on-background"><a href="#Web-Workers-work-on-background" class="headerlink" title="Web Workers work on background"></a>Web Workers work on background</h2><p>Web Workers 的運算是在背景執行的，有自己的 CPU 運算空間。</p>
+<h2 id="Seperate-scope"><a href="#Seperate-scope" class="headerlink" title="Seperate scope"></a>Seperate scope</h2><p>基於每個執行緒(Thread)都是獨立的作用域，主執行緒(Main Thread)與工作夥伴(Workers)之間不共享資料須要透過 Message Event 互相傳遞與溝通，<code>postMessage</code> 發送、<code>onMessage</code> 監聽。</p>
+<h2 id="Main-Thread-creates-Web-Workers"><a href="#Main-Thread-creates-Web-Workers" class="headerlink" title="Main Thread creates Web Workers"></a>Main Thread creates Web Workers</h2><p>工作夥伴(Workers)是基於主執行緒的執行環境產生的次執行緒，生命週期由主執行緒決定產生(Creating)與毀滅(Closing)，但彼此的工作執行是併發的不會互相影響，避免 Blocking the Thread。</p>
+<img src="/blog/images/main-thread-and-web-workers-0.jpg" class="" title="Resource: https:&#x2F;&#x2F;hwclass.medium.com&#x2F;web-workers-in-a-nutshell-809f1dbe7fbf">
+<img src="/blog/images/main-thread-and-web-workers-1.jpg" class="" title="Resource: https:&#x2F;&#x2F;viblo.asia&#x2F;p&#x2F;simple-web-workers-workflow-with-webpack-3P0lPkobZox">
+
+<h1 id="Demo-example"><a href="#Demo-example" class="headerlink" title="Demo example"></a>Demo example</h1><p>範例使用龐大的 For loop 來佔用執行緒的計算空間，體驗不同執行序工作下卡頓的情況：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="js - Web Workers" src="https://codepen.io/mawchu/embed/yLdLZmQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/yLdLZmQ">
+  js - Web Workers</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>]]></content>
+      <categories>
+        <category>Web worker</category>
+      </categories>
+      <tags>
+        <tag>client</tag>
+        <tag>browser</tag>
+      </tags>
   </entry>
   <entry>
     <title>React dependency &amp; 常用的 React hook</title>
@@ -1878,45 +1917,6 @@
         <tag>React useCallback</tag>
         <tag>computed</tag>
         <tag>react hooks dependency</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NX powerful monorepo tool - 前端微服務框架</title>
-    <url>/blog/2024/08/27/nx-intro/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">NX powerful monorepo tool - </div>
-            <div class="stroke">NX powerful monorepo tool - </div>
-            <div class="plain main-title">NX powerful monorepo tool - </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>一次工作機會上偶遇了 NX 建置起來的 Monorepo 的專案架構，此時不記錄更待何時！</p>
-<span id="more"></span>
-
-<h1 id="NX-的誕生背景"><a href="#NX-的誕生背景" class="headerlink" title="NX 的誕生背景"></a>NX 的誕生背景</h1><p>當公司發展迅速到成熟階段時 <strong>業務模型（Business model）</strong> 通常會有既定運作框架，衍生許多附屬的品牌或者多樣的 <strong>微前端服務（Micro Frontends）</strong> 需要在此框架下進行維護（通常是庫 Repository），將組織的各種業務邏輯拆分成單元讓同仁分工又不耦合（Coupling）。<br>但每每建置整個專案架構都是多體庫（polyrepo）必須將設定重來一遍：前端框架、UI SCSS 主題、node modules、打包設定甚至到 CICD 等前期準備工作總是挺佔時間的，一方面專案之間共享套件又需要推上雲端（ex Npm），這時候 NX 就出現了！</p>
-<blockquote>
-<p>You can use Nx to</p>
-<ul>
-<li>speed up your existing project’s builds and tests, locally and on CI (whether that’s a monorepo or standalone application)</li>
-<li>quickly scaffold a new project (using Nx plugins) without having to configure any lower-level build tools</li>
-<li>easily integrate new tooling (e.g., Storybook, Tailwind etc), into your project.</li>
-<li>ensure consistency and code quality with custom generators and lint rules</li>
-<li>update your frameworks and tools and keep your workspace evergreen using the automated code migration feature</li>
-</ul>
-</blockquote>
-<h1 id="Monorepo-讓你一個庫解決所有專案"><a href="#Monorepo-讓你一個庫解決所有專案" class="headerlink" title="Monorepo 讓你一個庫解決所有專案"></a>Monorepo 讓你一個庫解決所有專案</h1><p>不同於多體庫（polyrepo）一個專案下就可以衍生多個業務邏輯與專案，根基在基礎架構下又不用重建真的減少許多不便也能讓開發人員不用重新熟悉，快快上手!</p>
-<h1 id="Quickly-scaffold-是核心優勢"><a href="#Quickly-scaffold-是核心優勢" class="headerlink" title="Quickly scaffold 是核心優勢"></a>Quickly scaffold 是核心優勢</h1><p>個人覺得搭鷹架（scaffold）是專案最費時間的地方，如果能在既有框架下增加快速的新專案搭建時間對開發人員會大大的助益，以下是 NX 的架構圖：<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/nx-intro-0.jpg"></p>
-<p>應用的範圍很大，從 CI（Continuous Integration）持續整合到專案配置（前端框架、UI SCSS 主題、node modules、打包設定）、自動化測試、遷移（migration）與快取（cache），對於前端工程師來說應該是專案配置上的省事最有感，讓專案間共享設定與邏輯並且可以客製化。</p>
-]]></content>
-      <categories>
-        <category>Structure</category>
-      </categories>
-      <tags>
-        <tag>NX</tag>
-        <tag>monorepo</tag>
-        <tag>polyrepo</tag>
       </tags>
   </entry>
   <entry>
@@ -2154,58 +2154,45 @@ on <a href="https://codepen.io">CodePen</a>.
       </tags>
   </entry>
   <entry>
-    <title>React - useContext hook 使用說明</title>
-    <url>/blog/2024/05/02/react-useContext/</url>
+    <title>React - useEffect hook 使用說明</title>
+    <url>/blog/2024/05/02/react-useEffect/</url>
     <content><![CDATA[<div class="visual-image">
         <div class="visual-image-box">
             <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React - useContext hook </div>
-            <div class="stroke">React - useContext hook </div>
-            <div class="plain main-title">React - useContext hook </div>
+            <div class="stroke">React - useEffect hook </div>
+            <div class="stroke">React - useEffect hook </div>
+            <div class="plain main-title">React - useEffect hook </div>
             <div class="plain">．．．</div>
         </div>
     </div>
-<p>關於 React 的 useContext 可以理解為使用「上下文」，延伸為跨元件的共享資料，在學習 Vuex 時也可以見到參數被命名 <code>context</code>。</p>
+<p>這一篇來記錄一下初學 React 時界定最模糊但最常用的鉤子 <code>useEffect()</code>，到底怎麼用、為什麼這樣用？</p>
 <span id="more"></span>
 
-<h1 id="Prop-drilling-資料瀑布"><a href="#Prop-drilling-資料瀑布" class="headerlink" title="Prop drilling 資料瀑布"></a>Prop drilling 資料瀑布</h1><p>在前端工程領域有一個詞彙 <strong>prop drilling</strong> 資料瀑布（對我自己翻的）描述了多代巢狀、跨元件結構所衍生的資料傳遞問題，前端任何熱門框架都會想方設法解決這個燙手山芋，一旦資料龐大或者使用流程複雜很容易走入 UI 的多重宇宙，一層又一層層的傳下去，元件嵌套了好幾層或者跨多個兄弟元件的情況下如何將資料垂直傳遞、水平傳遞？</p>
-<p>以下比較 Vue &amp; React 解決 prop drilling 的工具：</p>
-<h2 id="Vue-provide-amp-inject"><a href="#Vue-provide-amp-inject" class="headerlink" title="Vue provide &amp; inject"></a>Vue provide &amp; inject</h2><p>Vue 的使用概念比較像匯出跟匯入，<br>在提供資料的元件使用 <code>provide()</code> 提供出去；在接收資料的元件使用 <code>inject</code> 注入。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ChildA</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ChildB</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">ChildA</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildA.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">ChildB</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildB.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">ChildA</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">ChildB</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">provide</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">message</span>: <span class="string">&#x27;Hello from App!&#x27;</span> <span class="comment">// ------------ provide here</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>React 所有鉤子都不容易在閱讀官方解說之後馬上理解，需要透過案例演練或者採坑的經驗後慢慢掌握。</p>
+<h1 id="useEffect-為何稱之為「副作用」"><a href="#useEffect-為何稱之為「副作用」" class="headerlink" title="useEffect 為何稱之為「副作用」"></a>useEffect 為何稱之為「副作用」</h1><p>就像吃藥治療了身體病痛的同時也會帶來一些額外的影響，例如偏頭痛、喉嚨乾燥等等，<code>useEffect()</code> 就是提供你的應用程式一些「額外的影響」。<br>影響的範圍與作用透過第一個函式參數來定義，依賴更新的資料則是第二個 Dependency 參數。</p>
+<h1 id="useEffect-與生命週期的關係"><a href="#useEffect-與生命週期的關係" class="headerlink" title="useEffect 與生命週期的關係"></a>useEffect 與生命週期的關係</h1><p>而副作用與<strong>元件 component 的生命週期</strong>息息相關，這一點在很多教學重點裡往往沒有提到，感謝 Fireship 的 YT 大佬講解得非常好懂，直接拆解出幾個核心架構：</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TNhaISOUy6Q?si=_aN_Q57_fOyp6vYa&t;start=230" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildA.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">GrandChild</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildB.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">GrandChild</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// GrandChild.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">inject</span>: [<span class="string">&#x27;message&#x27;</span>] <span class="comment">// --------------- inject here</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="React-useContext"><a href="#React-useContext" class="headerlink" title="React useContext"></a>React useContext</h2><p><code>useContext</code> 的作法是開啟一個魔法陣(createContext)，變成一個容器一般的存在，所有應用的資料注入後(CustomContext.Provider)在擺進需要應用的元件，有沒有發現關鍵字「Provider」？在該作用域(scope)內放入共享的資料素材後，元件內就可以召喚魔法(useContext)來取得資料了!</p>
-<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px; width: min(100%, 960px)' src='/blog/images/react-useContext-1.jpg' height='auto'>
-
-<h3 id="操作說明書"><a href="#操作說明書" class="headerlink" title="操作說明書"></a>操作說明書</h3><ul>
-<li><p><strong><code>createContext</code></strong> 創建一個 context 上下文。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AppContext.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; createContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AppContext</span> = <span class="title function_">createContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">AppContext</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><code>CustomContext.Provider</code></strong> 提供一個 Provider 容器，將需要共享資料的元件放入，注意這裡的 Provider 首字大寫。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ChildA</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildA&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ChildB</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildB&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AppContext</span> <span class="keyword">from</span> <span class="string">&#x27;./AppContext&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">AppContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">message:</span> &#x27;<span class="attr">Hello</span> <span class="attr">from</span> <span class="attr">App</span>!&#x27; &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ChildA</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ChildB</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">AppContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">App</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><code>useContext</code></strong> 提供接口讓元件承接注入的資料。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildA.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ChildA</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">ChildA</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildB.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ChildB</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">ChildB</span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// GrandChild.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AppContext</span> <span class="keyword">from</span> <span class="string">&#x27;./AppContext&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">GrandChild</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; message &#125; = <span class="title function_">useContext</span>(<span class="title class_">AppContext</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;message&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">GrandChild</span>;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<iframe height="300" style="width: 100%;" scrolling="no" title="React.useContext" src="https://codepen.io/mawchu/embed/XWQwvzz?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/XWQwvzz">
-  React.useContext</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+<h2 id="class-life-cycle-event"><a href="#class-life-cycle-event" class="headerlink" title="class life cycle event"></a>class life cycle event</h2><p>在 React 16.8 釋出 functional hooks 以前元件都是以 <strong>class 形式</strong>為基礎延伸的，而學習過 Javascript 核心的小夥伴都理解 class 語法糖其實是 function X this constructor 寫法的包裝，畢竟 Javascript 本來就沒有強硬的物件導向(OOP)寫法，完全看開發者如何應用而已。</p>
+<p>回到 React useEffect 與生命週期的關係，class component 提供了三個基本的<strong>元件生命週期事件</strong>：</p>
+<h3 id="componentDidMount-元件初創"><a href="#componentDidMount-元件初創" class="headerlink" title="componentDidMount 元件初創"></a>componentDidMount 元件初創</h3><p>在這個階段類似 Vue 的 <code>mounted()</code> 鉤子，會在元件<strong>初創時期</strong>啟動並執行。<br>useEffect 的寫法經常會搭配 Fetch API X <strong>empty dependency array</strong>，不用依賴任何資料的變化否則容易進入無限迴圈(Infinite Loop)，這個寫法會執行在瀏覽器首次完成渲染時。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-1.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="componentDidUpdate-元件初創"><a href="#componentDidUpdate-元件初創" class="headerlink" title="componentDidUpdate 元件初創"></a>componentDidUpdate 元件初創</h3><p>在這個階段類似 Vue 的 <code>update()</code> 鉤子，會在元件<strong>資料更新</strong>時啟動並執行。<br>如果搭配 useEffect dependency array 的依賴就類似 Vue 的 <code>watch</code> 行為，根據資料變化啟動副作用。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-2.jpg' width='min(100%, 600px)' height='auto'></p>
+<h3 id="componentWillUnmount-元件毀滅"><a href="#componentWillUnmount-元件毀滅" class="headerlink" title="componentWillUnmount 元件毀滅"></a>componentWillUnmount 元件毀滅</h3><p>在這個階段類似 Vue 的 <code>destroy()</code> 鉤子，會在元件<strong>從畫面移除時</strong>啟動並執行。<br>useEffect 的寫法會在 <strong>return function</strong> 內，標記著元件移除時要啟動的副作用，例如移除事件監聽器。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-3.jpg' width='min(100%, 600px)' height='auto'></p>
+<h2 id="等同-useEffect-DidMount-階段的寫法"><a href="#等同-useEffect-DidMount-階段的寫法" class="headerlink" title="等同 useEffect DidMount 階段的寫法"></a>等同 useEffect DidMount 階段的寫法</h2><p>其實剛學 useEffect 鉤子不太理解加與不加的差別，因為有的行為我只想執行一次又不想加重首次渲染的負擔時就不一定會使用到，例如以下的情況：</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="React.useEffect" src="https://codepen.io/mawchu/embed/GRLaabv?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/GRLaabv">
+  React.useEffect</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
+<p>若資料在<strong>不會改變</strong>的前提下平心而論確實差不多，因為沒有重新渲染的問題；倘若資料會改變而影響 component re-render 就會開始看到差異。</p>
+<p>使用 <code>useEffect</code> 可以將函式區域內的資料都維持在<strong>第一次渲染後</strong>、<strong>資料更新前</strong>的版本，例如以上範例，即使非同步 SetTimeout Callback 的執行其實更早(0 毫秒早於首次渲染以前)，data 仍凍結在初始值 <code>I&#39;m a data.</code>，體現了 useEffect 在這裡的優點。</p>
+<p>然而撰寫在 function component 內、useEffect 外且沒有使用其他 Hooks 的函式，會緊跟隨每次元件的渲染重建、渲染前執行計算、渲染後顯示結果，生命週期因渲染重新誕生、因元件毀滅而消失（除了監聽事件）。</p>
+<h1 id="useEffect-X-empty-array-是微任務"><a href="#useEffect-X-empty-array-是微任務" class="headerlink" title="useEffect X empty array 是微任務"></a>useEffect X empty array 是微任務</h1><p>用 <strong>宏任務(Macro task)</strong> 或 <strong>微任務(Micro task)</strong> 來理解 React hooks 是狹隘的做法，畢竟怎麼為 event loop 安排還是取決於開發者的程式邏輯與使用鉤子的目的上，不過在上一個案例中 useEffect X empty array 的搭配就很接近微任務了，React 設計這些接口的初衷就是提供符合設計動機的時間點，讓開發者根據業務需求信手拈來安排想要的流程脈絡，不過理解背後的運作順序還是有助於避免採坑。</p>
+<p>以下是 chatGpt 的解說，有時候會胡說八道需要斟酌觀看 xd</p>
 <blockquote>
-<p>注意良好的撰寫習慣，context 命名首字大寫(Capitalize)！</p>
+<p>When you use a hook like <code>useState</code>, <code>useEffect</code>, <code>useContext</code>, etc., it’s not the hook itself that determines whether its execution is scheduled as a micro task or a macro task. Instead, it’s the way React schedules and processes updates that determines <strong>when the hook’s associated functions are called</strong>.<br>However, some hooks, like <strong>useEffect with an empty dependency array []</strong>, are often used for tasks that are more closely associated with micro tasks, such as updating the DOM after rendering, it runs its effect callback after the browser <strong>has finished painting and before the next paint</strong>. This ensures that any DOM updates caused by the effect are applied before the browser repaints the screen. In these cases, the effect of the hook may be scheduled as a micro task, but it’s not a rule that applies to all hooks.<br>–chatGpt</p>
 </blockquote>
-<h1 id="useContext-對渲染的影響"><a href="#useContext-對渲染的影響" class="headerlink" title="useContext 對渲染的影響"></a>useContext 對渲染的影響</h1><p>雖然 useContext 是跨元件之間除了 redux、zustand 以外或小專案的選擇，制定起來也沒有那麼繁瑣，不過缺點就是所有作用域內的元件都會受到資料的變動而重新渲染(re-render)，即使該元件只是關係鍊的環節之一未使用到資料，也不可避免地一併渲染，若資料很多互相耦合的情況嚴重就需要考慮是否要使用 Flux 資料管理套件了。</p>
 ]]></content>
       <categories>
         <category>React</category>
@@ -2213,9 +2200,11 @@ on <a href="https://codepen.io">CodePen</a>.
       <tags>
         <tag>React</tag>
         <tag>React hooks</tag>
-        <tag>useContext</tag>
-        <tag>provide &amp; inject</tag>
+        <tag>useEffect</tag>
         <tag>class life cycle</tag>
+        <tag>mounted</tag>
+        <tag>updated</tag>
+        <tag>destroy</tag>
       </tags>
   </entry>
   <entry>
@@ -2278,45 +2267,58 @@ on <a href="https://codepen.io">CodePen</a>.
       </tags>
   </entry>
   <entry>
-    <title>React - useEffect hook 使用說明</title>
-    <url>/blog/2024/05/02/react-useEffect/</url>
+    <title>React - useContext hook 使用說明</title>
+    <url>/blog/2024/05/02/react-useContext/</url>
     <content><![CDATA[<div class="visual-image">
         <div class="visual-image-box">
             <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">React - useEffect hook </div>
-            <div class="stroke">React - useEffect hook </div>
-            <div class="plain main-title">React - useEffect hook </div>
+            <div class="stroke">React - useContext hook </div>
+            <div class="stroke">React - useContext hook </div>
+            <div class="plain main-title">React - useContext hook </div>
             <div class="plain">．．．</div>
         </div>
     </div>
-<p>這一篇來記錄一下初學 React 時界定最模糊但最常用的鉤子 <code>useEffect()</code>，到底怎麼用、為什麼這樣用？</p>
+<p>關於 React 的 useContext 可以理解為使用「上下文」，延伸為跨元件的共享資料，在學習 Vuex 時也可以見到參數被命名 <code>context</code>。</p>
 <span id="more"></span>
 
-<p>React 所有鉤子都不容易在閱讀官方解說之後馬上理解，需要透過案例演練或者採坑的經驗後慢慢掌握。</p>
-<h1 id="useEffect-為何稱之為「副作用」"><a href="#useEffect-為何稱之為「副作用」" class="headerlink" title="useEffect 為何稱之為「副作用」"></a>useEffect 為何稱之為「副作用」</h1><p>就像吃藥治療了身體病痛的同時也會帶來一些額外的影響，例如偏頭痛、喉嚨乾燥等等，<code>useEffect()</code> 就是提供你的應用程式一些「額外的影響」。<br>影響的範圍與作用透過第一個函式參數來定義，依賴更新的資料則是第二個 Dependency 參數。</p>
-<h1 id="useEffect-與生命週期的關係"><a href="#useEffect-與生命週期的關係" class="headerlink" title="useEffect 與生命週期的關係"></a>useEffect 與生命週期的關係</h1><p>而副作用與<strong>元件 component 的生命週期</strong>息息相關，這一點在很多教學重點裡往往沒有提到，感謝 Fireship 的 YT 大佬講解得非常好懂，直接拆解出幾個核心架構：</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TNhaISOUy6Q?si=_aN_Q57_fOyp6vYa&t;start=230" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<h1 id="Prop-drilling-資料瀑布"><a href="#Prop-drilling-資料瀑布" class="headerlink" title="Prop drilling 資料瀑布"></a>Prop drilling 資料瀑布</h1><p>在前端工程領域有一個詞彙 <strong>prop drilling</strong> 資料瀑布（對我自己翻的）描述了多代巢狀、跨元件結構所衍生的資料傳遞問題，前端任何熱門框架都會想方設法解決這個燙手山芋，一旦資料龐大或者使用流程複雜很容易走入 UI 的多重宇宙，一層又一層層的傳下去，元件嵌套了好幾層或者跨多個兄弟元件的情況下如何將資料垂直傳遞、水平傳遞？</p>
+<p>以下比較 Vue &amp; React 解決 prop drilling 的工具：</p>
+<h2 id="Vue-provide-amp-inject"><a href="#Vue-provide-amp-inject" class="headerlink" title="Vue provide &amp; inject"></a>Vue provide &amp; inject</h2><p>Vue 的使用概念比較像匯出跟匯入，<br>在提供資料的元件使用 <code>provide()</code> 提供出去；在接收資料的元件使用 <code>inject</code> 注入。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ChildA</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ChildB</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">ChildA</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildA.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">ChildB</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildB.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">ChildA</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">ChildB</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">provide</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">message</span>: <span class="string">&#x27;Hello from App!&#x27;</span> <span class="comment">// ------------ provide here</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-<h2 id="class-life-cycle-event"><a href="#class-life-cycle-event" class="headerlink" title="class life cycle event"></a>class life cycle event</h2><p>在 React 16.8 釋出 functional hooks 以前元件都是以 <strong>class 形式</strong>為基礎延伸的，而學習過 Javascript 核心的小夥伴都理解 class 語法糖其實是 function X this constructor 寫法的包裝，畢竟 Javascript 本來就沒有強硬的物件導向(OOP)寫法，完全看開發者如何應用而已。</p>
-<p>回到 React useEffect 與生命週期的關係，class component 提供了三個基本的<strong>元件生命週期事件</strong>：</p>
-<h3 id="componentDidMount-元件初創"><a href="#componentDidMount-元件初創" class="headerlink" title="componentDidMount 元件初創"></a>componentDidMount 元件初創</h3><p>在這個階段類似 Vue 的 <code>mounted()</code> 鉤子，會在元件<strong>初創時期</strong>啟動並執行。<br>useEffect 的寫法經常會搭配 Fetch API X <strong>empty dependency array</strong>，不用依賴任何資料的變化否則容易進入無限迴圈(Infinite Loop)，這個寫法會執行在瀏覽器首次完成渲染時。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-1.jpg' width='min(100%, 600px)' height='auto'></p>
-<h3 id="componentDidUpdate-元件初創"><a href="#componentDidUpdate-元件初創" class="headerlink" title="componentDidUpdate 元件初創"></a>componentDidUpdate 元件初創</h3><p>在這個階段類似 Vue 的 <code>update()</code> 鉤子，會在元件<strong>資料更新</strong>時啟動並執行。<br>如果搭配 useEffect dependency array 的依賴就類似 Vue 的 <code>watch</code> 行為，根據資料變化啟動副作用。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-2.jpg' width='min(100%, 600px)' height='auto'></p>
-<h3 id="componentWillUnmount-元件毀滅"><a href="#componentWillUnmount-元件毀滅" class="headerlink" title="componentWillUnmount 元件毀滅"></a>componentWillUnmount 元件毀滅</h3><p>在這個階段類似 Vue 的 <code>destroy()</code> 鉤子，會在元件<strong>從畫面移除時</strong>啟動並執行。<br>useEffect 的寫法會在 <strong>return function</strong> 內，標記著元件移除時要啟動的副作用，例如移除事件監聽器。<br><img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px' src='/blog/images/react-useEffect-3.jpg' width='min(100%, 600px)' height='auto'></p>
-<h2 id="等同-useEffect-DidMount-階段的寫法"><a href="#等同-useEffect-DidMount-階段的寫法" class="headerlink" title="等同 useEffect DidMount 階段的寫法"></a>等同 useEffect DidMount 階段的寫法</h2><p>其實剛學 useEffect 鉤子不太理解加與不加的差別，因為有的行為我只想執行一次又不想加重首次渲染的負擔時就不一定會使用到，例如以下的情況：</p>
-<iframe height="300" style="width: 100%;" scrolling="no" title="React.useEffect" src="https://codepen.io/mawchu/embed/GRLaabv?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/mawchu/pen/GRLaabv">
-  React.useEffect</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildA.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">GrandChild</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildB.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild.vue&#x27;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title class_">GrandChild</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// GrandChild.vue</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; message &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">inject</span>: [<span class="string">&#x27;message&#x27;</span>] <span class="comment">// --------------- inject here</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="React-useContext"><a href="#React-useContext" class="headerlink" title="React useContext"></a>React useContext</h2><p><code>useContext</code> 的作法是開啟一個魔法陣(createContext)，變成一個容器一般的存在，所有應用的資料注入後(CustomContext.Provider)在擺進需要應用的元件，有沒有發現關鍵字「Provider」？在該作用域(scope)內放入共享的資料素材後，元件內就可以召喚魔法(useContext)來取得資料了!</p>
+<img class="post-image" style='margin-right: unset; margin-left: unset; padding-top: 12px; width: min(100%, 960px)' src='/blog/images/react-useContext-1.jpg' height='auto'>
+
+<h3 id="操作說明書"><a href="#操作說明書" class="headerlink" title="操作說明書"></a>操作說明書</h3><ul>
+<li><p><strong><code>createContext</code></strong> 創建一個 context 上下文。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// AppContext.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; createContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AppContext</span> = <span class="title function_">createContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">AppContext</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><code>CustomContext.Provider</code></strong> 提供一個 Provider 容器，將需要共享資料的元件放入，注意這裡的 Provider 首字大寫。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ChildA</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildA&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ChildB</span> <span class="keyword">from</span> <span class="string">&#x27;./ChildB&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AppContext</span> <span class="keyword">from</span> <span class="string">&#x27;./AppContext&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">AppContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">message:</span> &#x27;<span class="attr">Hello</span> <span class="attr">from</span> <span class="attr">App</span>!&#x27; &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ChildA</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ChildB</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">AppContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">App</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><code>useContext</code></strong> 提供接口讓元件承接注入的資料。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildA.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ChildA</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">ChildA</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ChildB.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">GrandChild</span> <span class="keyword">from</span> <span class="string">&#x27;./GrandChild&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ChildB</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">GrandChild</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">ChildB</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// GrandChild.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; useContext &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">AppContext</span> <span class="keyword">from</span> <span class="string">&#x27;./AppContext&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">GrandChild</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; message &#125; = <span class="title function_">useContext</span>(<span class="title class_">AppContext</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;message&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">GrandChild</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<iframe height="300" style="width: 100%;" scrolling="no" title="React.useContext" src="https://codepen.io/mawchu/embed/XWQwvzz?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/mawchu/pen/XWQwvzz">
+  React.useContext</a> by Jamie Hsieh (<a href="https://codepen.io/mawchu">@mawchu</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-<p>若資料在<strong>不會改變</strong>的前提下平心而論確實差不多，因為沒有重新渲染的問題；倘若資料會改變而影響 component re-render 就會開始看到差異。</p>
-<p>使用 <code>useEffect</code> 可以將函式區域內的資料都維持在<strong>第一次渲染後</strong>、<strong>資料更新前</strong>的版本，例如以上範例，即使非同步 SetTimeout Callback 的執行其實更早(0 毫秒早於首次渲染以前)，data 仍凍結在初始值 <code>I&#39;m a data.</code>，體現了 useEffect 在這裡的優點。</p>
-<p>然而撰寫在 function component 內、useEffect 外且沒有使用其他 Hooks 的函式，會緊跟隨每次元件的渲染重建、渲染前執行計算、渲染後顯示結果，生命週期因渲染重新誕生、因元件毀滅而消失（除了監聽事件）。</p>
-<h1 id="useEffect-X-empty-array-是微任務"><a href="#useEffect-X-empty-array-是微任務" class="headerlink" title="useEffect X empty array 是微任務"></a>useEffect X empty array 是微任務</h1><p>用 <strong>宏任務(Macro task)</strong> 或 <strong>微任務(Micro task)</strong> 來理解 React hooks 是狹隘的做法，畢竟怎麼為 event loop 安排還是取決於開發者的程式邏輯與使用鉤子的目的上，不過在上一個案例中 useEffect X empty array 的搭配就很接近微任務了，React 設計這些接口的初衷就是提供符合設計動機的時間點，讓開發者根據業務需求信手拈來安排想要的流程脈絡，不過理解背後的運作順序還是有助於避免採坑。</p>
-<p>以下是 chatGpt 的解說，有時候會胡說八道需要斟酌觀看 xd</p>
 <blockquote>
-<p>When you use a hook like <code>useState</code>, <code>useEffect</code>, <code>useContext</code>, etc., it’s not the hook itself that determines whether its execution is scheduled as a micro task or a macro task. Instead, it’s the way React schedules and processes updates that determines <strong>when the hook’s associated functions are called</strong>.<br>However, some hooks, like <strong>useEffect with an empty dependency array []</strong>, are often used for tasks that are more closely associated with micro tasks, such as updating the DOM after rendering, it runs its effect callback after the browser <strong>has finished painting and before the next paint</strong>. This ensures that any DOM updates caused by the effect are applied before the browser repaints the screen. In these cases, the effect of the hook may be scheduled as a micro task, but it’s not a rule that applies to all hooks.<br>–chatGpt</p>
+<p>注意良好的撰寫習慣，context 命名首字大寫(Capitalize)！</p>
 </blockquote>
+<h1 id="useContext-對渲染的影響"><a href="#useContext-對渲染的影響" class="headerlink" title="useContext 對渲染的影響"></a>useContext 對渲染的影響</h1><p>雖然 useContext 是跨元件之間除了 redux、zustand 以外或小專案的選擇，制定起來也沒有那麼繁瑣，不過缺點就是所有作用域內的元件都會受到資料的變動而重新渲染(re-render)，即使該元件只是關係鍊的環節之一未使用到資料，也不可避免地一併渲染，若資料很多互相耦合的情況嚴重就需要考慮是否要使用 Flux 資料管理套件了。</p>
 ]]></content>
       <categories>
         <category>React</category>
@@ -2325,10 +2327,8 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>React</tag>
         <tag>React hooks</tag>
         <tag>class life cycle</tag>
-        <tag>useEffect</tag>
-        <tag>mounted</tag>
-        <tag>updated</tag>
-        <tag>destroy</tag>
+        <tag>useContext</tag>
+        <tag>provide &amp; inject</tag>
       </tags>
   </entry>
   <entry>
@@ -2728,6 +2728,38 @@ on <a href="https://codepen.io">CodePen</a>.
       </tags>
   </entry>
   <entry>
+    <title>Vue3 - Slot usage 插槽使用說明</title>
+    <url>/blog/2024/08/22/vue3-slot-review/</url>
+    <content><![CDATA[<div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke">Vue - Slot usage </div>
+            <div class="stroke">Vue - Slot usage </div>
+            <div class="plain main-title">Vue - Slot usage </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>插槽就是個用了就忘的好工具，最近在整理 Vue3 專案的元件有點忘記插槽的用法了快快來複習。</p>
+<span id="more"></span>
+
+<h1 id="Slot-usage-插槽使用說明"><a href="#Slot-usage-插槽使用說明" class="headerlink" title="Slot usage 插槽使用說明"></a>Slot usage 插槽使用說明</h1><p>簡單說明一下插槽就像是開放的 <strong>部分客製化空間</strong> ，提供範圍內自由設計的 UI 可以像插槽一樣放入元件中，重新回顧一下重點：</p>
+<h2 id="Default-slot-預設插槽"><a href="#Default-slot-預設插槽" class="headerlink" title="Default slot 預設插槽"></a>Default slot 預設插槽</h2><p>插槽分為具名與不具名，不具名的插槽為預設使用的插槽，通常只能一個，可以替換掉原本的部分內容：</p>
+<h3 id="Component-元件"><a href="#Component-元件" class="headerlink" title="Component 元件"></a>Component 元件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">SvgIcon</span> <span class="keyword">from</span> <span class="string">&#x27;Components/common/SvgIcon.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; withDefaults &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> attrs = <span class="title function_">useAttrs</span>();</span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(</span><br><span class="line">  defineProps&lt;&#123;</span><br><span class="line">    svgIconName?: string;</span><br><span class="line">    mode?: string;</span><br><span class="line">  &#125;&gt;(),</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;light&#x27;</span>,</span><br><span class="line">    <span class="attr">svgIconName</span>: <span class="string">&#x27;info&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> calSvgIconName = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> props.<span class="property">svgIconName</span>);</span><br><span class="line"><span class="keyword">const</span> calMode = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> props.<span class="property">mode</span>);</span><br><span class="line"><span class="keyword">const</span> getBindValues = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">  <span class="attr">showArrow</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">persistent</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">popperClass</span>: <span class="string">`popover-<span class="subst">$&#123;calMode.value&#125;</span>`</span>,</span><br><span class="line">  ...attrs,</span><br><span class="line">&#125;));</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">el-tooltip</span> <span class="attr">v-bind</span>=<span class="string">&quot;getBindValues&quot;</span> <span class="attr">:offset</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span>&gt;</span>  // --------------------- Default slot 開始</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">SvgIcon</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">class</span>=<span class="string">&quot;ml-1&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-if</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:width</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:height</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:name</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">color</span>=<span class="string">&quot;#e25827&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Default slot 開始</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-tooltip</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Parent-父層"><a href="#Parent-父層" class="headerlink" title="Parent 父層"></a>Parent 父層</h3><p>預設不具名插槽是不限制非 <code>&lt;template&gt;&lt;/template&gt;</code> 形式放入，任何 Html 都可以為具名插槽所運用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;<span class="title class_">Tooltip</span> :content=<span class="string">&quot;$t(&#x27;common.statement.partnerTotalFTF&#x27;)&quot;</span> placement=<span class="string">&quot;bottom&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Tooltip</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Naming-slot-具名插槽"><a href="#Naming-slot-具名插槽" class="headerlink" title="Naming slot 具名插槽"></a>Naming slot 具名插槽</h2><p>具名插槽的使用可以方便定義目的與位置，配合 UI Library 的應用或者客製化元件都可以很好的發揮，可以定義很多個：</p>
+<h3 id="Component-元件-1"><a href="#Component-元件-1" class="headerlink" title="Component 元件"></a>Component 元件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-tooltip</span> <span class="attr">v-bind</span>=<span class="string">&quot;getBindValues&quot;</span> <span class="attr">:offset</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;trigger&quot;</span>&gt;</span> // --------------------- Naming slot &quot;trigger&quot; 開始</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">SvgIcon</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">class</span>=<span class="string">&quot;ml-1&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-if</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:width</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:height</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:name</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">color</span>=<span class="string">&quot;#e25827&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Naming slot 結束</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">content</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;content&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Naming slot &quot;content&quot;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-tooltip</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Parent-父層-1"><a href="#Parent-父層-1" class="headerlink" title="Parent 父層"></a>Parent 父層</h3><p>具名插槽會限制以 <code>&lt;template v-slot:name&gt;&lt;/template&gt;</code> 模式命名並插入內容：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;<span class="title class_">Tooltip</span> :content=<span class="string">&quot;$t(&#x27;common.statement.partnerTotalFTF&#x27;)&quot;</span> placement=<span class="string">&quot;bottom&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:trigger</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;trigger&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:content</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;content&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Tooltip</span>&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+        <tag>slot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue3 - useful features 實用工具解析</title>
     <url>/blog/2024/08/14/vue3-useful-features/</url>
     <content><![CDATA[<div class="visual-image">
@@ -2831,38 +2863,6 @@ on <a href="https://codepen.io">CodePen</a>.
         <tag>attrs</tag>
         <tag>useVModel</tag>
         <tag>defineModel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue3 - Slot usage 插槽使用說明</title>
-    <url>/blog/2024/08/22/vue3-slot-review/</url>
-    <content><![CDATA[<div class="visual-image">
-        <div class="visual-image-box">
-            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
-            <div class="stroke">Vue - Slot usage </div>
-            <div class="stroke">Vue - Slot usage </div>
-            <div class="plain main-title">Vue - Slot usage </div>
-            <div class="plain">．．．</div>
-        </div>
-    </div>
-<p>插槽就是個用了就忘的好工具，最近在整理 Vue3 專案的元件有點忘記插槽的用法了快快來複習。</p>
-<span id="more"></span>
-
-<h1 id="Slot-usage-插槽使用說明"><a href="#Slot-usage-插槽使用說明" class="headerlink" title="Slot usage 插槽使用說明"></a>Slot usage 插槽使用說明</h1><p>簡單說明一下插槽就像是開放的 <strong>部分客製化空間</strong> ，提供範圍內自由設計的 UI 可以像插槽一樣放入元件中，重新回顧一下重點：</p>
-<h2 id="Default-slot-預設插槽"><a href="#Default-slot-預設插槽" class="headerlink" title="Default slot 預設插槽"></a>Default slot 預設插槽</h2><p>插槽分為具名與不具名，不具名的插槽為預設使用的插槽，通常只能一個，可以替換掉原本的部分內容：</p>
-<h3 id="Component-元件"><a href="#Component-元件" class="headerlink" title="Component 元件"></a>Component 元件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">SvgIcon</span> <span class="keyword">from</span> <span class="string">&#x27;Components/common/SvgIcon.vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; withDefaults &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> attrs = <span class="title function_">useAttrs</span>();</span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(</span><br><span class="line">  defineProps&lt;&#123;</span><br><span class="line">    svgIconName?: string;</span><br><span class="line">    mode?: string;</span><br><span class="line">  &#125;&gt;(),</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;light&#x27;</span>,</span><br><span class="line">    <span class="attr">svgIconName</span>: <span class="string">&#x27;info&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> calSvgIconName = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> props.<span class="property">svgIconName</span>);</span><br><span class="line"><span class="keyword">const</span> calMode = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> props.<span class="property">mode</span>);</span><br><span class="line"><span class="keyword">const</span> getBindValues = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">width</span>: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">  <span class="attr">showArrow</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">persistent</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">popperClass</span>: <span class="string">`popover-<span class="subst">$&#123;calMode.value&#125;</span>`</span>,</span><br><span class="line">  ...attrs,</span><br><span class="line">&#125;));</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">el-tooltip</span> <span class="attr">v-bind</span>=<span class="string">&quot;getBindValues&quot;</span> <span class="attr">:offset</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span>&gt;</span>  // --------------------- Default slot 開始</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">SvgIcon</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">class</span>=<span class="string">&quot;ml-1&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-if</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:width</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:height</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:name</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">color</span>=<span class="string">&quot;#e25827&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Default slot 開始</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-tooltip</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="Parent-父層"><a href="#Parent-父層" class="headerlink" title="Parent 父層"></a>Parent 父層</h3><p>預設不具名插槽是不限制非 <code>&lt;template&gt;&lt;/template&gt;</code> 形式放入，任何 Html 都可以為具名插槽所運用：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;<span class="title class_">Tooltip</span> :content=<span class="string">&quot;$t(&#x27;common.statement.partnerTotalFTF&#x27;)&quot;</span> placement=<span class="string">&quot;bottom&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Tooltip</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Naming-slot-具名插槽"><a href="#Naming-slot-具名插槽" class="headerlink" title="Naming slot 具名插槽"></a>Naming slot 具名插槽</h2><p>具名插槽的使用可以方便定義目的與位置，配合 UI Library 的應用或者客製化元件都可以很好的發揮，可以定義很多個：</p>
-<h3 id="Component-元件-1"><a href="#Component-元件-1" class="headerlink" title="Component 元件"></a>Component 元件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">el-tooltip</span> <span class="attr">v-bind</span>=<span class="string">&quot;getBindValues&quot;</span> <span class="attr">:offset</span>=<span class="string">&quot;6&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;trigger&quot;</span>&gt;</span> // --------------------- Naming slot &quot;trigger&quot; 開始</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">SvgIcon</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">class</span>=<span class="string">&quot;ml-1&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">v-if</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:width</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:height</span>=<span class="string">&quot;18&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">:name</span>=<span class="string">&quot;calSvgIconName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">color</span>=<span class="string">&quot;#e25827&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Naming slot 結束</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">content</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;content&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span> // --------------------- Naming slot &quot;content&quot;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">el-tooltip</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Parent-父層-1"><a href="#Parent-父層-1" class="headerlink" title="Parent 父層"></a>Parent 父層</h3><p>具名插槽會限制以 <code>&lt;template v-slot:name&gt;&lt;/template&gt;</code> 模式命名並插入內容：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;<span class="title class_">Tooltip</span> :content=<span class="string">&quot;$t(&#x27;common.statement.partnerTotalFTF&#x27;)&quot;</span> placement=<span class="string">&quot;bottom&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:trigger</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;trigger&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:content</span>&gt;</span>這裡的內容會覆蓋 &#x27;<span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;content&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span>&#x27;<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">Tooltip</span>&gt;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Vue</tag>
-        <tag>slot</tag>
       </tags>
   </entry>
   <entry>
