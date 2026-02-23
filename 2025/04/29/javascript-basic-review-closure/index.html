@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="JavaScript  X Bsic Review - Closure              JavaScript  X Bsic Review - Closure              JavaScript  X Bsic Review - Closure             ．．．">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顧 JavaScript 核心 X Bsic Review - Closure">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/04/29/javascript-basic-review-closure/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="JavaScript  X Bsic Review - Closure              JavaScript  X Bsic Review - Closure              JavaScript  X Bsic Review - Closure             ．．．">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-29T02:19:17.000Z">
+<meta property="article:modified_time" content="2025-08-10T16:39:19.464Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Closure">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/04/29/javascript-basic-review-closure/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/04/29/javascript-basic-review-closure/","path":"2025/04/29/javascript-basic-review-closure/","title":"回顧 JavaScript 核心 X Bsic Review - Closure"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>回顧 JavaScript 核心 X Bsic Review - Closure | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%89%E5%8C%85%E7%9A%84%E5%AE%9A%E7%BE%A9"><span class="nav-number">1.</span> <span class="nav-text">閉包的定義</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%87%89%E7%94%A8%E7%9A%84%E5%AF%A6%E9%9A%9B%E7%AF%84%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">應用的實際範例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E6%88%B0%E6%A1%86%E6%9E%B6%E7%9A%84%E6%87%89%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">實戰框架的應用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-number">1.2.1.</span> <span class="nav-text">React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue3-Setup"><span class="nav-number">1.2.2.</span> <span class="nav-text">Vue3 Setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue2-This"><span class="nav-number">1.2.3.</span> <span class="nav-text">Vue2 This</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%BB%A0%E5%87%BD%E5%BC%8F%E8%88%87%E9%96%89%E5%8C%85"><span class="nav-number">1.3.</span> <span class="nav-text">工廠函式與閉包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%96%B9%E5%A5%97%E4%BB%B6%E8%88%87-IIFE-%E9%96%89%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">三方套件與 IIFE 閉包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%86%E5%B9%BE%E5%80%8B%E8%80%81%E6%9C%8B%E5%8F%8B%E9%96%89%E5%8C%85%E9%99%B7%E9%98%B1%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">來幾個老朋友閉包陷阱題</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#For-loop-%E7%B3%BB%E5%88%97"><span class="nav-number">2.1.</span> <span class="nav-text">For loop 系列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B6%93%E5%85%B8-for-%E8%BF%B4%E5%9C%88-setTimeout-%E5%95%8F%E9%A1%8C"><span class="nav-number">2.1.1.</span> <span class="nav-text">經典 for 迴圈 + setTimeout 問題</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95-1-let"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">解法 1 - let</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95-2-IIFE"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">解法 2 - IIFE</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%89%E5%8C%85%E7%9A%84%E5%BB%A3%E7%BE%A9"><span class="nav-number">3.</span> <span class="nav-text">閉包的廣義</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/04/29/javascript-basic-review-closure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="回顧 JavaScript 核心 X Bsic Review - Closure | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          回顧 JavaScript 核心 X Bsic Review - Closure
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-04-29 10:19:17" itemprop="dateCreated datePublished" datetime="2025-04-29T10:19:17+08:00">2025-04-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-11 00:39:19" itemprop="dateModified" datetime="2025-08-11T00:39:19+08:00">2025-08-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Frontend-Interview/" itemprop="url" rel="index"><span itemprop="name">Frontend Interview</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> JavaScript  X Bsic Review - Closure</div>
+            <div class="stroke"> JavaScript  X Bsic Review - Closure</div>
+            <div class="plain main-title"> JavaScript  X Bsic Review - Closure</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>本篇複習關於 JavaScript 最基礎的知識點：<strong>Closure</strong>。</p>
+<span id="more"></span>
+
+<h1 id="閉包的定義"><a href="#閉包的定義" class="headerlink" title="閉包的定義"></a>閉包的定義</h1><p>一個子函式可以記住且持續存取外部作用域的變數，即便脫離父層函式的執行環境仍可在外部取用或執行。<br>閉包的特色包含：</p>
+<ul>
+<li>子函式(Inner Function)</li>
+<li>外部變數(Outer Variables)</li>
+<li>定義當下的作用域(Lexical Environment)，每次呼叫會創造一個新的作用域</li>
+<li>垃圾回收機制(GC)</li>
+</ul>
+<p>很重要的一點在「保護私有變數不為外部修改或取用」!</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">outer</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> message = <span class="string">&#x27;Hello&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">inner</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(message);  <span class="comment">// 用到了外層的變數</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> inner;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myFunc = <span class="title function_">outer</span>();</span><br><span class="line"><span class="title function_">myFunc</span>();  <span class="comment">// =&gt; &quot;Hello&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="應用的實際範例"><a href="#應用的實際範例" class="headerlink" title="應用的實際範例"></a>應用的實際範例</h2><p>曾需要在專案內根據「投資年限」的長短計算手續費率，得出投資長達 1~該投資年(investYear) 的費率變化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">generateFeeRate</span> () &#123;</span><br><span class="line">   <span class="keyword">let</span> fee = <span class="number">1</span>; <span class="comment">// 預設費率</span></span><br><span class="line">   <span class="keyword">return</span> <span class="function">(<span class="params">investYears: number</span>) =&gt;</span> &#123;</span><br><span class="line">       <span class="comment">// 投資奇數年並大於兩年</span></span><br><span class="line">     <span class="keyword">if</span> ((investYears % <span class="number">2</span> === <span class="number">1</span>) &amp;&amp; (investYears &gt; <span class="number">2</span>)) &#123;</span><br><span class="line">       <span class="comment">// 若費率大於 0.6 每兩年再降 0.1</span></span><br><span class="line">       <span class="comment">// 費率最低至 0.5</span></span><br><span class="line">       fee = fee &gt; <span class="number">0.6</span> ? fee - (<span class="number">0.1</span> * (investYears % <span class="number">2</span>)) : <span class="number">0.5</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="title class_">Number</span>(fee.<span class="title function_">toFixed</span>(<span class="number">2</span>));</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>再根據客戶的投資年限 + 投資本金去計算出費用圖表：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">reCalculateAssetData</span> () &#123;</span><br><span class="line">   <span class="keyword">const</span> fee = <span class="variable language_">this</span>.<span class="title function_">generateFeeRate</span>();</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">let</span> n = <span class="number">0</span>; n &lt;= <span class="variable language_">this</span>.<span class="property">investYears</span>; n++) &#123;</span><br><span class="line">     <span class="variable language_">this</span>.<span class="title function_">generateAssetData</span>(<span class="title function_">fee</span>(n), n, <span class="variable language_">this</span>.<span class="property">sliderA</span>, <span class="variable language_">this</span>.<span class="property">sliderB</span>, <span class="variable language_">this</span>.<span class="property">sumArr</span>);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> @<span class="title class_">Watch</span>(<span class="string">&#x27;investYears&#x27;</span>)</span><br><span class="line"> @<span class="title class_">Watch</span>(<span class="string">&#x27;sliderA&#x27;</span>)<span class="comment">// 投資方式 A</span></span><br><span class="line"> @<span class="title class_">Watch</span>(<span class="string">&#x27;sliderB&#x27;</span>)<span class="comment">// 投資方式 B</span></span><br><span class="line"> <span class="keyword">function</span> <span class="title function_">regenerateChart</span> () &#123;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="title function_">reCalculateAssetData</span>();</span><br><span class="line">   <span class="variable language_">this</span>.<span class="title function_">drawLineChart</span>(...);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>封裝費率的值，來得出不同投資年分的資產總值計算費用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fee = <span class="variable language_">this</span>.<span class="title function_">generateFeeRate</span>(); <span class="comment">// 初始化</span></span><br><span class="line"><span class="title function_">fee</span>(<span class="number">1</span>); <span class="comment">// 呼叫 closure 得到第 1 年費率</span></span><br><span class="line"><span class="title function_">fee</span>(<span class="number">2</span>); <span class="comment">// 呼叫 closure 得到第 2 年費率</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="實戰框架的應用"><a href="#實戰框架的應用" class="headerlink" title="實戰框架的應用"></a>實戰框架的應用</h2><p>在 Vue React 的應用可謂遍地開花：</p>
+<table>
+<thead>
+<tr>
+<th align="left">案例類型</th>
+<th align="left">案例範例</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>事件監聽器</strong> (Event Handlers)</td>
+<td align="left"><code>onClick=&#123;() =&gt; handleClick(item.id)&#125;</code></td>
+<td align="left">這個 <code>item.id</code> 是靠 closure 記住的！</td>
+</tr>
+<tr>
+<td align="left"><strong>Hooks (React)</strong></td>
+<td align="left"><code>useState</code>, <code>useEffect</code>, 自訂 hooks</td>
+<td align="left"><code>useEffect</code> 裡的回呼函式會「記住」當下的變數狀態。</td>
+</tr>
+<tr>
+<td align="left"><strong>Composition API (Vue3)</strong></td>
+<td align="left"><code>setup</code> 裡 return 出來的函式</td>
+<td align="left"><code>setup()</code> 裡定義的變數，被 <code>ref</code> 或方法捕捉到。</td>
+</tr>
+<tr>
+<td align="left"><strong>工廠函式</strong> (例如 debounce、throttle)</td>
+<td align="left"><code>useDebounce(fn, delay)</code></td>
+<td align="left">debounce 內部會記住 timer id。</td>
+</tr>
+<tr>
+<td align="left"><strong>表單驗證器生成</strong></td>
+<td align="left">比如 <code>createValidator()</code> 回傳自訂驗證函式</td>
+<td align="left">Validator 會 closure 捕捉驗證條件。</td>
+</tr>
+<tr>
+<td align="left"><strong>回傳 function 的設計</strong></td>
+<td align="left">service, composable, helper</td>
+<td align="left">一個函式 return 出另一個帶著設定的函式。</td>
+</tr>
+</tbody></table>
+<h3 id="React"><a href="#React" class="headerlink" title="React"></a>React</h3><p>每個元件本身都是一個父層作用域，內部定義的 handler methods 都可以提取定義在父層作用域的變數：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Counter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(count); <span class="comment">// ⚡ 這裡 closure 捕捉到的是「定義時的 count」</span></span><br><span class="line">    <span class="title function_">setCount</span>(count + <span class="number">1</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> timer = <span class="built_in">setInterval</span>(handleClick, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">  &#125;, []); <span class="comment">// 注意這裡空陣列！</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue3-Setup"><a href="#Vue3-Setup" class="headerlink" title="Vue3 Setup"></a>Vue3 Setup</h3><p><code>&lt;script setup&gt;</code> 標籤是一個封裝的 <code>Setup()&#123;&#125;</code> 函式，本身是一個父層作用域，所以內部定義的 handler methods 都可以提取定義在父層作用域的變數：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">const data = ...;  // 父層 setup 函式裡的資料</span><br><span class="line"></span><br><span class="line">function handler() &#123;</span><br><span class="line">  // 每次呼叫 handler，也從 closure 拿 data</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue2-This"><a href="#Vue2-This" class="headerlink" title="Vue2 This"></a>Vue2 This</h3><p>Vue2 的變數資料是透過 <code>Object.defineProperty</code>  實作 Proxy-like 對每個屬性建立 getter&#x2F;setter，註冊在 data 物件後透過代理在 <code>this</code> 上面的行為來取得資料。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定義資料物件</span></span><br><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 背後原理 1:包裝成響應式</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">defineReactive</span>(<span class="params">obj, key, val</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> dep = <span class="keyword">new</span> <span class="title class_">Dep</span>(); <span class="comment">// 👈 這是 Vue 裡專門負責通知更新的「訂閱器」</span></span><br><span class="line"></span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(obj, key, &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// 👁️ 依賴收集：誰用到我，就記下來（像 watcher）</span></span><br><span class="line">      dep.<span class="title function_">depend</span>();</span><br><span class="line">      <span class="keyword">return</span> val;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">newVal</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (newVal !== val) &#123;</span><br><span class="line">        val = newVal;</span><br><span class="line">        <span class="comment">// 🔔 通知所有依賴我的人：「嘿，我變了喔！」</span></span><br><span class="line">        dep.<span class="title function_">notify</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">defineReactive</span>(obj, key, val) </span><br><span class="line"></span><br><span class="line"><span class="comment">// 背後原理 2: 代理到 this</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(<span class="variable language_">this</span>, <span class="string">&#x27;count&#x27;</span>, &#123;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">_data</span>.<span class="property">count</span>; &#125;,</span><br><span class="line">  <span class="title function_">set</span>(<span class="params">v</span>) &#123; <span class="variable language_">this</span>.<span class="property">_data</span>.<span class="property">count</span> = v; &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>所以 Vue2 資料註冊的方式不是透過 Closure，而是透過訂閱更新的 <code>this</code> 獲取最新資料！</p>
+<h2 id="工廠函式與閉包"><a href="#工廠函式與閉包" class="headerlink" title="工廠函式與閉包"></a>工廠函式與閉包</h2><p>先定義了一個具有閉包的函式後，透過「呼叫函式保留了該作用域並封存變數」，以產生一個或多個保有各自私有狀態的工廠函式；換句話說，工廠函式需要透過閉包的手法建立。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCounter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// 👈 這是被閉住的私有變數</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="title function_">increment</span>(<span class="params"></span>) &#123;</span><br><span class="line">      count++;</span><br><span class="line">      <span class="keyword">return</span> count;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">reset</span>(<span class="params"></span>) &#123;</span><br><span class="line">      count = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counter1 = <span class="title function_">createCounter</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(counter1.<span class="title function_">increment</span>()); <span class="comment">// 1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(counter1.<span class="title function_">increment</span>()); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三方套件與-IIFE-閉包"><a href="#三方套件與-IIFE-閉包" class="headerlink" title="三方套件與 IIFE 閉包"></a>三方套件與 IIFE 閉包</h2><p>IIFE（Immediately Invoked Function Expression）之所以常被用來定義私有變數，正是因為閉包的特性。<br>是在 ES6 模組 (import&#x2F;export) 出現前，常見的私有變數封裝技巧。</p>
+<p>例如封裝模組：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Counter</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// 👈 私有變數，外面碰不到！</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="title function_">increment</span>(<span class="params"></span>) &#123;</span><br><span class="line">      count++;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(count);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">reset</span>(<span class="params"></span>) &#123;</span><br><span class="line">      count = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<h1 id="來幾個老朋友閉包陷阱題"><a href="#來幾個老朋友閉包陷阱題" class="headerlink" title="來幾個老朋友閉包陷阱題"></a>來幾個老朋友閉包陷阱題</h1><h2 id="For-loop-系列"><a href="#For-loop-系列" class="headerlink" title="For loop 系列"></a>For loop 系列</h2><h3 id="經典-for-迴圈-setTimeout-問題"><a href="#經典-for-迴圈-setTimeout-問題" class="headerlink" title="經典 for 迴圈 + setTimeout 問題"></a>經典 for 迴圈 + setTimeout 問題</h3><p>for loop 可以看做一個 <strong>外部執行環境</strong>，內部的 setTimeout <code>callback</code> 自然形成一個閉包子函式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>答案預期輸出什麼？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>為什麼？</p>
+<ul>
+<li><code>var</code> 是 <strong>function-scope</strong>，每一圈跑完都會汙染 <code>i</code> 的值，最後 <code>i = 3</code> (包含迴圈最後執行 i++)</li>
+<li><code>setTimeout</code> 是宏任務會最後執行。</li>
+</ul>
+<h4 id="解法-1-let"><a href="#解法-1-let" class="headerlink" title="解法 1 - let"></a>解法 1 - let</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">// 閉包產生</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>答案預期輸出什麼？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>var</code> 改成 <code>let</code> 會套用 <strong>block-scope</strong> 屬性，就可以讓每一次的迴圈重新建立自己的 <code>lexical scope</code>。</li>
+</ul>
+<h4 id="解法-2-IIFE"><a href="#解法-2-IIFE" class="headerlink" title="解法 2 - IIFE"></a>解法 2 - IIFE</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  (<span class="keyword">function</span>(<span class="params">j</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">// 閉包產生</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(j);</span><br><span class="line">    &#125;, <span class="number">100</span>);</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>立即呼叫函式的閉包特性始得私有變數 <code>i</code> 在每一次呼叫時立刻封裝起來，讓子函式使用獨立的 <code>j</code>，所以可以完美的更新正確的變數。</p>
+<h1 id="閉包的廣義"><a href="#閉包的廣義" class="headerlink" title="閉包的廣義"></a>閉包的廣義</h1><p>所有函式本質上都可能是閉包，因為它們都帶有「定義當下的作用域鏈」(Lexical Scope Chain)。<br>只是真正重要的閉包行為，是當函式「離開原本的作用域」，仍然「記得當初的變數」。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/blog/tags/Closure/" rel="tag"># Closure</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/04/27/javascript-basic-review-this/" rel="prev" title="回顧 JavaScript 核心 X Basic Review - This">
+                  <i class="fa fa-chevron-left"></i> 回顧 JavaScript 核心 X Basic Review - This
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2025/05/06/javascript-basic-review-prototype-chain/" rel="next" title="回顧 JavaScript 核心 X Basic Review - Prototype Chain">
+                  回顧 JavaScript 核心 X Basic Review - Prototype Chain <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

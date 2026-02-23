@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="JavaScript  X Basic Review - This              JavaScript  X Basic Review - This              JavaScript  X Basic Review - This             ．．．               本篇複習關於">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顧 JavaScript 核心 X Basic Review - This">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/04/27/javascript-basic-review-this/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="JavaScript  X Basic Review - This              JavaScript  X Basic Review - This              JavaScript  X Basic Review - This             ．．．               本篇複習關於">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mawchu.github.io/blog/images/javascript-basic-review-01-00.png">
+<meta property="article:published_time" content="2025-04-27T07:21:30.000Z">
+<meta property="article:modified_time" content="2025-08-10T16:39:19.464Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="This">
+<meta property="article:tag" content="Execution context">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mawchu.github.io/blog/images/javascript-basic-review-01-00.png">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/04/27/javascript-basic-review-this/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/04/27/javascript-basic-review-this/","path":"2025/04/27/javascript-basic-review-this/","title":"回顧 JavaScript 核心 X Basic Review - This"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>回顧 JavaScript 核心 X Basic Review - This | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#This-%E4%B9%8B%E6%96%BC%E5%89%8D%E7%AB%AF"><span class="nav-number">1.</span> <span class="nav-text">This 之於前端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#This-%E8%AA%95%E7%94%9F%E6%96%BC%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83%E7%95%B6%E4%B8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">This 誕生於執行環境當下</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#This-%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%B6%81%E5%AE%9A%E8%A6%8F%E5%89%87"><span class="nav-number">2.</span> <span class="nav-text">This 的四大綁定規則</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%8E%E7%A2%BA%E7%B6%81%E5%AE%9A-Explicit-Binding"><span class="nav-number">2.1.</span> <span class="nav-text">明確綁定(Explicit Binding)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%B1%E5%BC%8F%E7%B6%81%E5%AE%9A-Implicit-Binding"><span class="nav-number">2.2.</span> <span class="nav-text">隱式綁定(Implicit Binding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#new-%E5%91%BC%E5%8F%AB%E8%A6%8F%E5%89%87-new-Binding"><span class="nav-number">2.2.1.</span> <span class="nav-text">new 呼叫規則(new Binding)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%90%9E%E6%87%82-This-%E5%BE%88%E9%87%8D%E8%A6%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">為什麼搞懂 This 很重要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class-%E8%AA%9E%E6%B3%95%E7%B3%96%E5%B0%B1%E6%98%AF%E5%BB%BA%E7%AB%8B%E7%89%A9%E4%BB%B6"><span class="nav-number">2.2.3.</span> <span class="nav-text">Class 語法糖就是建立物件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E7%89%A9%E4%BB%B6%E6%9C%AC%E8%BA%AB-Object"><span class="nav-number">2.2.4.</span> <span class="nav-text">指向物件本身(Object)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A0%90%E8%A8%AD%E7%B6%81%E5%AE%9A-Default-Binding"><span class="nav-number">2.3.</span> <span class="nav-text">預設綁定(Default Binding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E5%91%BC%E5%8F%AB%E7%9A%84-this"><span class="nav-number">2.3.1.</span> <span class="nav-text">簡單呼叫的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F%E7%9A%84-this"><span class="nav-number">2.3.2.</span> <span class="nav-text">嚴格模式的 this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E5%9A%B4%E6%A0%BC%E6%A8%A1%E5%BC%8F%E7%9A%84-this"><span class="nav-number">2.3.3.</span> <span class="nav-text">非嚴格模式的 this</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IIFE-%E7%AB%8B%E5%8D%B3%E8%87%AA%E6%88%91%E5%91%BC%E5%8F%AB%E5%87%BD%E5%BC%8F"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">IIFE 立即自我呼叫函式</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/04/27/javascript-basic-review-this/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="回顧 JavaScript 核心 X Basic Review - This | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          回顧 JavaScript 核心 X Basic Review - This
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-04-27 15:21:30" itemprop="dateCreated datePublished" datetime="2025-04-27T15:21:30+08:00">2025-04-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-11 00:39:19" itemprop="dateModified" datetime="2025-08-11T00:39:19+08:00">2025-08-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Frontend-Interview/" itemprop="url" rel="index"><span itemprop="name">Frontend Interview</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> JavaScript  X Basic Review - This</div>
+            <div class="stroke"> JavaScript  X Basic Review - This</div>
+            <div class="plain main-title"> JavaScript  X Basic Review - This</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇複習關於 JavaScript 最基礎的知識點：<strong>This</strong>、<strong>Execution Context</strong>。</p>
+<span id="more"></span>
+
+<h1 id="This-之於前端"><a href="#This-之於前端" class="headerlink" title="This 之於前端"></a>This 之於前端</h1><p>關於 <strong>This</strong> 的指向可以說是入門前端工程師第一大門檻也不誇張，理解他可以游刃有餘的在各種執行環境(Execution context)深度利用，不理解他很可能會導致結果不如預期或者除錯困難。</p>
+<h2 id="This-誕生於執行環境當下"><a href="#This-誕生於執行環境當下" class="headerlink" title="This 誕生於執行環境當下"></a>This 誕生於執行環境當下</h2><p>JavaScript 每逢同步函式(Sync Function)呼叫(Function Calling)會產生 <strong>執行環境(Execution context)</strong> 並推送至 <strong>執行堆疊(Execution Stack)</strong> 上，當前執行環境的 <code>this</code> 則誕生。</p>
+<p>執行堆疊按照 <strong>後進先出(Last in first out)</strong> 的順序完成每一個執行環境，一但遇到異步執行函式(Async Function)由 <strong>事件迴圈(Event Loop)</strong> 再度推送至執行佇列(Execution queue、Event Loop)。</p>
+<img style='margin-right: unset; margin-left: unset; padding-top: 30px' src='/blog/images/javascript-basic-review-01-00.png' width='100%' height='auto'>
+
+<p>即使每個函式的執行當下產生當前環境的 <code>this</code> 也不代表會指向函式的作用域(Lexical scope)本身，而是關係在 <strong>呼叫的方式</strong>。</p>
+<h1 id="This-的四大綁定規則"><a href="#This-的四大綁定規則" class="headerlink" title="This 的四大綁定規則"></a>This 的四大綁定規則</h1><p>函式呼叫的當下，透過以下四種方式決定 This 綁定誰：</p>
+<h2 id="明確綁定-Explicit-Binding"><a href="#明確綁定-Explicit-Binding" class="headerlink" title="明確綁定(Explicit Binding)"></a>明確綁定(Explicit Binding)</h2><p>透過 ES5 老朋友 <code>Call</code>、<code>Apply</code>、<code>Bind</code> 綁定的 This：</p>
+<ul>
+<li><p>call、apply<br>  可以直接呼叫，call 接受解構參數：apply接受陣列參數。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fn.<span class="title function_">call</span>(bindObj, ...<span class="variable language_">arguments</span>)</span><br><span class="line">fn.<span class="title function_">apply</span>(bindObj, [...<span class="variable language_">arguments</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>bind 會產生一個拷貝函式<br>  需要透過另一個函式表達式回傳結果，或者是使用雙括弧，條件是只能綁定一次。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fn.<span class="title function_">bind</span>()()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Vue 2 中其實內部有做一些 methods 綁定 this 的處理（像是自動 bind），所以在 Vue 中用 methods，基本上 this 穩穩是指向 Vue instance。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="隱式綁定-Implicit-Binding"><a href="#隱式綁定-Implicit-Binding" class="headerlink" title="隱式綁定(Implicit Binding)"></a>隱式綁定(Implicit Binding)</h2><p>就是透過 <strong>物件的方法呼叫</strong> 來改變綁定的 This，如上述的內容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">`Object`</span>,</span><br><span class="line">  getThis</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">getThis</span>(); <span class="comment">//Object</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="new-呼叫規則-new-Binding"><a href="#new-呼叫規則-new-Binding" class="headerlink" title="new 呼叫規則(new Binding)"></a>new 呼叫規則(new Binding)</h3><p>等同上面提到的 <strong>new Vue</strong>，當 new 一個實例的當下就綁定了 This：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span> (name) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name; <span class="comment">// 等同於 Class constructor</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Mawchu&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property">person</span>); <span class="comment">//&#x27;Mawchu&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="為什麼搞懂-This-很重要"><a href="#為什麼搞懂-This-很重要" class="headerlink" title="為什麼搞懂 This 很重要"></a>為什麼搞懂 This 很重要</h3><p>進入前端產業後應用框架加快開發的模式不可避免，尤其學習 Vue 不外乎就是透過 <strong>建構器(constructor)</strong> 的方式建立一個 Vue，起手式如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">message</span>: <span class="string">&#x27;Hello Vue 2!&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Class-語法糖就是建立物件"><a href="#Class-語法糖就是建立物件" class="headerlink" title="Class 語法糖就是建立物件"></a>Class 語法糖就是建立物件</h3><p>由於 JavaScript 的類(Class)應用不外乎就是借用物件特性的 <code>this</code> 來建構一個實例(Instance)，那麼理所當然內部的一切資料(data)、方法(methods)、生命週期鉤子(Life Cycle Hooks)也都是運用簡易呼叫的表達式函式來綁定，應用起來自然也就等同於指向物件本身的 Vue 實例自己了。</p>
+<h3 id="指向物件本身-Object"><a href="#指向物件本身-Object" class="headerlink" title="指向物件本身(Object)"></a>指向物件本身(Object)</h3><p>若函式的呼叫方式透過 <strong>物件方法(Methods)</strong> 呼叫 ，那麼 <code>this</code> 就會指向 <strong>物件本身</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">`Global`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getThis</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getThis</span>(); <span class="comment">//Global</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">`Object`</span>,</span><br><span class="line">  getThis</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">getThis</span>(); <span class="comment">//Object</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="預設綁定-Default-Binding"><a href="#預設綁定-Default-Binding" class="headerlink" title="預設綁定(Default Binding)"></a>預設綁定(Default Binding)</h2><h3 id="簡單呼叫的-this"><a href="#簡單呼叫的-this" class="headerlink" title="簡單呼叫的 this"></a>簡單呼叫的 this</h3><p>不依附物件也不透過綁定的方式呼叫，都可以稱作簡單呼叫：</p>
+<h3 id="嚴格模式的-this"><a href="#嚴格模式的-this" class="headerlink" title="嚴格模式的 this"></a>嚴格模式的 this</h3><p>若函式的呼叫方式透過 <strong>嚴格模式下(use strict)</strong> 最基本的 <strong>簡易呼叫(Simple Calling)</strong> ，那麼 <code>this</code> 就會指向 <code>undefined</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&quot;use strict&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> name = <span class="string">`Global`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getThis</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getThis</span>(); <span class="comment">//Uncaught TypeError: Cannot read properties of undefined (reading &#x27;name&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非嚴格模式的-this"><a href="#非嚴格模式的-this" class="headerlink" title="非嚴格模式的 this"></a>非嚴格模式的 this</h3><p>若函式的呼叫方式透過 <strong>非嚴格模式下(use strict)</strong> 最基本的 <strong>簡易呼叫(Simple Calling)</strong> ，那麼 <code>this</code> 就會指向全域執行環境(Global)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">`Global`</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getThis</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getThis</span>(); <span class="comment">// Uncaught TypeError: Cannot read properties of undefined (reading &#x27;name&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="IIFE-立即自我呼叫函式"><a href="#IIFE-立即自我呼叫函式" class="headerlink" title="IIFE 立即自我呼叫函式"></a>IIFE 立即自我呼叫函式</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>) <span class="comment">// 行為等同 嚴格模式的 this -&gt; undefined &amp; 非嚴格模式的 this -&gt; Window</span></span><br><span class="line">&#125;())</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/blog/tags/This/" rel="tag"># This</a>
+              <a href="/blog/tags/Execution-context/" rel="tag"># Execution context</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/04/18/leetcode-139-word-break-647-palindromic-substrings/" rel="prev" title="優化演算法練習 Leetcode X Word Break & Palindromic Substrings">
+                  <i class="fa fa-chevron-left"></i> 優化演算法練習 Leetcode X Word Break & Palindromic Substrings
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2025/04/29/javascript-basic-review-closure/" rel="next" title="回顧 JavaScript 核心 X Bsic Review - Closure">
+                  回顧 JavaScript 核心 X Bsic Review - Closure <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

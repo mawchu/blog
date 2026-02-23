@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="JavaScript  X Basic Review - Prototype Chain              JavaScript  X Basic Review - Prototype Chain              JavaScript  X Basic Review - Prototype Chain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顧 JavaScript 核心 X Basic Review - Prototype Chain">
+<meta property="og:url" content="https://mawchu.github.io/blog/2025/05/06/javascript-basic-review-prototype-chain/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="JavaScript  X Basic Review - Prototype Chain              JavaScript  X Basic Review - Prototype Chain              JavaScript  X Basic Review - Prototype Chain">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-05-06T07:16:20.000Z">
+<meta property="article:modified_time" content="2025-08-10T16:39:19.464Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Execution context">
+<meta property="article:tag" content="Prototype Chain">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="Encapsulation">
+<meta property="article:tag" content="Inheritance">
+<meta property="article:tag" content="Polymorphism">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2025/05/06/javascript-basic-review-prototype-chain/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2025/05/06/javascript-basic-review-prototype-chain/","path":"2025/05/06/javascript-basic-review-prototype-chain/","title":"回顧 JavaScript 核心 X Basic Review - Prototype Chain"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>回顧 JavaScript 核心 X Basic Review - Prototype Chain | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OOP-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91"><span class="nav-number">1.</span> <span class="nav-text">OOP 物件導向</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%9D%EF%BC%88Encapsulation%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">封裝（Encapsulation）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AC%E6%9C%89%E5%B1%AC%E6%80%A7-Public-properties"><span class="nav-number">1.1.1.</span> <span class="nav-text">公有屬性 Public properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E5%B1%AC%E6%80%A7-Private-properties"><span class="nav-number">1.1.2.</span> <span class="nav-text">私有屬性 Private properties</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-closure-%E6%A8%A1%E6%93%AC%E7%A7%81%E6%9C%89%E8%AE%8A%E6%95%B8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">方法一：使用 closure 模擬私有變數</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9AES2022-%E6%94%AF%E6%8F%B4-%E7%A7%81%E6%9C%89%E6%AC%84%E4%BD%8D"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">方法二：ES2022 支援 # 私有欄位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B9%BC%E6%89%BF%EF%BC%88Inheritance%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">繼承（Inheritance）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%9E%8B%EF%BC%88Polymorphism%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">多型（Polymorphism）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E5%AF%AB%EF%BC%88Overriding%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">覆寫（Overriding）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%BC%89%EF%BC%88Overloading%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">多載（Overloading）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Javascript"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Javascript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TypeScript"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">TypeScript</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Javascript-%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%8F%88%E6%98%AF%E4%B8%80%E5%88%87%E5%9F%BA%E7%A4%8E"><span class="nav-number">2.</span> <span class="nav-text">Javascript 的原型鏈是一切基礎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8C%85%E8%A3%B9%E5%99%A8-Primitive-Wrapper"><span class="nav-number">2.1.</span> <span class="nav-text">原始型別包裹器(Primitive Wrapper)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E5%9E%8B%E5%88%A5%E5%8C%85%E8%A3%B9%E5%99%A8%E8%88%87%E5%8E%9F%E5%9E%8B%E9%8F%88%E7%9A%84%E9%97%9C%E4%BF%82"><span class="nav-number">2.1.1.</span> <span class="nav-text">原始型別包裹器與原型鏈的關係</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BE%E4%B9%8E%E8%90%AC%E7%89%A9%E7%9A%86%E7%89%A9%E4%BB%B6%EF%BC%8C%E9%99%A4%E4%BA%86-null-%E5%92%8C-undefined"><span class="nav-number">2.1.2.</span> <span class="nav-text">幾乎萬物皆物件，除了 null 和 undefined</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E8%88%87%E5%BB%BA%E6%A7%8B%E5%87%BD%E5%BC%8F%E6%9C%AC%E8%BA%AB%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%8F%88"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">函式與建構函式本身的原型鏈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-prototype-proto-x3D-x3D-x3D-null"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">Object.prototype.proto &#x3D;&#x3D;&#x3D; null</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.1.2.3.</span> <span class="nav-text"></span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2025/05/06/javascript-basic-review-prototype-chain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="回顧 JavaScript 核心 X Basic Review - Prototype Chain | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          回顧 JavaScript 核心 X Basic Review - Prototype Chain
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-05-06 15:16:20" itemprop="dateCreated datePublished" datetime="2025-05-06T15:16:20+08:00">2025-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-11 00:39:19" itemprop="dateModified" datetime="2025-08-11T00:39:19+08:00">2025-08-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Frontend-Interview/" itemprop="url" rel="index"><span itemprop="name">Frontend Interview</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> JavaScript  X Basic Review - Prototype Chain</div>
+            <div class="stroke"> JavaScript  X Basic Review - Prototype Chain</div>
+            <div class="plain main-title"> JavaScript  X Basic Review - Prototype Chain</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>本篇複習關於 JavaScript 實作 OOP 的背後真相：<strong>Prototype Chain 原型鏈</strong>。</p>
+<span id="more"></span>
+
+<h1 id="OOP-物件導向"><a href="#OOP-物件導向" class="headerlink" title="OOP 物件導向"></a>OOP 物件導向</h1><p>物件導向在不同程式語言中的落實原理不同，但都是為了進行模塊(module)、實例化、原生型別的 OOP 概念建構，<br><strong>封裝(Encapsulation)<strong>、</strong>繼承(Inheritance)<strong>、</strong>多型(Polymorphism)</strong> 等行爲，就是 OOP 最常見的幾個操作方式。</p>
+<table>
+<thead>
+<tr>
+<th>OOP 核心概念</th>
+<th>JavaScript 實作方式</th>
+<th>範例 &#x2F; 解釋</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>封裝</strong> (Encapsulation)</td>
+<td>物件、<code>function</code>、<code>class</code> 內的屬性與方法</td>
+<td>把狀態和行為包在一個作用域內</td>
+</tr>
+<tr>
+<td><strong>繼承</strong> (Inheritance)</td>
+<td><code>prototype chain</code>、<code>extends</code>、<code>Object.create()</code></td>
+<td>子類繼承父類的方法與屬性</td>
+</tr>
+<tr>
+<td><strong>多型</strong> (Polymorphism)</td>
+<td>方法覆寫（override）與相同介面不同實作</td>
+<td>同一方法不同行為</td>
+</tr>
+</tbody></table>
+<h2 id="封裝（Encapsulation）"><a href="#封裝（Encapsulation）" class="headerlink" title="封裝（Encapsulation）"></a>封裝（Encapsulation）</h2><p>定義：把「狀態（資料）」和「行為（方法）」打包成一個單位，保護內部實作細節。<br>JavaScript 用 <strong>object</strong>、<strong>class</strong> 或 <strong>closure</strong> 隔離內部狀態。</p>
+<h3 id="公有屬性-Public-properties"><a href="#公有屬性-Public-properties" class="headerlink" title="公有屬性 Public properties"></a>公有屬性 Public properties</h3><p><code>greet()</code> 方法實際是掛在 <code>Person.prototype</code> 上（共用記憶體），但沒限制：任何人都能改</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Public properties</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name; <span class="comment">// 封裝屬性</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello, I&#x27;m <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;毛球&#x27;</span>);</span><br><span class="line">p.<span class="title function_">greet</span>(); <span class="comment">// Hello, I&#x27;m 毛球</span></span><br><span class="line"></span><br><span class="line">p.<span class="property">name</span> = <span class="string">&#x27;別人&#x27;</span></span><br><span class="line"></span><br><span class="line">p.<span class="title function_">greet</span>(); <span class="comment">// Hello, I&#x27;m 別人 &lt;- this.name 不是私有</span></span><br><span class="line"></span><br><span class="line">p.<span class="property">greet</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello, I&#x27;m 改過的 <span class="subst">$&#123;<span class="variable language_">this</span>.name&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">p.<span class="title function_">greet</span>(); <span class="comment">// &quot;Hello, I&#x27;m 改過的 別人&quot; &lt;- this.greet() 不是私有</span></span><br></pre></td></tr></table></figure>
+<h3 id="私有屬性-Private-properties"><a href="#私有屬性-Private-properties" class="headerlink" title="私有屬性 Private properties"></a>私有屬性 Private properties</h3><h4 id="方法一：使用-closure-模擬私有變數"><a href="#方法一：使用-closure-模擬私有變數" class="headerlink" title="方法一：使用 closure 模擬私有變數"></a>方法一：使用 closure 模擬私有變數</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCounter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// 私有變數，外部看不到</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="title function_">increment</span>(<span class="params"></span>) &#123;</span><br><span class="line">      count++;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(count);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counter = <span class="title function_">createCounter</span>();</span><br><span class="line">counter.<span class="title function_">increment</span>(); <span class="comment">// 1</span></span><br><span class="line">counter.<span class="title function_">increment</span>(); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">counter.<span class="property">increment</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(counter.<span class="property">count</span>); <span class="comment">// undefined</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(counter.<span class="property">count</span>); <span class="comment">// undefined</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">count</span>); <span class="comment">// undefined</span></span><br><span class="line">  counter.<span class="property">count</span>--; <span class="comment">// NaN</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">counter.<span class="title function_">increment</span>();</span><br></pre></td></tr></table></figure>
+
+<h4 id="方法二：ES2022-支援-私有欄位"><a href="#方法二：ES2022-支援-私有欄位" class="headerlink" title="方法二：ES2022 支援 # 私有欄位"></a>方法二：ES2022 支援 # 私有欄位</h4><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties">MDN文章 - Private properties</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// # hash Private properties</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  #name;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.#name = name;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">greet</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hi, I&#x27;m <span class="subst">$&#123;<span class="variable language_">this</span>.#name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;毛球&#x27;</span>);</span><br><span class="line">p.<span class="title function_">greet</span>();           <span class="comment">// ✅ Hi, I&#x27;m 毛球</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.#name); <span class="comment">// ❌ SyntaxError: Private field &#x27;#name&#x27; must be declared in an enclosing class</span></span><br></pre></td></tr></table></figure>
+<p>這就是語法上正式支援的「真正私有欄位」。</p>
+<h2 id="繼承（Inheritance）"><a href="#繼承（Inheritance）" class="headerlink" title="繼承（Inheritance）"></a>繼承（Inheritance）</h2><p>定義：子類別可以「承襲」父類別的屬性與方法，重用既有邏輯。</p>
+<p>Javascript 使用 <code>prototype chain</code>、 <code>class extends</code> 或 <code>Object.create()</code>實作繼承。<br>Dog 類別從 Animal 繼承所有方法，包含 <code>speak()</code>，如果沒寫 Dog 的 <code>speak()</code>，那 <code>dog.speak()</code> 就會去呼叫 <code>Animal.prototype.speak()</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dog = <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">dog.<span class="title function_">speak</span>(); <span class="comment">// Animal makes sound（繼承的行為）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>Dog 定義了同名的 speak() 方法，這會覆蓋掉繼承自 Animal 的那個版本。<br>所以 你是繼承了方法，但選擇覆蓋它（override）來自訂行為。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">  <span class="title function_">speak</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Animal makes sound&#x27;</span>); <span class="comment">// ← 父類別原本的方法</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Animal</span> &#123;</span><br><span class="line">  <span class="title function_">speak</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Dog barks&#x27;</span>); <span class="comment">// ← 覆蓋掉父類別的 speak</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dog = <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">dog.<span class="title function_">speak</span>(); <span class="comment">// 👉 Dog barks</span></span><br></pre></td></tr></table></figure>
+
+<p>底層使用 Prototype 的底層原理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Animal</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="title class_">Animal</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">speak</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Animal makes sound&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Dog</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Animal</span>.<span class="property"><span class="keyword">prototype</span></span>);</span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Dog</span>;</span><br><span class="line"><span class="title class_">Dog</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">speak</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Dog barks&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多型（Polymorphism）"><a href="#多型（Polymorphism）" class="headerlink" title="多型（Polymorphism）"></a>多型（Polymorphism）</h2><p>定義：不同物件可以使用「相同的方法名稱」，但表現出不同的行為。</p>
+<h3 id="覆寫（Overriding）"><a href="#覆寫（Overriding）" class="headerlink" title="覆寫（Overriding）"></a>覆寫（Overriding）</h3><p>覆蓋繼承邏輯，讓子類有自己的版本。<br>你只呼叫 <code>speak()</code>，但執行的是各自定義的版本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> animals = [</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Dog</span>(),</span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Animal</span>()</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">animals.<span class="title function_">forEach</span>(<span class="function"><span class="params">a</span> =&gt;</span> a.<span class="title function_">speak</span>());</span><br><span class="line"><span class="comment">// Dog barks</span></span><br><span class="line"><span class="comment">// Animal makes sound</span></span><br></pre></td></tr></table></figure>
+
+<p>你只呼叫 speak()，但執行的是各自定義的版本。</p>
+<h3 id="多載（Overloading）"><a href="#多載（Overloading）" class="headerlink" title="多載（Overloading）"></a>多載（Overloading）</h3><p>定義：同一個方法名稱，不同參數數量或型別，有不同實作。</p>
+<h4 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h4><p>這是 Java&#x2F;C++ 的語法糖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Math</span> &#123;</span><br><span class="line">  int <span class="title function_">add</span>(<span class="params">int a, int b</span>) &#123;...&#125;</span><br><span class="line">  double <span class="title function_">add</span>(<span class="params">double a, double b</span>) &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解釋一下 Java「靜態型別語言」中的資料型別（data types）：</p>
+<table>
+<thead>
+<tr>
+<th>型別</th>
+<th>中文意思</th>
+<th>用來存什麼</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int</code></td>
+<td>整數型別</td>
+<td>存像 1、2、100、-50 這種整數</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>雙精度浮點數</td>
+<td>存像 3.14、0.01、-2.5 這種小數</td>
+</tr>
+</tbody></table>
+<h4 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h4><p>跟 Java 不同，JS 做不到直接多載，但你可以靠「判斷參數」來模擬：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (age !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hi <span class="subst">$&#123;name&#125;</span>, you&#x27;re <span class="subst">$&#123;age&#125;</span>`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hi <span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h4><p>TypeScript 可以「看起來」像 Overloading（但本質還是判斷）</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name: <span class="built_in">string</span></span>): <span class="built_in">void</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name: <span class="built_in">string</span>, age: <span class="built_in">number</span></span>): <span class="built_in">void</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">greet</span>(<span class="params">name: <span class="built_in">string</span>, age?: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (age) <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;name&#125;</span>, <span class="subst">$&#123;age&#125;</span>`</span>);</span><br><span class="line">  <span class="keyword">else</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Javascript-的原型鏈是一切基礎"><a href="#Javascript-的原型鏈是一切基礎" class="headerlink" title="Javascript 的原型鏈是一切基礎"></a>Javascript 的原型鏈是一切基礎</h1><p>JavaScript 是基於原型繼承（prototype-based inheritance） 的語言。<br>也就是說，物件可以從另一個物件繼承屬性與方法，而這個繼承機制就是透過「原型鍊」實現的。</p>
+<h2 id="原始型別包裹器-Primitive-Wrapper"><a href="#原始型別包裹器-Primitive-Wrapper" class="headerlink" title="原始型別包裹器(Primitive Wrapper)"></a>原始型別包裹器(Primitive Wrapper)</h2><p>原始型別有幾個：<strong>Boolean</strong>、<strong>Null</strong>、<strong>Undefined</strong>、<strong>BigInt</strong>、<strong>String</strong>、<strong>Symbol</strong> 幾種，但他們都不是物件卻可以做以下操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String() 包裹器</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">str.<span class="title function_">toUpperCase</span>(); <span class="comment">// JS 背後幫你做了：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同於：</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;hello&quot;</span>).<span class="title function_">toUpperCase</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="原始型別包裹器與原型鏈的關係"><a href="#原始型別包裹器與原型鏈的關係" class="headerlink" title="原始型別包裹器與原型鏈的關係"></a>原始型別包裹器與原型鏈的關係</h3><p>JS 中「萬物皆物件」，但方法都藏在 prototype 裡。<br>當你對 Primitive Type（原始型別）使用 . 符號時，JavaScript 會在背後偷偷幫你做一件事：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JS 會幫你自動這樣做</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;hello&quot;</span>); <span class="comment">// 建立一個 String 物件</span></span><br><span class="line">str.<span class="property">__proto__</span> === <span class="title class_">String</span>.<span class="property"><span class="keyword">prototype</span></span>; <span class="comment">// ✅ true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如此一來就能使用繼承鏈上的所有型別方法囉！</p>
+<h3 id="幾乎萬物皆物件，除了-null-和-undefined"><a href="#幾乎萬物皆物件，除了-null-和-undefined" class="headerlink" title="幾乎萬物皆物件，除了 null 和 undefined"></a>幾乎萬物皆物件，除了 null 和 undefined</h3><p>以下是 JavaScript 中常見內建型別的原型鏈整理成表格，包含實例的 <code>__proto__</code>、建構函式的 <code>.prototype</code> 與其父原型關係：</p>
+<table>
+<thead>
+<tr>
+<th>值的類型 (實例)</th>
+<th><code>__proto__</code>（實例）</th>
+<th><code>.prototype.__proto__</code>（父原型）</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&#39;abc&#39;</code></td>
+<td><code>String.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>字串實例</td>
+</tr>
+<tr>
+<td><code>123</code></td>
+<td><code>Number.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>數字實例</td>
+</tr>
+<tr>
+<td><code>true</code></td>
+<td><code>Boolean.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>布林實例</td>
+</tr>
+<tr>
+<td><code>Symbol(&#39;a&#39;)</code></td>
+<td><code>Symbol.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>Symbol 實例</td>
+</tr>
+<tr>
+<td><code>123n</code> (BigInt)</td>
+<td><code>BigInt.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>BigInt 實例</td>
+</tr>
+<tr>
+<td><code>[]</code></td>
+<td><code>Array.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>陣列實例</td>
+</tr>
+<tr>
+<td><code>function() &#123;&#125;</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>一般函式</td>
+</tr>
+<tr>
+<td><code>() =&gt; &#123;&#125;</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>箭頭函式</td>
+</tr>
+<tr>
+<td><code>&#123;&#125;</code></td>
+<td><code>Object.prototype</code></td>
+<td><code>null</code></td>
+<td>最底層</td>
+</tr>
+<tr>
+<td><code>new Date()</code></td>
+<td><code>Date.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>日期物件</td>
+</tr>
+<tr>
+<td><code>/abc/</code> (RegExp)</td>
+<td><code>RegExp.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>正規表達式</td>
+</tr>
+<tr>
+<td><code>new Error()</code></td>
+<td><code>Error.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>錯誤物件</td>
+</tr>
+<tr>
+<td><code>new Map()</code></td>
+<td><code>Map.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>ES6 Map</td>
+</tr>
+<tr>
+<td><code>new Set()</code></td>
+<td><code>Set.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>ES6 Set</td>
+</tr>
+<tr>
+<td><code>new WeakMap()</code></td>
+<td><code>WeakMap.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>WeakMap</td>
+</tr>
+<tr>
+<td><code>new WeakSet()</code></td>
+<td><code>WeakSet.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>WeakSet</td>
+</tr>
+</tbody></table>
+<h4 id="函式與建構函式本身的原型鏈"><a href="#函式與建構函式本身的原型鏈" class="headerlink" title="函式與建構函式本身的原型鏈"></a>函式與建構函式本身的原型鏈</h4><table>
+<thead>
+<tr>
+<th>建構函式</th>
+<th>自身的 <code>__proto__</code></th>
+<th><code>.prototype.__proto__</code></th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>String</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>是函式</td>
+</tr>
+<tr>
+<td><code>Number</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>Boolean</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>Array</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>Function</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>特殊情況（自己生自己）</td>
+</tr>
+<tr>
+<td><code>Object</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>null</code></td>
+<td><code>.prototype</code> 為最底層</td>
+</tr>
+<tr>
+<td><code>Date</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>RegExp</code></td>
+<td><code>Function.prototype</code></td>
+<td><code>Object.prototype</code></td>
+<td>同上</td>
+</tr>
+</tbody></table>
+<h4 id="Object-prototype-proto-x3D-x3D-x3D-null"><a href="#Object-prototype-proto-x3D-x3D-x3D-null" class="headerlink" title="Object.prototype.proto &#x3D;&#x3D;&#x3D; null"></a>Object.prototype.<strong>proto</strong> &#x3D;&#x3D;&#x3D; null</h4><p>Object.prototype 是所有物件原型鏈的終點。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;                &lt;-- 一般物件實例</span><br><span class="line"> └── __proto__ → <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line">                     └── __proto__ → <span class="literal">null</span> (原型鏈終點)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><ul>
+<li><code>null</code> 本身就是 prototype 鏈的終點，沒東西可繼承。</li>
+<li><code>undefined</code> 是完全獨立的原始值，也沒有原型鏈。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">null</span>.<span class="property">__proto__</span>        <span class="comment">// ❌ TypeError</span></span><br><span class="line"><span class="literal">undefined</span>.<span class="property">__proto__</span>   <span class="comment">// ❌ TypeError</span></span><br></pre></td></tr></table></figure>
+
+<p>打完收工！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/blog/tags/Execution-context/" rel="tag"># Execution context</a>
+              <a href="/blog/tags/Prototype-Chain/" rel="tag"># Prototype Chain</a>
+              <a href="/blog/tags/OOP/" rel="tag"># OOP</a>
+              <a href="/blog/tags/Encapsulation/" rel="tag"># Encapsulation</a>
+              <a href="/blog/tags/Inheritance/" rel="tag"># Inheritance</a>
+              <a href="/blog/tags/Polymorphism/" rel="tag"># Polymorphism</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2025/04/29/javascript-basic-review-closure/" rel="prev" title="回顧 JavaScript 核心 X Bsic Review - Closure">
+                  <i class="fa fa-chevron-left"></i> 回顧 JavaScript 核心 X Bsic Review - Closure
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2026/02/23/leetcode-1-test-I-map-II/" rel="next" title="（二度挑戰）優化演算法練習 Leetcode X Two Sum II">
+                  （二度挑戰）優化演算法練習 Leetcode X Two Sum II <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
