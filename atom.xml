@@ -6,7 +6,7 @@
   <link href="https://mawchu.github.io/blog/atom.xml" rel="self"/>
   
   <link href="https://mawchu.github.io/blog/"/>
-  <updated>2026-02-24T15:18:31.676Z</updated>
+  <updated>2026-03-03T15:31:24.033Z</updated>
   <id>https://mawchu.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>（二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy</title>
+    <link href="https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/"/>
+    <id>https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/</id>
+    <published>2026-03-03T15:12:00.000Z</published>
+    <updated>2026-03-03T15:31:24.033Z</updated>
+    
+    <content type="html"><![CDATA[<div class="visual-image">        <div class="visual-image-box">            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />            <div class="stroke"> Leetcode X Valid Anagram - Easy</div>            <div class="stroke"> Leetcode X Valid Anagram - Easy</div>            <div class="plain main-title"> Leetcode X Valid Anagram - Easy</div>            <div class="plain">．．．</div>        </div>    </div><p>這題的解題歷程「卡了一下之後恍然大悟」的感覺非常美好，不只是答案本身，更是我如何一步步修正思路、真正理解問題內涵的過程。</p><span id="more"></span><h1 id="拆解題目"><a href="#拆解題目" class="headerlink" title="拆解題目"></a>拆解題目</h1><h2 id="242-Valid-Anagram"><a href="#242-Valid-Anagram" class="headerlink" title="242. Valid Anagram"></a>242. Valid Anagram</h2><p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>t</code> is an anagram of <code>s</code>, and <code>false</code> otherwise.</p><blockquote><p>Example 1:</p></blockquote><blockquote><p>Input: s &#x3D; “anagram”, t &#x3D; “nagaram”<br>Output: <code>true</code></p></blockquote><blockquote><p>Example 2:</p></blockquote><blockquote><p>Input: s &#x3D; “rat”, t &#x3D; “car”<br>Output: <code>false</code></p></blockquote><p>Constraints:</p><p>1 &lt;&#x3D; <code>s.length</code>, <code>t.length</code> &lt;&#x3D; 5 * 104<br><code>s</code> and <code>t</code> consist of lowercase English letters.</p><h1 id="一開始的直覺：Set"><a href="#一開始的直覺：Set" class="headerlink" title="一開始的直覺：Set"></a>一開始的直覺：Set</h1><p>我的第一個想法是：</p><p>用 Set 來看字母是否相同</p><p>像這種：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dictionary = <span class="keyword">new</span> <span class="title class_">Set</span>(s);</span><br></pre></td></tr></table></figure><p>這思路也不是完全錯，因為 Set 可以幫你快速知道有哪些不同字母。但仔細想一下，有一個致命問題：</p><p>Set 只會告訴你「字母有沒有出現」，卻不會告訴你「出現幾次」<br>但 anagram 的定義是：每個字母出現的次數也必須相同</p><p>像這種例子就會出問題：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aab</span><br><span class="line">abb</span><br></pre></td></tr></table></figure><p>這兩個字串出現的字母都是 {‘a’,’b’}，但次數不同 — 這就是 Set 思路的卡關點。</p><h1 id="如何記錄字母出現頻率？"><a href="#如何記錄字母出現頻率？" class="headerlink" title="如何記錄字母出現頻率？"></a>如何記錄字母出現頻率？</h1><p>畢竟是第二次解題，腦袋中還保存着「a ~ z」存在某種規律可循、可以使用「計分板」這兩個印象來解題，至於規律是什麼呢？</p><h2 id="Unicode-的連續性"><a href="#Unicode-的連續性" class="headerlink" title="Unicode 的連續性"></a>Unicode 的連續性</h2><blockquote>小寫英文字母 a 到 z 在 Unicode/ASCII 中是連續編號的也就是 a=97、b=98、…… z=122，這個順序和英文字母一一對應。</blockquote><p>也就是：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index = char.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="string">&quot;a&quot;</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure><p><code>char.charCodeAt(0)</code> 代表的是第一個字母的 Unicode&#x2F;ASCII 數字，<code>a(97) - z(122)</code> 正好是一連串連續加 1 的數字。</p><h2 id="陣列計分板-Bill-Board"><a href="#陣列計分板-Bill-Board" class="headerlink" title="陣列計分板 Bill Board"></a>陣列計分板 Bill Board</h2><p>這個概念可以很好的結合每個字母的「計分板」：兩個個字串計數，出現一次加一、再出現一次減一，這樣一來就能得到所有字母計數爲 0 時爲字謎（Anagram）。</p><p>基於以上規律，我把兩個字串的字母頻率全部記下來：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> billBoard = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure><p>然後：</p><p>遍歷 s，對應位置 ++<br>遍歷 t，對應位置 –</p><p>最後，如果所有位置都回到 0 → 代表 s 和 t 的每個字母出現次數完全一致，就是 anagram。</p><p>這段最核心的邏輯是：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">billBoard[char.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>]++;</span><br></pre></td></tr></table></figure><p>這種做法在效能上是最理想的：</p><blockquote>時間複雜度：O(n)空間複雜度：O(1)（固定 26 長度的 array）</blockquote><h1 id="要注意的細節"><a href="#要注意的細節" class="headerlink" title="要注意的細節"></a>要注意的細節</h1><h2 id="字串長度不一樣要先處理"><a href="#字串長度不一樣要先處理" class="headerlink" title="字串長度不一樣要先處理"></a>字串長度不一樣要先處理</h2><p>一開始我試著把兩個頻率更新合併在同一個 loop 內處理：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.<span class="property">length</span>; i++) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  billBoard[t[i].<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>]--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>但如果 t.length &lt; s.length 的話，當 i 超過 t 的 index 時就會發生 undefined.charCodeAt(0) 的錯誤。</p><p>解法是：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (s.<span class="property">length</span> !== t.<span class="property">length</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure><p>或者把兩個 loop 分開寫。這樣才能避免超過邊界讀取。</p><h2 id="結尾檢查"><a href="#結尾檢查" class="headerlink" title="結尾檢查"></a>結尾檢查</h2><p>我最一開始用 Set 去判斷記分板是不是全 0；後來意識到：</p><blockquote>用 Array.every(n => n === 0) 更直覺又省事不需要建立新的 Set 結構</blockquote><p>原因是：</p><p>every 只是跑一次迴圈檢查，不用額外記憶體(Set 是 HashMap 用空間換時間)。<br>結構語義也更清楚，這種小細節在效率和可讀性上都有加分。</p><h1 id="最終版本的程式邏輯"><a href="#最終版本的程式邏輯" class="headerlink" title="最終版本的程式邏輯"></a>最終版本的程式邏輯</h1><p>下面是這個題目最乾淨、最推薦的寫法：</p><ul><li>先檢查長度</li><li>記錄 s 字母出現次數</li><li>減去 t 字母出現次數</li><li>檢查全部為 0</li></ul><h1 id="今天的收穫：不只是跑通，而是理解"><a href="#今天的收穫：不只是跑通，而是理解" class="headerlink" title="今天的收穫：不只是跑通，而是理解"></a>今天的收穫：不只是跑通，而是理解</h1><p>這題看起來很簡單，但其實它把很多基礎能力融合在一起：</p><ul><li>字串與資料結構的轉換</li><li>Unicode 的數值值與 index 映射</li><li>frequency map vs set 的差異</li><li>錯誤邊界的思考（例如長度不一致或 undefined）</li></ul><hr><p>一開始想到 Set、再經過幾次修正、加上 unicode 映射，那整個過程不只是把 code 寫對，而是真正理解題目本質的思維成長。<br>在寫算法的路上，我覺得有這種「一開始卡一下但後來豁然開朗」的感覺，其實是最美好的部分 😊</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;visual-image&quot;&gt;
+        &lt;div class=&quot;visual-image-box&quot;&gt;
+            &lt;image class=&quot;visual-image-deco&quot; src=&quot;/blog/images/mawchu_logo_w.svg&quot; /&gt;
+            &lt;div class=&quot;stroke&quot;&gt; Leetcode X Valid Anagram - Easy&lt;/div&gt;
+            &lt;div class=&quot;stroke&quot;&gt; Leetcode X Valid Anagram - Easy&lt;/div&gt;
+            &lt;div class=&quot;plain main-title&quot;&gt; Leetcode X Valid Anagram - Easy&lt;/div&gt;
+            &lt;div class=&quot;plain&quot;&gt;．．．&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;p&gt;這題的解題歷程「卡了一下之後恍然大悟」的感覺非常美好，不只是答案本身，更是我如何一步步修正思路、真正理解問題內涵的過程。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Algorithm" scheme="https://mawchu.github.io/blog/categories/Algorithm/"/>
+    
+    <category term="Udemy learning" scheme="https://mawchu.github.io/blog/categories/Algorithm/Udemy-learning/"/>
+    
+    <category term="Leetcode" scheme="https://mawchu.github.io/blog/categories/Algorithm/Udemy-learning/Leetcode/"/>
+    
+    
+    <category term="Algorithm" scheme="https://mawchu.github.io/blog/tags/Algorithm/"/>
+    
+    <category term="Javascript" scheme="https://mawchu.github.io/blog/tags/Javascript/"/>
+    
+    <category term="HashMap" scheme="https://mawchu.github.io/blog/tags/HashMap/"/>
+    
+    <category term="Map" scheme="https://mawchu.github.io/blog/tags/Map/"/>
+    
+    <category term="Leetcode" scheme="https://mawchu.github.io/blog/tags/Leetcode/"/>
+    
+    <category term="CountArray" scheme="https://mawchu.github.io/blog/tags/CountArray/"/>
+    
+    <category term="Anagram" scheme="https://mawchu.github.io/blog/tags/Anagram/"/>
+    
+  </entry>
   
   <entry>
     <title>（二度挑戰）優化演算法練習 Leetcode X Contains Duplicate - Easy</title>
@@ -690,40 +736,6 @@
     <category term="Google Tag Manager" scheme="https://mawchu.github.io/blog/tags/Google-Tag-Manager/"/>
     
     <category term="Data Layer" scheme="https://mawchu.github.io/blog/tags/Data-Layer/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NX powerful monorepo tool - 前端微服務框架</title>
-    <link href="https://mawchu.github.io/blog/2024/08/27/nx-intro/"/>
-    <id>https://mawchu.github.io/blog/2024/08/27/nx-intro/</id>
-    <published>2024-08-27T08:15:06.000Z</published>
-    <updated>2025-03-23T08:18:53.066Z</updated>
-    
-    <content type="html"><![CDATA[<div class="visual-image">        <div class="visual-image-box">            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />            <div class="stroke">NX powerful monorepo tool - </div>            <div class="stroke">NX powerful monorepo tool - </div>            <div class="plain main-title">NX powerful monorepo tool - </div>            <div class="plain">．．．</div>        </div>    </div><p>一次工作機會上偶遇了 NX 建置起來的 Monorepo 的專案架構，此時不記錄更待何時！</p><span id="more"></span><h1 id="NX-的誕生背景"><a href="#NX-的誕生背景" class="headerlink" title="NX 的誕生背景"></a>NX 的誕生背景</h1><p>當公司發展迅速到成熟階段時 <strong>業務模型（Business model）</strong> 通常會有既定運作框架，衍生許多附屬的品牌或者多樣的 <strong>微前端服務（Micro Frontends）</strong> 需要在此框架下進行維護（通常是庫 Repository），將組織的各種業務邏輯拆分成單元讓同仁分工又不耦合（Coupling）。<br>但每每建置整個專案架構都是多體庫（polyrepo）必須將設定重來一遍：前端框架、UI SCSS 主題、node modules、打包設定甚至到 CICD 等前期準備工作總是挺佔時間的，一方面專案之間共享套件又需要推上雲端（ex Npm），這時候 NX 就出現了！</p><blockquote><p>You can use Nx to</p><ul><li>speed up your existing project’s builds and tests, locally and on CI (whether that’s a monorepo or standalone application)</li><li>quickly scaffold a new project (using Nx plugins) without having to configure any lower-level build tools</li><li>easily integrate new tooling (e.g., Storybook, Tailwind etc), into your project.</li><li>ensure consistency and code quality with custom generators and lint rules</li><li>update your frameworks and tools and keep your workspace evergreen using the automated code migration feature</li></ul></blockquote><h1 id="Monorepo-讓你一個庫解決所有專案"><a href="#Monorepo-讓你一個庫解決所有專案" class="headerlink" title="Monorepo 讓你一個庫解決所有專案"></a>Monorepo 讓你一個庫解決所有專案</h1><p>不同於多體庫（polyrepo）一個專案下就可以衍生多個業務邏輯與專案，根基在基礎架構下又不用重建真的減少許多不便也能讓開發人員不用重新熟悉，快快上手!</p><h1 id="Quickly-scaffold-是核心優勢"><a href="#Quickly-scaffold-是核心優勢" class="headerlink" title="Quickly scaffold 是核心優勢"></a>Quickly scaffold 是核心優勢</h1><p>個人覺得搭鷹架（scaffold）是專案最費時間的地方，如果能在既有框架下增加快速的新專案搭建時間對開發人員會大大的助益，以下是 NX 的架構圖：<br><img class="post-image" style="margin-right: unset; margin-left: unset; padding-top: 12px" src="/blog/images/nx-intro-0.jpg"></p><p>應用的範圍很大，從 CI（Continuous Integration）持續整合到專案配置（前端框架、UI SCSS 主題、node modules、打包設定）、自動化測試、遷移（migration）與快取（cache），對於前端工程師來說應該是專案配置上的省事最有感，讓專案間共享設定與邏輯並且可以客製化。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;visual-image&quot;&gt;
-        &lt;div class=&quot;visual-image-box&quot;&gt;
-            &lt;image class=&quot;visual-image-deco&quot; src=&quot;/blog/images/mawchu_logo_w.svg&quot; /&gt;
-            &lt;div class=&quot;stroke&quot;&gt;NX powerful monorepo tool - &lt;/div&gt;
-            &lt;div class=&quot;stroke&quot;&gt;NX powerful monorepo tool - &lt;/div&gt;
-            &lt;div class=&quot;plain main-title&quot;&gt;NX powerful monorepo tool - &lt;/div&gt;
-            &lt;div class=&quot;plain&quot;&gt;．．．&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;p&gt;一次工作機會上偶遇了 NX 建置起來的 Monorepo 的專案架構，此時不記錄更待何時！&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Structure" scheme="https://mawchu.github.io/blog/categories/Structure/"/>
-    
-    
-    <category term="NX" scheme="https://mawchu.github.io/blog/tags/NX/"/>
-    
-    <category term="monorepo" scheme="https://mawchu.github.io/blog/tags/monorepo/"/>
-    
-    <category term="polyrepo" scheme="https://mawchu.github.io/blog/tags/polyrepo/"/>
     
   </entry>
   

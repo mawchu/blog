@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Leetcode X Valid Anagram - Easy              Leetcode X Valid Anagram - Easy              Leetcode X Valid Anagram - Easy             ．．．               這題的解題歷程「卡了一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy">
+<meta property="og:url" content="https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="Leetcode X Valid Anagram - Easy              Leetcode X Valid Anagram - Easy              Leetcode X Valid Anagram - Easy             ．．．               這題的解題歷程「卡了一下">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-03T15:12:00.000Z">
+<meta property="article:modified_time" content="2026-03-03T15:31:24.033Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="HashMap">
+<meta property="article:tag" content="Map">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="CountArray">
+<meta property="article:tag" content="Anagram">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/","path":"2026/03/03/leetcode-242-valid-anagram-II/","title":"（二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>（二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%86%E8%A7%A3%E9%A1%8C%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">拆解題目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#242-Valid-Anagram"><span class="nav-number">1.1.</span> <span class="nav-text">242. Valid Anagram</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E9%96%8B%E5%A7%8B%E7%9A%84%E7%9B%B4%E8%A6%BA%EF%BC%9ASet"><span class="nav-number">2.</span> <span class="nav-text">一開始的直覺：Set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A8%98%E9%8C%84%E5%AD%97%E6%AF%8D%E5%87%BA%E7%8F%BE%E9%A0%BB%E7%8E%87%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">如何記錄字母出現頻率？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode-%E7%9A%84%E9%80%A3%E7%BA%8C%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">Unicode 的連續性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%A3%E5%88%97%E8%A8%88%E5%88%86%E6%9D%BF-Bill-Board"><span class="nav-number">3.2.</span> <span class="nav-text">陣列計分板 Bill Board</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%B4%B0%E7%AF%80"><span class="nav-number">4.</span> <span class="nav-text">要注意的細節</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E9%95%B7%E5%BA%A6%E4%B8%8D%E4%B8%80%E6%A8%A3%E8%A6%81%E5%85%88%E8%99%95%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">字串長度不一樣要先處理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E5%B0%BE%E6%AA%A2%E6%9F%A5"><span class="nav-number">4.2.</span> <span class="nav-text">結尾檢查</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%B5%82%E7%89%88%E6%9C%AC%E7%9A%84%E7%A8%8B%E5%BC%8F%E9%82%8F%E8%BC%AF"><span class="nav-number">5.</span> <span class="nav-text">最終版本的程式邏輯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8A%E5%A4%A9%E7%9A%84%E6%94%B6%E7%A9%AB%EF%BC%9A%E4%B8%8D%E5%8F%AA%E6%98%AF%E8%B7%91%E9%80%9A%EF%BC%8C%E8%80%8C%E6%98%AF%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">今天的收穫：不只是跑通，而是理解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2026/03/03/leetcode-242-valid-anagram-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="（二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （二度挑戰）優化演算法練習 Leetcode X Valid Anagram - Easy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-03-03 23:12:00 / Modified: 23:31:24" itemprop="dateCreated datePublished" datetime="2026-03-03T23:12:00+08:00">2026-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/Udemy-learning/" itemprop="url" rel="index"><span itemprop="name">Udemy learning</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/Udemy-learning/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leetcode X Valid Anagram - Easy</div>
+            <div class="stroke"> Leetcode X Valid Anagram - Easy</div>
+            <div class="plain main-title"> Leetcode X Valid Anagram - Easy</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>這題的解題歷程「卡了一下之後恍然大悟」的感覺非常美好，不只是答案本身，更是我如何一步步修正思路、真正理解問題內涵的過程。</p>
+<span id="more"></span>
+
+<h1 id="拆解題目"><a href="#拆解題目" class="headerlink" title="拆解題目"></a>拆解題目</h1><h2 id="242-Valid-Anagram"><a href="#242-Valid-Anagram" class="headerlink" title="242. Valid Anagram"></a>242. Valid Anagram</h2><p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>t</code> is an anagram of <code>s</code>, and <code>false</code> otherwise.</p>
+<blockquote>
+<p>Example 1:</p>
+</blockquote>
+<blockquote>
+<p>Input: s &#x3D; “anagram”, t &#x3D; “nagaram”<br>Output: <code>true</code></p>
+</blockquote>
+<blockquote>
+<p>Example 2:</p>
+</blockquote>
+<blockquote>
+<p>Input: s &#x3D; “rat”, t &#x3D; “car”<br>Output: <code>false</code></p>
+</blockquote>
+<p>Constraints:</p>
+<p>1 &lt;&#x3D; <code>s.length</code>, <code>t.length</code> &lt;&#x3D; 5 * 104<br><code>s</code> and <code>t</code> consist of lowercase English letters.</p>
+<h1 id="一開始的直覺：Set"><a href="#一開始的直覺：Set" class="headerlink" title="一開始的直覺：Set"></a>一開始的直覺：Set</h1><p>我的第一個想法是：</p>
+<p>用 Set 來看字母是否相同</p>
+<p>像這種：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dictionary = <span class="keyword">new</span> <span class="title class_">Set</span>(s);</span><br></pre></td></tr></table></figure>
+
+<p>這思路也不是完全錯，因為 Set 可以幫你快速知道有哪些不同字母。但仔細想一下，有一個致命問題：</p>
+<p>Set 只會告訴你「字母有沒有出現」，卻不會告訴你「出現幾次」<br>但 anagram 的定義是：每個字母出現的次數也必須相同</p>
+<p>像這種例子就會出問題：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aab</span><br><span class="line">abb</span><br></pre></td></tr></table></figure>
+
+<p>這兩個字串出現的字母都是 {‘a’,’b’}，但次數不同 — 這就是 Set 思路的卡關點。</p>
+<h1 id="如何記錄字母出現頻率？"><a href="#如何記錄字母出現頻率？" class="headerlink" title="如何記錄字母出現頻率？"></a>如何記錄字母出現頻率？</h1><p>畢竟是第二次解題，腦袋中還保存着「a ~ z」存在某種規律可循、可以使用「計分板」這兩個印象來解題，至於規律是什麼呢？</p>
+<h2 id="Unicode-的連續性"><a href="#Unicode-的連續性" class="headerlink" title="Unicode 的連續性"></a>Unicode 的連續性</h2><blockquote>
+小寫英文字母 a 到 z 在 Unicode/ASCII 中是連續編號的
+也就是 a=97、b=98、…… z=122，這個順序和英文字母一一對應。
+</blockquote>
+
+<p>也就是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index = char.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="string">&quot;a&quot;</span>.<span class="title function_">charCodeAt</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>char.charCodeAt(0)</code> 代表的是第一個字母的 Unicode&#x2F;ASCII 數字，<code>a(97) - z(122)</code> 正好是一連串連續加 1 的數字。</p>
+<h2 id="陣列計分板-Bill-Board"><a href="#陣列計分板-Bill-Board" class="headerlink" title="陣列計分板 Bill Board"></a>陣列計分板 Bill Board</h2><p>這個概念可以很好的結合每個字母的「計分板」：兩個個字串計數，出現一次加一、再出現一次減一，這樣一來就能得到所有字母計數爲 0 時爲字謎（Anagram）。</p>
+<p>基於以上規律，我把兩個字串的字母頻率全部記下來：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> billBoard = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="number">26</span>).<span class="title function_">fill</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>然後：</p>
+<p>遍歷 s，對應位置 ++<br>遍歷 t，對應位置 –</p>
+<p>最後，如果所有位置都回到 0 → 代表 s 和 t 的每個字母出現次數完全一致，就是 anagram。</p>
+<p>這段最核心的邏輯是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">billBoard[char.<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>]++;</span><br></pre></td></tr></table></figure>
+
+<p>這種做法在效能上是最理想的：</p>
+<blockquote>
+時間複雜度：O(n)
+空間複雜度：O(1)（固定 26 長度的 array）
+</blockquote>
+
+<h1 id="要注意的細節"><a href="#要注意的細節" class="headerlink" title="要注意的細節"></a>要注意的細節</h1><h2 id="字串長度不一樣要先處理"><a href="#字串長度不一樣要先處理" class="headerlink" title="字串長度不一樣要先處理"></a>字串長度不一樣要先處理</h2><p>一開始我試著把兩個頻率更新合併在同一個 loop 內處理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.<span class="property">length</span>; i++) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  billBoard[t[i].<span class="title function_">charCodeAt</span>(<span class="number">0</span>) - <span class="number">97</span>]--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但如果 t.length &lt; s.length 的話，當 i 超過 t 的 index 時就會發生 undefined.charCodeAt(0) 的錯誤。</p>
+<p>解法是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (s.<span class="property">length</span> !== t.<span class="property">length</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或者把兩個 loop 分開寫。這樣才能避免超過邊界讀取。</p>
+<h2 id="結尾檢查"><a href="#結尾檢查" class="headerlink" title="結尾檢查"></a>結尾檢查</h2><p>我最一開始用 Set 去判斷記分板是不是全 0；後來意識到：</p>
+<blockquote>
+用 Array.every(n => n === 0) 更直覺又省事
+不需要建立新的 Set 結構
+</blockquote>
+
+<p>原因是：</p>
+<p>every 只是跑一次迴圈檢查，不用額外記憶體(Set 是 HashMap 用空間換時間)。<br>結構語義也更清楚，這種小細節在效率和可讀性上都有加分。</p>
+<h1 id="最終版本的程式邏輯"><a href="#最終版本的程式邏輯" class="headerlink" title="最終版本的程式邏輯"></a>最終版本的程式邏輯</h1><p>下面是這個題目最乾淨、最推薦的寫法：</p>
+<ul>
+<li>先檢查長度</li>
+<li>記錄 s 字母出現次數</li>
+<li>減去 t 字母出現次數</li>
+<li>檢查全部為 0</li>
+</ul>
+<h1 id="今天的收穫：不只是跑通，而是理解"><a href="#今天的收穫：不只是跑通，而是理解" class="headerlink" title="今天的收穫：不只是跑通，而是理解"></a>今天的收穫：不只是跑通，而是理解</h1><p>這題看起來很簡單，但其實它把很多基礎能力融合在一起：</p>
+<ul>
+<li>字串與資料結構的轉換</li>
+<li>Unicode 的數值值與 index 映射</li>
+<li>frequency map vs set 的差異</li>
+<li>錯誤邊界的思考（例如長度不一致或 undefined）</li>
+</ul>
+<hr>
+<p>一開始想到 Set、再經過幾次修正、加上 unicode 映射，那整個過程不只是把 code 寫對，而是真正理解題目本質的思維成長。<br>在寫算法的路上，我覺得有這種「一開始卡一下但後來豁然開朗」的感覺，其實是最美好的部分 😊</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+              <a href="/blog/tags/HashMap/" rel="tag"># HashMap</a>
+              <a href="/blog/tags/Map/" rel="tag"># Map</a>
+              <a href="/blog/tags/Leetcode/" rel="tag"># Leetcode</a>
+              <a href="/blog/tags/CountArray/" rel="tag"># CountArray</a>
+              <a href="/blog/tags/Anagram/" rel="tag"># Anagram</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2026/02/24/leetcode-217-test-contains-duplicate-II/" rel="prev" title="（二度挑戰）優化演算法練習 Leetcode X Contains Duplicate - Easy">
+                  <i class="fa fa-chevron-left"></i> （二度挑戰）優化演算法練習 Leetcode X Contains Duplicate - Easy
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
