@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Leetcode  Binary Tree Inorder Traversal - Easy              Leetcode  Binary Tree Inorder Traversal - Easy              Leetcode  Binary Tree Inorder Traversal - Ea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二度挑戰）演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy">
+<meta property="og:url" content="https://mawchu.github.io/blog/2026/03/12/leetcode-94-binary-tree-inorder-traversal/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="Leetcode  Binary Tree Inorder Traversal - Easy              Leetcode  Binary Tree Inorder Traversal - Easy              Leetcode  Binary Tree Inorder Traversal - Ea">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-12T14:40:00.000Z">
+<meta property="article:modified_time" content="2026-03-12T15:24:16.385Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="Tree">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Recursion">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2026/03/12/leetcode-94-binary-tree-inorder-traversal/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2026/03/12/leetcode-94-binary-tree-inorder-traversal/","path":"2026/03/12/leetcode-94-binary-tree-inorder-traversal/","title":"（二度挑戰）演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>（二度挑戰）演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%E8%AA%AA%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">題目說明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Tree-Inorder-Traversal-%E2%80%94-%E7%90%86%E8%A7%A3-DFS-%E7%9A%84%E9%81%8E%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">Binary Tree Inorder Traversal — 理解 DFS 的過程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%96%8B%E5%A7%8B%E7%9A%84%E5%9B%B0%E6%83%91"><span class="nav-number">2.1.</span> <span class="nav-text">一開始的困惑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tree-traversal-%E7%9A%84%E6%A0%B8%E5%BF%83"><span class="nav-number">2.2.</span> <span class="nav-text">Tree traversal 的核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%A8%AE-traversal-%E7%9A%84%E5%B7%AE%E5%88%A5"><span class="nav-number">2.3.</span> <span class="nav-text">三種 traversal 的差別</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Inorder-traversal-%E7%9A%84%E7%9B%B4%E8%A6%BA"><span class="nav-number">3.</span> <span class="nav-text">Inorder traversal 的直覺</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%9E%E8%BF%B4%E6%98%AF%E6%80%8E%E9%BA%BC%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">遞迴是怎麼工作的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E7%B5%82%E8%A7%A3%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">最終解法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%99%E9%A1%8C%E7%9C%9F%E6%AD%A3%E5%AD%B8%E5%88%B0%E7%9A%84"><span class="nav-number">6.</span> <span class="nav-text">這題真正學到的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E5%BE%8C%E6%83%A1%E8%A3%9C"><span class="nav-number">7.</span> <span class="nav-text">題後惡補</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Search-Tree%EF%BC%88BST%EF%BC%89%E6%9C%89%E8%A6%8F%E5%89%87"><span class="nav-number">8.</span> <span class="nav-text">Binary Search Tree（BST）有規則</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%A1%8C%E5%BE%8C%E6%84%9F%E6%83%B3"><span class="nav-number">9.</span> <span class="nav-text">解題後感想</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">133</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2026/03/12/leetcode-94-binary-tree-inorder-traversal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="（二度挑戰）演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （二度挑戰）演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-03-12 22:40:00 / Modified: 23:24:16" itemprop="dateCreated datePublished" datetime="2026-03-12T22:40:00+08:00">2026-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leetcode  Binary Tree Inorder Traversal - Easy</div>
+            <div class="stroke"> Leetcode  Binary Tree Inorder Traversal - Easy</div>
+            <div class="plain main-title"> Leetcode  Binary Tree Inorder Traversal - Easy</div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+
+<p>第二次來理解這題的時候，驚嘆 ChatGpt 真的是一個好老師，用很清楚的說明一次教會我 PreOrder、InOrder、PostOrder…</p>
+<span id="more"></span>
+
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><ol start="94">
+<li>Binary Tree Inorder Traversal (Easy)</li>
+</ol>
+<p>Given the <code>root</code> of a binary tree, return the <em>inorder traversal</em> of its nodes’ values.</p>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>Example 1:</p>
+<p>Input:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root = [<span class="number">1</span>, <span class="literal">null</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+
+<p>Explanation:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+
+<h1 id="Binary-Tree-Inorder-Traversal-—-理解-DFS-的過程"><a href="#Binary-Tree-Inorder-Traversal-—-理解-DFS-的過程" class="headerlink" title="Binary Tree Inorder Traversal — 理解 DFS 的過程"></a>Binary Tree Inorder Traversal — 理解 DFS 的過程</h1><p>這題表面上是 Tree traversal，但真正理解的是 DFS + recursion 的運作方式。</p>
+<h2 id="一開始的困惑"><a href="#一開始的困惑" class="headerlink" title="一開始的困惑"></a>一開始的困惑</h2><p>題目給的是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root = [<span class="number">1</span>, <span class="literal">null</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+
+<p>第一個沒看懂：</p>
+<ul>
+<li>root 看起來像 array</li>
+<li>但函式參數卻是 TreeNode</li>
+</ul>
+<p>其實 <code>[1,null,2,3]</code> 只是 LeetCode 用來描述樹的表示法（level order）。<br>真正傳入程式的是 TreeNode 結構：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"> \</span><br><span class="line">  <span class="number">2</span></span><br><span class="line"> /</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>所以 traversal 操作的是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node.<span class="property">val</span>;</span><br><span class="line">node.<span class="property">left</span>;</span><br><span class="line">node.<span class="property">right</span>;</span><br></pre></td></tr></table></figure>
+
+<p>而不是 array index。</p>
+<h2 id="Tree-traversal-的核心"><a href="#Tree-traversal-的核心" class="headerlink" title="Tree traversal 的核心"></a>Tree traversal 的核心</h2><p>Binary Tree traversal 的本質其實就是 DFS（Depth First Search）。</p>
+<p>DFS 的基本模板：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">dfs</span>(<span class="params">node</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line">  <span class="title function_">visit</span>(node); <span class="comment">// 記錄的時機</span></span><br><span class="line">  <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 <code>visit(node)</code> 放在哪裡，決定 traversal 類型。</p>
+<h2 id="三種-traversal-的差別"><a href="#三種-traversal-的差別" class="headerlink" title="三種 traversal 的差別"></a>三種 traversal 的差別</h2><p>DFS 在一個節點其實有 三個時刻：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 剛到節點</span><br><span class="line"><span class="number">2.</span> 左子樹探索完</span><br><span class="line"><span class="number">3.</span> 右子樹探索完</span><br></pre></td></tr></table></figure>
+
+<p>對應 traversal：</p>
+<table>
+<thead>
+<tr>
+<th>traversal</th>
+<th>記錄時間</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Preorder</td>
+<td>剛到節點</td>
+</tr>
+<tr>
+<td>Inorder</td>
+<td>左子樹完成</td>
+</tr>
+<tr>
+<td>Postorder</td>
+<td>左右子樹完成</td>
+</tr>
+</tbody></table>
+<p>這裏是本文精華，也是我認爲最棒的說明：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">dfs</span>(<span class="params">node</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(node); <span class="comment">// Preorder 在走左節點之前</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(node); <span class="comment">// Inorder 再走左節點之後</span></span><br><span class="line"></span><br><span class="line">  <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(node); <span class="comment">// Postorder 再走右節點之後</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Inorder-traversal-的直覺"><a href="#Inorder-traversal-的直覺" class="headerlink" title="Inorder traversal 的直覺"></a>Inorder traversal 的直覺</h1><p>Inorder 的規則是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left → root → right</span><br></pre></td></tr></table></figure>
+
+<p>實際 DFS 行為可以理解為：</p>
+<blockquote>
+能往左就一直往左
+走到底
+開始記錄
+再回溯
+最後探索右邊
+</blockquote>
+
+<p>很像走迷宮：</p>
+<blockquote>
+一直往一條路走
+走不通就回頭
+再試另一條
+</blockquote>
+
+<p>這其實就是 DFS + backtracking（回朔）。</p>
+<hr>
+<h1 id="遞迴是怎麼工作的"><a href="#遞迴是怎麼工作的" class="headerlink" title="遞迴是怎麼工作的"></a>遞迴是怎麼工作的</h1><p>很多人會疑惑：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line"><span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br></pre></td></tr></table></figure>
+
+<p>看起來像同時執行，但其實程式是依照順序執行：</p>
+<blockquote>
+先跑完整個左子樹 DFS
+回來
+再跑右子樹
+</blockquote>
+
+<p>而 recursion 其實就是自動維護一個 call stack。</p>
+<p>當遇到：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<p>代表：</p>
+<blockquote>
+這條路走到盡頭
+開始回溯
+</blockquote>
+
+<hr>
+<h1 id="最終解法"><a href="#最終解法" class="headerlink" title="最終解法"></a>最終解法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inorderTraversal = <span class="keyword">function</span> (<span class="params">root</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> result = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">node</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line">    result.<span class="title function_">push</span>(node.<span class="property">val</span>);</span><br><span class="line">    <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">dfs</span>(root);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>時間複雜度：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">O</span>(n);</span><br></pre></td></tr></table></figure>
+
+<p>每個節點訪問一次。</p>
+<p>空間複雜度：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">O</span>(h);</span><br></pre></td></tr></table></figure>
+
+<p>來自 recursion stack。</p>
+<h1 id="這題真正學到的"><a href="#這題真正學到的" class="headerlink" title="這題真正學到的"></a>這題真正學到的</h1><p>這題的重點其實不是 traversal，而是理解：</p>
+<ul>
+<li>Tree traversal &#x3D; DFS</li>
+<li>recursion &#x3D; 自動 stack</li>
+<li>traversal 只是「記錄節點的時間點不同」</li>
+</ul>
+<p>理解這個之後：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Preorder</span>;</span><br><span class="line"><span class="title class_">Inorder</span>;</span><br><span class="line"><span class="title class_">Postorder</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其實只是 同一個 DFS 模板。</p>
+<hr>
+<h1 id="題後惡補"><a href="#題後惡補" class="headerlink" title="題後惡補"></a>題後惡補</h1><p>Binary Tree v.s. Binary Search Tree</p>
+<p>普通 Binary Tree：</p>
+<blockquote>
+節點數值沒有任何規律
+</blockquote>
+
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">7</span></span><br><span class="line">   / \</span><br><span class="line">  <span class="number">3</span>   <span class="number">9</span></span><br><span class="line"> / \</span><br><span class="line"><span class="number">8</span>   <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>Traversal 只是在 走完整棵樹。</p>
+<hr>
+<h1 id="Binary-Search-Tree（BST）有規則"><a href="#Binary-Search-Tree（BST）有規則" class="headerlink" title="Binary Search Tree（BST）有規則"></a>Binary Search Tree（BST）有規則</h1><blockquote>
+left < root < right
+</blockquote>
+
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="number">4</span></span><br><span class="line">   / \</span><br><span class="line">  <span class="number">2</span>   <span class="number">6</span></span><br><span class="line"> / \ / \</span><br><span class="line"><span class="number">1</span>  <span class="number">3</span> <span class="number">5</span>  <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>這時候 Inorder traversal 會得到排序結果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="解題後感想"><a href="#解題後感想" class="headerlink" title="解題後感想"></a>解題後感想</h1><p>這題最大的收穫其實不是 traversal，而是理解：</p>
+<blockquote>
+Tree traversal = DFS
+Recursion = 自動 stack
+</blockquote>
+
+<p>而這個模式也會出現在很多演算法題，例如：</p>
+<blockquote>
+Backtracking
+Maze solving
+Permutations
+N-Queens
+</blockquote>
+
+<p>本質其實都是 DFS + 回溯。</p>
+<p>而 recursion 其實只是幫我們自動維護一個 call stack，記住「現在走到哪裡、要回到哪裡」。</p>
+<p>這題雖然是 Easy，但其實是理解 Tree 與 DFS 思維很重要的一個基礎題。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+              <a href="/blog/tags/Leetcode/" rel="tag"># Leetcode</a>
+              <a href="/blog/tags/Tree/" rel="tag"># Tree</a>
+              <a href="/blog/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/blog/tags/Recursion/" rel="tag"># Recursion</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2026/03/09/leetcode-94-binary-tree-inorder-traversal-second-challenge/" rel="prev" title="（二度挑戰）優化演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy">
+                  <i class="fa fa-chevron-left"></i> （二度挑戰）優化演算法練習 Leetcode 94 Binary Tree Inorder Traversal - Easy
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2026/03/16/leetcode-543-diameter-of-binary-tree/" rel="next" title="優化演算法練習 Leetcode 543 Diameter of Binary Tree - Easy">
+                  優化演算法練習 Leetcode 543 Diameter of Binary Tree - Easy <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
