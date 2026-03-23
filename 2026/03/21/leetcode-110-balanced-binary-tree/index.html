@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/blog/images/favicon.svg" color="#222">
+  <meta name="google-site-verification" content="-eriZSYcCAooVspgHdtILNlJifFeWR-0qGK70ORUrp0">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mawchu.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="Leetcode X Balanced Binary Tree - DFS  -               Leetcode X Balanced Binary Tree - DFS  -               Leetcode X Balanced Binary Tree - DFS  -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二度卡關）演算法練習 Leetcode X Balanced Binary Tree - DFS 深度理解與 -1 解法">
+<meta property="og:url" content="https://mawchu.github.io/blog/2026/03/21/leetcode-110-balanced-binary-tree/index.html">
+<meta property="og:site_name" content="Mawchu&#39;s blog">
+<meta property="og:description" content="Leetcode X Balanced Binary Tree - DFS  -               Leetcode X Balanced Binary Tree - DFS  -               Leetcode X Balanced Binary Tree - DFS  -">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-21T15:58:00.000Z">
+<meta property="article:modified_time" content="2026-03-23T15:26:29.755Z">
+<meta property="article:author" content="Mawchu">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Javascript">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="Tree">
+<meta property="article:tag" content="Recursion">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://mawchu.github.io/blog/2026/03/21/leetcode-110-balanced-binary-tree/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://mawchu.github.io/blog/2026/03/21/leetcode-110-balanced-binary-tree/","path":"2026/03/21/leetcode-110-balanced-binary-tree/","title":"（二度卡關）演算法練習 Leetcode X Balanced Binary Tree - DFS 深度理解與 -1 解法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>（二度卡關）演算法練習 Leetcode X Balanced Binary Tree - DFS 深度理解與 -1 解法 | Mawchu's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEH407PQV9"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-MEH407PQV9","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5882544496919980"
+     crossorigin="anonymous"></script>
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/blog/atom.xml" title="Mawchu's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Mawchu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">貓奴前端 | 毛球的技術筆記</p>
+      <img class="custom-logo-image" src="/blog/images/mawchu-head-logo-y.svg" alt="Mawchu's blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-bookmark fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-folder-open fa-fw"></i>Categories</a></li><li class="menu-item menu-item-posts"><a href="/blog/archives/" rel="section"><i class="fa fa-pencil-square fa-fw"></i>posts</a></li><li class="menu-item menu-item-rss"><a href="/blog/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>Rss</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE%E8%AA%AA%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">題目說明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E4%B8%80%E9%96%8B%E5%A7%8B%E8%B8%A9%E9%81%8E%E7%9A%84%E5%9D%91"><span class="nav-number">2.</span> <span class="nav-text">我一開始踩過的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-isBalanceTree-%E4%B8%80%E9%96%8B%E5%A7%8B%E8%A8%AD%E6%88%90-false"><span class="nav-number">2.1.</span> <span class="nav-text">1. isBalanceTree 一開始設成 false</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-node-%E5%BF%98%E8%A8%98%E5%9B%9E%E5%82%B3-0"><span class="nav-number">2.2.</span> <span class="nav-text">2. !node 忘記回傳 0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8A%8A-isBalanceTree-%E5%AF%AB%E5%9C%A8%E5%85%A7%E9%83%A8"><span class="nav-number">2.3.</span> <span class="nav-text">3. 把 isBalanceTree 寫在內部</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%BF%98%E8%A8%98%E5%91%BC%E5%8F%AB-dfs-root"><span class="nav-number">2.4.</span> <span class="nav-text">4. 忘記呼叫 dfs(root)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%82%B3%E9%8C%AF-dfs-node"><span class="nav-number">2.5.</span> <span class="nav-text">5. 傳錯 dfs(node)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-return-%E5%AF%AB%E9%8C%AF"><span class="nav-number">2.6.</span> <span class="nav-text">6. return 寫錯</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E7%A2%BA%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">正確版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%98%AF-DFS"><span class="nav-number">4.</span> <span class="nav-text">為什麼是 DFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E8%A7%A3%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">-1 解法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#abs-gt-1-%E8%88%87-1-%E7%9A%84%E7%9B%B4%E8%A6%BA%E7%90%86%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">abs &gt; 1 與 -1 的直覺理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E6%9C%80%E5%BE%8C%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">我最後的理解</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Mawchu"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Mawchu</p>
+  <div class="site-description" itemprop="description">我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">137</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://mawchu.github.io/" title="Website → https:&#x2F;&#x2F;mawchu.github.io" rel="noopener me"><i class="fa fa-address-book fa-fw"></i>Website</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/mawchu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mawchu" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:mawchu0412@gmail.com" title="E-Mail → mailto:mawchu0412@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/mawchu?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;mawchu?utm_source&#x3D;share&amp;utm_campaign&#x3D;share_via&amp;utm_content&#x3D;profile&amp;utm_medium&#x3D;ios_app" rel="noopener me" target="_blank"><i class="fa fa-user fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://mawchu.github.io/blog/2026/03/21/leetcode-110-balanced-binary-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Mawchu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mawchu's blog">
+      <meta itemprop="description" content="我是毛球 (Mawchu)，半路從資深平面設計師轉職前端工程師的技術學習筆記，希望能透過平易近人的解釋幫助到任何一個迷途羔羊與我自己。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="（二度卡關）演算法練習 Leetcode X Balanced Binary Tree - DFS 深度理解與 -1 解法 | Mawchu's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （二度卡關）演算法練習 Leetcode X Balanced Binary Tree - DFS 深度理解與 -1 解法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-03-21 23:58:00" itemprop="dateCreated datePublished" datetime="2026-03-21T23:58:00+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-03-23 23:26:29" itemprop="dateModified" datetime="2026-03-23T23:26:29+08:00">2026-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Algorithm/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <div class="visual-image">
+        <div class="visual-image-box">
+            <image class="visual-image-deco" src="/blog/images/mawchu_logo_w.svg" />
+            <div class="stroke"> Leetcode X Balanced Binary Tree - DFS  - </div>
+            <div class="stroke"> Leetcode X Balanced Binary Tree - DFS  - </div>
+            <div class="plain main-title"> Leetcode X Balanced Binary Tree - DFS  - </div>
+            <div class="plain">．．．</div>
+        </div>
+    </div>
+<p>這題我其實卡了一段時間，不是因為寫不出來，而是過程中踩了很多坑，而且有些錯誤其實滿低級的，但當下就是會卡住。</p>
+<p>這篇把我實際卡過的點完整記錄下來，包含從錯誤寫法到理解 DFS 與 -1<br>解法的過程。</p>
+<span id="more"></span>
+
+<h1 id="題目說明"><a href="#題目說明" class="headerlink" title="題目說明"></a>題目說明</h1><ol start="110">
+<li>Balanced Binary Tree (Easy)</li>
+</ol>
+<blockquote>
+<p>Given a binary tree, determine if it is height-balanced.</p>
+</blockquote>
+<p>每個節點的左右子樹高度差不能超過 1。</p>
+<hr>
+<h1 id="我一開始踩過的坑"><a href="#我一開始踩過的坑" class="headerlink" title="我一開始踩過的坑"></a>我一開始踩過的坑</h1><h2 id="1-isBalanceTree-一開始設成-false"><a href="#1-isBalanceTree-一開始設成-false" class="headerlink" title="1. isBalanceTree 一開始設成 false"></a>1. isBalanceTree 一開始設成 false</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isBalanceTree = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>這樣會導致結果永遠是 false。</p>
+<p>正確應該是先假設是平衡的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isBalanceTree = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-node-忘記回傳-0"><a href="#2-node-忘記回傳-0" class="headerlink" title="2. !node 忘記回傳 0"></a>2. !node 忘記回傳 0</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!node) <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
+<p>會導致後面拿到 undefined。</p>
+<p>正確：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!node) <span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-把-isBalanceTree-寫在內部"><a href="#3-把-isBalanceTree-寫在內部" class="headerlink" title="3. 把 isBalanceTree 寫在內部"></a>3. 把 isBalanceTree 寫在內部</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isBalanceTree = <span class="title class_">Math</span>.<span class="title function_">abs</span>(left - right) &gt; <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>每層都重新宣告，狀態失效。</p>
+<hr>
+<h2 id="4-忘記呼叫-dfs-root"><a href="#4-忘記呼叫-dfs-root" class="headerlink" title="4. 忘記呼叫 dfs(root)"></a>4. 忘記呼叫 dfs(root)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> isBalanceTree;</span><br></pre></td></tr></table></figure>
+
+<p>DFS 根本沒執行。</p>
+<hr>
+<h2 id="5-傳錯-dfs-node"><a href="#5-傳錯-dfs-node" class="headerlink" title="5. 傳錯 dfs(node)"></a>5. 傳錯 dfs(node)</h2><p>應該是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">dfs</span>(root);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-return-寫錯"><a href="#6-return-寫錯" class="headerlink" title="6. return 寫錯"></a>6. return 寫錯</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">max</span>(left - right) + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>應該是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">max</span>(left, right) + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="正確版本"><a href="#正確版本" class="headerlink" title="正確版本"></a>正確版本</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isBalanced = <span class="keyword">function</span> (<span class="params">root</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> isBalanceTree = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">node</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!node) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> left = <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line">    <span class="keyword">const</span> right = <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Math</span>.<span class="title function_">abs</span>(left - right) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      isBalanceTree = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">max</span>(left, right) + <span class="number">1</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">dfs</span>(root);</span><br><span class="line">  <span class="keyword">return</span> isBalanceTree;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="為什麼是-DFS"><a href="#為什麼是-DFS" class="headerlink" title="為什麼是 DFS"></a>為什麼是 DFS</h1><p>因為高度只能從底往上算，所以一定是後序遍歷：</p>
+<p>左 → 右 → 自己</p>
+<hr>
+<h1 id="1-解法"><a href="#1-解法" class="headerlink" title="-1 解法"></a>-1 解法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isBalanced = <span class="keyword">function</span> (<span class="params">root</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">dfs</span> = (<span class="params">node</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!node) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> left = <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line">    <span class="keyword">if</span> (left === -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> right = <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line">    <span class="keyword">if</span> (right === -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Math</span>.<span class="title function_">abs</span>(left - right) &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">max</span>(left, right) + <span class="number">1</span>;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">dfs</span>(root) !== -<span class="number">1</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="abs-gt-1-與-1-的直覺理解"><a href="#abs-gt-1-與-1-的直覺理解" class="headerlink" title="abs &gt; 1 與 -1 的直覺理解"></a>abs &gt; 1 與 -1 的直覺理解</h1><p>這裡我後來有一個比較直覺的理解。</p>
+<p>樹的資料其實是一筆一筆插入的。如果某一邊持續比另一邊多延伸一層以上，整個結構就會開始往單邊傾斜。</p>
+<p>當差距大於 1 的時候，其實就代表這棵樹已經開始「變形」，往某一側長成類似<br>linked list 的形狀。</p>
+<p>也就是說：</p>
+<ul>
+<li>平衡樹：高度分布接近</li>
+<li>不平衡樹：某一邊一路往下串</li>
+</ul>
+<p>所以當我們看到：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Math</span>.<span class="title function_">abs</span>(left - right) &gt; <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其實可以理解成：</p>
+<p>這個節點的結構已經失去平衡，開始單邊肥大。</p>
+<p>而 -1<br>的角色，就是把這個「已經壞掉的訊號」往上傳，讓整棵樹可以提早停止判斷。</p>
+<hr>
+<h1 id="我最後的理解"><a href="#我最後的理解" class="headerlink" title="我最後的理解"></a>我最後的理解</h1><p>這題讓我真正理解 DFS 的一個關鍵：</p>
+<p>DFS 不只是走訪節點，而是透過 recursion 把資訊一層一層往上傳。</p>
+<p>當 return 不只是數值，而是「狀態 + 資訊」的時候，很多 tree<br>題就會開始變得好理解。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/blog/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://mawchu.github.io">
+            <span class="icon">
+              <i class="fa fa-globe"></i>
+            </span>
+
+            <span class="label">Website</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+              <a href="/blog/tags/Leetcode/" rel="tag"># Leetcode</a>
+              <a href="/blog/tags/DFS/" rel="tag"># DFS</a>
+              <a href="/blog/tags/Tree/" rel="tag"># Tree</a>
+              <a href="/blog/tags/Recursion/" rel="tag"># Recursion</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2026/03/16/leetcode-543-diameter-of-binary-tree/" rel="prev" title="優化演算法練習 Leetcode 543 Diameter of Binary Tree - Easy">
+                  <i class="fa fa-chevron-left"></i> 優化演算法練習 Leetcode 543 Diameter of Binary Tree - Easy
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/2026/03/23/javascript-debounce_throttle_learning/" rel="next" title="（深入理解）debounce 與 throttle 的時間模型與 this 流動">
+                  （深入理解）debounce 與 throttle 的時間模型與 this 流動 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2023 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-paw"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mawchu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
